@@ -70,7 +70,6 @@ export = {
       if (ids.length > 0 && !ids.find(id => idIsNotValid(id))) {
         try {
           await Email.destroy({ where: { id: { [Op.in]: ids } } });
-          return ids;
         } catch (err) {
           throw new ApolloError(err);
         }

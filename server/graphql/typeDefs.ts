@@ -24,6 +24,6 @@ export = gql`
     login(email: String! password: String!): User!
     register(firstName: String! lastName: String! email: String! password: String!): User!
     sendEmail(recipientId: ID! subject: String! content: String!): Email!
-    deleteEmails(ids: [ID]!): [ID]!
+    deleteEmails(ids: [ID]!): Boolean
   }
 `;
