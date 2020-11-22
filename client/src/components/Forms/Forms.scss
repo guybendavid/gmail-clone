@@ -1,0 +1,48 @@
+.login-container,
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  & > div {
+    &:nth-child(1) {
+      background: var(--gradient-color);
+    }
+  }
+
+  form {
+    width: 100%;
+
+    & > div {
+      margin-bottom: 0;
+    }
+
+    div {
+      .MuiFormLabel-root.Mui-focused {
+        color: var(--gradient-color);
+      }
+
+      .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        border-color: var(--gradient-color);
+      }
+    }
+
+    a {
+      color: #175aa7;
+      text-decoration: none;
+      display: inline-block;
+      margin: 16px 0;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    button {
+      color: white;
+      background: var(--gradient-color);
+      text-transform: capitalize;
+    }
+  }
+}

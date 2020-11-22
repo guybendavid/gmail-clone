@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+
+  .left-sidebar {
+    flex: 0.2;
+  }
+
+  .emails-wrapper {
+    flex: 0.8;
+  }
+
+  @media only screen and (max-width: 765px) {
+    .emails-wrapper {
+      flex: 1;
+    }
+  }
+}

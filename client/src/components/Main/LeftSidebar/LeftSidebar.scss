@@ -1,0 +1,84 @@
+@import "../../../styles/Mixins.scss";
+
+.left-sidebar {
+  .button-wrapper {
+    padding: 16px 10px;
+    background: white;
+
+    button {
+      background: white;
+      width: fit-content;
+      border-radius: 24px;
+      padding-right: 30px;
+      height: 48px;
+
+      img {
+        margin-right: 15px;
+      }
+
+      span {
+        color: var(--text-secondary-color);
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    background: white;
+    height: 100%;
+
+    .list-items-wrapper {
+      padding: 0 10px;
+
+      &.first-list {
+        @include scrollbar;
+        flex: 0.42;
+        max-height: 385px;
+        overflow-y: auto;
+      }
+
+      &.second-list {
+        flex: 0.58;
+
+        .meet-title {
+          margin: 10px 19px;
+          font-weight: 500;
+        }
+      }
+
+      .list-item {
+        color: var(--text-secondary-color);
+        border-radius: 0 16px 16px 0;
+        padding: 3px 19px;
+
+        &.active {
+          span {
+            font-weight: bold;
+          }
+
+          &.first {
+            background: #fce8e6;
+            color: var(--red-color);
+          }
+        }
+
+        .icon {
+          margin-right: 23px;
+        }
+
+        span {
+          @include overflow-handler;
+          max-width: 180px;
+        }
+      }
+    }
+
+    hr {
+      margin: 5px 0;
+    }
+  }
+}

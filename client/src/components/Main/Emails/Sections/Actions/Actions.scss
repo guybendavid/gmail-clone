@@ -1,0 +1,16 @@
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 2px;
+
+  .right-side {
+    .MuiTablePagination-root {
+      overflow: hidden;
+    }
+  }
+
+  @media only screen and (max-width: 765px) {
+    padding: 10px 13px;
+  }
+}
