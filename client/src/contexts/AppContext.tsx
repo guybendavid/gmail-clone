@@ -2,7 +2,6 @@ import React, { useEffect, createContext, useState, Context } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { GET_EMAILS } from "../services/graphql";
 import { useMediaQuery } from "@material-ui/core";
-import { User } from "../interfaces/interfaces";
 
 interface Props {
   children: React.ReactNode;
@@ -17,7 +16,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   });
 
   const emails = data?.getEmails;
-  const [loggedInUser, setLoggedInUser] = useState<User | {}>({});
+  const [loggedInUser, setLoggedInUser] = useState<any>({});
   const [searchValue, setSearchValue] = useState("");
   const [activeTab, setActive] = useState(0);
   const [selectedEmails, setSelectedEmails] = useState<any>([]);
@@ -26,7 +25,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   const isSmallScreen = useMediaQuery("(max-width:765px)");
 
   useEffect(() => {
-    if (loggedInUser) {
+    if (loggedInUser?.id) {
       getEmails();
     }
     // eslint-disable-next-line
