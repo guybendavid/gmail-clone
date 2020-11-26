@@ -5,8 +5,8 @@ export = gql`
     id: ID!
     firstName: String!
     lastName: String!
-    email: String!
     image: String!
+    email: String
     token: String
   }
   type Email {

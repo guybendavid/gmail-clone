@@ -24,7 +24,8 @@ const Login: React.FC<Props> = ({ history }) => {
     if (email && password) {
       try {
         const user = await login({ variables: { email, password } });
-        handleAuth(user.data?.login, history);
+        const userData = { ...user.data?.login, email };
+        handleAuth(userData, history);
       } catch (err) {
         handleErrors(err);
       }

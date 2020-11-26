@@ -52,7 +52,7 @@ export = {
           }
 
           const { id, firstName, lastName, image } = user;
-          return { id, firstName, lastName, email, image, token: generateToken({ id, firstName, lastName }) };
+          return { id, firstName, lastName, image, token: generateToken({ id, firstName, lastName }) };
         } catch (err) {
           throw new ApolloError(err);
         }
