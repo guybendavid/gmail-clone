@@ -41,16 +41,16 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   const handleErrors = (error: any, history?: any) => {
-    const IsGraphQLErrorsIncludesError = (errorMessage: string) => {
+    const isGraphQLErrorsIncludesError = (errorMessage: string) => {
       return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
     };
 
     if (error.message === "Unauthenticated") {
       localStorage.clear();
       history?.push("/login");
-    } else if (IsGraphQLErrorsIncludesError("UserInputError")) {
+    } else if (isGraphQLErrorsIncludesError("UserInputError")) {
       setError(error.graphQLErrors[0].message.split(": ")[1]);
-    } else if (IsGraphQLErrorsIncludesError("SequelizeValidationError")) {
+    } else if (isGraphQLErrorsIncludesError("SequelizeValidationError")) {
       setError(error.graphQLErrors[0].message.split(": ")[2]);
     } else {
       setError(error.message);
