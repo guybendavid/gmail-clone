@@ -1,0 +1,25 @@
+@import "styles/Mixins.scss";
+
+.emails-footer {
+  text-align: center;
+
+  .tabs {
+    @include tabs;
+
+    button {
+      &.active {
+        color: var(--red-color);
+      }
+
+      &:not(.active) {
+        color: var(--text-secondary-color);
+      }
+    }
+  }
+
+  .compose-button {
+    @include blue-button;
+    width: 98%;
+    margin: 0 auto;
+  }
+}

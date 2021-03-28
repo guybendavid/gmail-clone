@@ -1,0 +1,18 @@
+@import "styles/Mixins.scss";
+
+.tabs-row {
+  @include tabs;
+  background: white !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  button {
+    &:nth-child(1) {
+      color: var(--red-color);
+    }
+
+    &:not(:nth-child(1)) {
+      color: var(--text-secondary-color);
+    }
+  }
+}

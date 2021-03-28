@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  height: 100vh;
+
+  .left-sidebar {
+    flex: 0.18;
+  }
+
+  .emails-wrapper {
+    flex: 0.82;
+  }
+
+  @media only screen and (max-width: 765px) {
+    height: unset;
+
+    .emails-wrapper {
+      flex: 1;
+
+      .emails-list {
+        height: 60vh;
+      }
+
+      .emails-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+  }
+}
