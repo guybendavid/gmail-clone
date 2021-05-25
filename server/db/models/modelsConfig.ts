@@ -37,7 +37,7 @@ User.hasMany(Email, { foreignKey: "recipient" });
 Email.belongsTo(User, { foreignKey: "sender" });
 Email.belongsTo(User, { foreignKey: "recipient" });
 
-Object.keys(models).map(modelName => {
+Object.keys(models).forEach(modelName => {
   if (models[modelName].associate) {
     models[modelName].associate(models);
   }
