@@ -27,12 +27,15 @@ export = (sequelize: Sequelize, DataTypes: any) => {
     content: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at"
     }
   }, {
     modelName: "Email",
     tableName: "emails",
-    updatedAt: false,
-    underscored: true
+    updatedAt: false
   });
 
   return Email;
