@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import ComposeDialog from "./ComposeDialog/ComposeDialog";
 import ComposeModal from "./ComposeModal/ComposeModal";
 
 const Compose = () => {
-  const { isSmallScreen } = useContext(AppContext);
+  const { isSmallScreen } = useContext(AppContext) as AppContextType;
 
   return (
     <>

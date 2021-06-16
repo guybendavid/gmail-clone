@@ -1,6 +1,6 @@
 import { FC, useState, SyntheticEvent, useContext } from "react";
 import { History, LocationState } from "history";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { LOGIN_USER } from "services/graphql";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Login: FC<Props> = ({ history }) => {
-  const { handleErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const { email, password } = formValues;
 

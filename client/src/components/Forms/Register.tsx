@@ -1,6 +1,6 @@
 import { FC, useState, SyntheticEvent, useContext } from "react";
 import { History, LocationState } from "history";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { REGISTER_USER } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Register: FC<Props> = ({ history }) => {
-  const { handleErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext) as AppContextType;
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", password: "" });
   const { firstName, lastName, email, password } = formValues;
 

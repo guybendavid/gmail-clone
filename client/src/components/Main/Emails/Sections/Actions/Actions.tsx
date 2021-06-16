@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { Email, User } from "interfaces/interfaces";
 import { useMutation } from "@apollo/client";
@@ -13,7 +13,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./Actions.scss";
 
 const Actions = () => {
-  const { emails, handleErrors } = useContext(AppContext);
+  const { emails, handleErrors } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);

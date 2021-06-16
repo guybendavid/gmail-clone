@@ -1,5 +1,5 @@
 import { useState, useContext, MouseEvent } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { User } from "interfaces/interfaces";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import "./Navbar.scss";
 
 const Navbar = () => {
-  const { isSmallScreen, logout } = useContext(AppContext);
+  const { isSmallScreen, logout } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const setSearchValue = useStore((state: Store) => state.setSearchValue);

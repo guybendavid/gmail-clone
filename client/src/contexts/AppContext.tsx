@@ -1,10 +1,18 @@
-import { FC, useEffect, createContext, Context, ReactNode } from "react";
+import { FC, useEffect, createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
-import { User } from "interfaces/interfaces";
+import { Email, User } from "interfaces/interfaces";
 import { History, LocationState } from "history";
-import { ApolloError, useLazyQuery } from "@apollo/client";
+import { ApolloClient, ApolloError, useLazyQuery } from "@apollo/client";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 import { useMediaQuery } from "@material-ui/core";
+
+export type AppContextType = {
+  apolloClient: ApolloClient<any> | undefined;
+  emails: Email[];
+  isSmallScreen: boolean;
+  logout: () => void;
+  handleErrors: (error: ApolloError) => void;
+};
 
 type HistoryType = History<LocationState>;
 
@@ -13,7 +21,7 @@ interface Props {
   history: HistoryType | {};
 }
 
-const AppContext: Context<any> = createContext(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider: FC<Props> = ({ children, history }) => {
   const loggedInUser = useStore((state: Store) => state.loggedInUser);
