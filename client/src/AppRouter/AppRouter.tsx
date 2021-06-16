@@ -20,7 +20,7 @@ const AppRouter: FC<any> = ({ setHistory }) => {
   }, []);
 
   return (
-    <Container className={"container" + (isAuthForm ? " is-auth-form" : "")}>
+    <Container className={"container " + (isAuthForm && "is-auth-form")}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />
