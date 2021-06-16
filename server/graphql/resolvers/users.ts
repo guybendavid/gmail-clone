@@ -9,7 +9,7 @@ const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Mutation: {
-    register: async (parent: any, args: IUSER) => {
+    register: async (_parent: any, args: IUSER) => {
       const { firstName, lastName, email, password } = args;
       const validateUser = validateRegisterObj(args);
 
@@ -33,7 +33,7 @@ export = {
         throw new UserInputError(validateUser.errors[0]);
       }
     },
-    login: async (parent: any, args: IUSER) => {
+    login: async (_parent: any, args: IUSER) => {
       const { email, password } = args;
       const validateUser = validateLoginObj(args);
 

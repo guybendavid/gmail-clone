@@ -7,17 +7,17 @@ import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "
 
 export = {
   Query: {
-    getReceivedEmails: (parent: any, args: { loggedInUserEmail: string; }, { user }: any) => {
+    getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, { user }: any) => {
       const { loggedInUserEmail } = args;
       return getEmails({ user, loggedInUserEmail, participantType: "recipient" });
     },
-    getSentEmails: (parent: any, args: { loggedInUserEmail: string; }, { user }: any) => {
+    getSentEmails: (_parent: any, args: { loggedInUserEmail: string; }, { user }: any) => {
       const { loggedInUserEmail } = args;
       return getEmails({ user, loggedInUserEmail, participantType: "sender" });
     }
   },
   Mutation: {
-    sendEmail: async (parent: any, args: SendEmailPayload, { user, pubsub }: any) => {
+    sendEmail: async (_parent: any, args: SendEmailPayload, { user, pubsub }: any) => {
       const { senderEmail, recipientEmail, subject, content } = args;
 
       if (!user) {
@@ -49,7 +49,7 @@ export = {
         throw new UserInputError(validateEmail.errors[0]);
       }
     },
-    deleteEmails: async (parent: any, args: { ids: string[]; }, { user }: any) => {
+    deleteEmails: async (_parent: any, args: { ids: string[]; }, { user }: any) => {
       const { ids } = args;
       const idIsNotValid = (id: string) => isNaN(Number(id));
 
@@ -70,13 +70,13 @@ export = {
   },
   Subscription: {
     newEmail: {
-      subscribe: withFilter((parent, args, { pubsub, user }) => {
+      subscribe: withFilter((_parent, _args, { pubsub, user }) => {
         if (!user) {
           throw new AuthenticationError("Unauthenticated");
         }
 
         return pubsub.asyncIterator(["NEW_EMAIL"]);
-      }, ({ newEmail }, args, { user }) => newEmail.sender.email === user.email || newEmail.recipient.email === user.email)
+      }, ({ newEmail }, _args, { user }) => newEmail.sender.email === user.email || newEmail.recipient.email === user.email)
     }
   }
 };

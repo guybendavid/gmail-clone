@@ -28,7 +28,7 @@ const Actions = () => {
       try {
         await deleteEmails({ variables: { ids } });
         deleteEmailsFromCache(ids, activeTab, loggedInUser.email, client);
-        setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? 's' : ''} deleted successfully`, severity: "info" });
+        setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
         setSelectedEmails([]);
       } catch (err) {
         handleErrors(err);
