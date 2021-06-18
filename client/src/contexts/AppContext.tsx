@@ -1,4 +1,4 @@
-import { FC, useEffect, createContext, ReactNode } from "react";
+import { useEffect, createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
 import { Email, User } from "interfaces/interfaces";
 import { History, LocationState } from "history";
@@ -23,7 +23,7 @@ interface Props {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const AppContextProvider: FC<Props> = ({ children, history }) => {
+const AppContextProvider = ({ children, history }: Props) => {
   const loggedInUser = useStore((state: Store) => state.loggedInUser);
   const setLoggedInUser = useStore((state: Store) => state.setLoggedInUser);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);

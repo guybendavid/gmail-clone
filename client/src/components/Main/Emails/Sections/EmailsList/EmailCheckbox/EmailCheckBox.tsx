@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Store, useStore } from "store/store";
 import { Email } from "interfaces/interfaces";
 import { Checkbox } from "@material-ui/core";
@@ -7,7 +6,7 @@ interface Props {
   email: Email;
 }
 
-const EmailCheckbox: FC<Props> = ({ email }) => {
+const EmailCheckbox = ({ email }: Props) => {
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const setSelectedEmails = useStore((state: Store) => state.setSelectedEmails);
 
