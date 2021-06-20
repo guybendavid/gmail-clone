@@ -1,6 +1,7 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { Container } from "@material-ui/core";
-import { Switch, useHistory, useLocation, withRouter } from "react-router-dom";
+import { Switch, useHistory, useLocation, withRouter, RouteComponentProps } from "react-router-dom";
+import { History, LocationState } from "history";
 import Login from "components/Forms/Login";
 import Register from "components/Forms/Register";
 import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
@@ -9,7 +10,11 @@ import DefaultRoute from "./Routes/DefaultRoute";
 import Main from "components/Main/Main";
 import IndicationMessage from "components/IndicationMessage/IndicationMessage";
 
-const AppRouter: FC<any> = ({ setHistory }) => {
+interface Props extends RouteComponentProps {
+  setHistory: (history: History<LocationState>) => void;
+}
+
+const AppRouter = ({ setHistory }: Props) => {
   const history = useHistory();
   const location = useLocation();
   const isAuthForm = location.pathname === "/login" || location.pathname === "/register";
