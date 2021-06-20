@@ -4,7 +4,7 @@ import { UserInputError, ApolloError } from "apollo-server";
 import { User } from "../../db/models/modelsConfig";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as IUSER } from "../../db/interfaces/interfaces";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line
 const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
