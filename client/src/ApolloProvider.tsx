@@ -47,24 +47,9 @@ const splitLink = split(
   httpLink
 );
 
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        getReceivedEmails: {
-          merge: (prevResult, incomingResult) => incomingResult
-        },
-        getSentEmails: {
-          merge: (prevResult, incomingResult) => incomingResult
-        }
-      }
-    }
-  }
-});
-
 const client = new ApolloClient({
   link: splitLink,
-  cache
+  cache: new InMemoryCache()
 });
 
 export default (
