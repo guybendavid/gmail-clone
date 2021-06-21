@@ -33,7 +33,6 @@ const AppContextProvider = ({ children, history }: Props) => {
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
   const [getEmails, { data, client: apolloClient }] = useLazyQuery(emailsToFetch, {
-    fetchPolicy: "cache-and-network",
     variables: { loggedInUserEmail: (loggedInUser as User)?.email },
     onError: (error) => handleErrors(error),
     onCompleted: () => clearSnackBarMessage()
