@@ -1,24 +1,30 @@
 import { gql } from "@apollo/client";
 
+const AUTH_FIELDS = gql`
+  fragment AuthFields on User {
+    id
+    image
+    token
+  }
+`;
+
 const LOGIN_USER = gql`
+  ${AUTH_FIELDS}
   mutation LoginUser($email: String! $password: String!) {
     login(email: $email password: $password) {
-      id
+      ...AuthFields
       firstName
       lastName
       email
-      image
-      token
     }
   }
 `;
 
 const REGISTER_USER = gql`
+  ${AUTH_FIELDS}
   mutation RegisterUser($firstName: String! $lastName: String! $email: String! $password: String!) {
     register(firstName: $firstName lastName: $lastName email: $email password: $password) {
-      id
-      image
-      token
+      ...AuthFields
     }
   }
 `;

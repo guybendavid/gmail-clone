@@ -16,7 +16,7 @@ const server = new ApolloServer({
 });
 
 const logger = pino({ level: LOG_LEVEL || "info" });
-const redisClient = asyncRedis.createClient(REDIS_URL || "");
+const redisClient = (asyncRedis as any).createClient(REDIS_URL || "");
 
 sequelize.authenticate()
   .then(() => logger.info("Database connected!"))

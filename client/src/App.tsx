@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { AppContextProvider } from "contexts/AppContext";
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "AppRouter/AppRouter";
 import "styles/Style.scss";
 
 const App = () => {
+  const [history, setHistory] = useState({});
+
   return (
-    <AppContextProvider>
+    <AppContextProvider history={history}>
       <BrowserRouter>
-        <AppRouter />
+        <AppRouter setHistory={setHistory} />
       </BrowserRouter>
     </AppContextProvider>
   );

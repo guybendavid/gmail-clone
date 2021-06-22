@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import Emails from "./Emails/Emails";
 import LeftSideBar from "./LeftSidebar/LeftSidebar";
@@ -9,7 +9,7 @@ import "./Main.scss";
 
 const Main = () => {
   const isComposeOpened = useStore((state: Store) => state.isComposeOpened);
-  const { isSmallScreen } = useContext(AppContext);
+  const { isSmallScreen } = useContext(AppContext) as AppContextType;
 
   return (
     <div className="main">

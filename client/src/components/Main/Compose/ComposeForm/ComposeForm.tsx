@@ -1,5 +1,5 @@
 import { useState, useContext, SyntheticEvent } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { SEND_EMAIL } from "services/graphql";
 import { useMutation } from "@apollo/client";
@@ -8,7 +8,7 @@ import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
 const ComposeForm = () => {
-  const { handleErrors } = useContext(AppContext);
+  const { handleErrors } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);

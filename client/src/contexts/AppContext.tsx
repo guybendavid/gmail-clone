@@ -1,18 +1,29 @@
-import { FC, useEffect, createContext, Context, ReactNode } from "react";
+import { useEffect, createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
-import { User } from "interfaces/interfaces";
+import { Email, User } from "interfaces/interfaces";
 import { History, LocationState } from "history";
-import { ApolloError, useLazyQuery } from "@apollo/client";
+import { ApolloClient, ApolloError, useLazyQuery } from "@apollo/client";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 import { useMediaQuery } from "@material-ui/core";
 
+export type AppContextType = {
+  apolloClient: ApolloClient<any> | undefined;
+  emails: Email[];
+  isSmallScreen: boolean;
+  logout: () => void;
+  handleErrors: (error: ApolloError) => void;
+};
+
+type HistoryType = History<LocationState>;
+
 interface Props {
   children: ReactNode;
+  history: HistoryType | {};
 }
 
-const AppContext: Context<any> = createContext(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const AppContextProvider: FC<Props> = ({ children }) => {
+const AppContextProvider = ({ children, history }: Props) => {
   const loggedInUser = useStore((state: Store) => state.loggedInUser);
   const setLoggedInUser = useStore((state: Store) => state.setLoggedInUser);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
@@ -42,7 +53,12 @@ const AppContextProvider: FC<Props> = ({ children }) => {
     // eslint-disable-next-line
   }, [loggedInUser]);
 
-  const handleErrors = (error: ApolloError, history?: History<LocationState>) => {
+  const logout = () => {
+    localStorage.clear();
+    (history as HistoryType).push("/login");
+  };
+
+  const handleErrors = (error: ApolloError) => {
     const { message: errorMessage } = error;
     const severity = "error";
     let content = null;
@@ -55,8 +71,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
 
     if (errorMessage === "Unauthenticated") {
-      localStorage.clear();
-      history?.push("/login");
+      logout();
     } else if (isUserInputError || isSequelizeValidationError) {
       content = error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2];
     } else {
@@ -69,7 +84,7 @@ const AppContextProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ apolloClient, emails, isSmallScreen, handleErrors }}>
+    <AppContext.Provider value={{ apolloClient, emails, isSmallScreen, logout, handleErrors }}>
       {children}
     </AppContext.Provider>
   );

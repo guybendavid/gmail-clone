@@ -4,12 +4,12 @@ import { UserInputError, ApolloError } from "apollo-server";
 import { User } from "../../db/models/modelsConfig";
 import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
 import { User as IUSER } from "../../db/interfaces/interfaces";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line
 const imageGenerator = require("../../utils/imageGenerator");
 
 export = {
   Mutation: {
-    register: async (parent: any, args: IUSER) => {
+    register: async (_parent: any, args: IUSER) => {
       const { firstName, lastName, email, password } = args;
       const validateUser = validateRegisterObj(args);
 
@@ -21,7 +21,7 @@ export = {
             throw new UserInputError("email already exists");
           }
 
-          const hasedPassword = await bcrypt.hash(password, 6);
+          const hasedPassword = await bcrypt.hash(password as string, 6);
           const image = imageGenerator();
           const user = await User.create({ firstName, lastName, email, password: hasedPassword, image });
           const { password: userPassword, ...safeUserData } = user.toJSON();
@@ -33,7 +33,7 @@ export = {
         throw new UserInputError(validateUser.errors[0]);
       }
     },
-    login: async (parent: any, args: IUSER) => {
+    login: async (_parent: any, args: IUSER) => {
       const { email, password } = args;
       const validateUser = validateLoginObj(args);
 
@@ -45,7 +45,7 @@ export = {
             throw new UserInputError("Email not found");
           }
 
-          const correctPassword = await bcrypt.compare(password, user.password);
+          const correctPassword = await bcrypt.compare(password as string, user.password);
 
           if (!correctPassword) {
             throw new UserInputError("Password is incorrect");

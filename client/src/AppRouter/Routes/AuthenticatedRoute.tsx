@@ -1,4 +1,4 @@
-import { FC, ComponentType } from "react";
+import { FC } from "react";
 import { Route, Redirect } from "react-router";
 import Navbar from "components/Navbar/Navbar";
 
@@ -6,10 +6,10 @@ interface Props {
   exact: boolean;
   path: string;
   isAdminRoute?: boolean;
-  Component: ComponentType<any>;
+  Component: FC;
 }
 
-const AuthenticatedRoute: FC<Props> = ({ path, Component }) => {
+const AuthenticatedRoute = ({ path, Component }: Props) => {
   const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
 
   return (

@@ -1,7 +1,7 @@
 import { useState, useContext, MouseEvent } from "react";
-import { AppContext } from "contexts/AppContext";
+import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
-import { useHistory } from "react-router-dom";
+import { User } from "interfaces/interfaces";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
@@ -12,10 +12,9 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AppIcon from "images/app-icon.png";
 import MenuIcon from '@material-ui/icons/Menu';
 import "./Navbar.scss";
-import { User } from "interfaces/interfaces";
 
 const Navbar = () => {
-  const { isSmallScreen } = useContext(AppContext);
+  const { isSmallScreen, logout } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const setSearchValue = useStore((state: Store) => state.setSearchValue);
@@ -27,7 +26,6 @@ const Navbar = () => {
 
   const AvatarMenu = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const history = useHistory();
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
@@ -35,11 +33,6 @@ const Navbar = () => {
 
     const handleClose = () => {
       setAnchorEl(null);
-    };
-
-    const handleLogout = () => {
-      localStorage.clear();
-      history.push("/");
     };
 
     return (
@@ -54,7 +47,7 @@ const Navbar = () => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
       </>
     );
