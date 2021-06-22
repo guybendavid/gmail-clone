@@ -21,6 +21,7 @@ const LOGIN_USER = gql`
 `;
 
 const REGISTER_USER = gql`
+  ${AUTH_FIELDS}
   mutation RegisterUser($firstName: String! $lastName: String! $email: String! $password: String!) {
     register(firstName: $firstName lastName: $lastName email: $email password: $password) {
       ...AuthFields
