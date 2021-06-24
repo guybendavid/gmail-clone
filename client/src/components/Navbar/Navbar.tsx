@@ -64,7 +64,7 @@ const Navbar = () => {
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
-          <div className={"search-wrapper " + (isSmallScreen || searchBarIsOpened ? "white" : "")}>
+          <div className={"search-wrapper" + (isSmallScreen || searchBarIsOpened ? " white" : "")}>
             <IconButton>
               {isSmallScreen ? <MenuIcon /> : <SearchIcon />}
             </IconButton>

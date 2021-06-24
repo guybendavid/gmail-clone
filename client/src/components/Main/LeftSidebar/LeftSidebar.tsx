@@ -49,7 +49,7 @@ const LeftSidebar = () => {
       <div className="list">
         <div className="list-items-wrapper first-list">
           {[InboxIcon, SendIcon, StarIcon, WatchLaterIcon, LabelImportantIcon, DraftsIcon, MailIcon, DeleteIcon, LabelIcon, ExpandMoreIcon].map((Icon, index) => (
-            <ListItem key={index} button className={`list-item` + (activeTab === index ? " active" : "") + (index === 0 ? " first" : "")}
+            <ListItem key={index} button className={"list-item" + (activeTab === index ? " active" : "") + (index === 0 ? " first" : "")}
               onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />
