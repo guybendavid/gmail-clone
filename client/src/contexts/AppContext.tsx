@@ -63,6 +63,7 @@ const AppContextProvider = ({ children, history }: Props) => {
     const severity = "error";
     let content = null;
 
+    // To do: fix type, use formatError instead all of this mess and check all type of errors behavior
     const isGraphQLErrorsIncludesError = (errorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(errorMessage);
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
