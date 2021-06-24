@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { UserInputError, AuthenticationError, ApolloError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/modelsConfig";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
-import { validateEmailObj } from "../../utils/validations";
+import { getErrors } from "../../utils/validations";
 import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "../../utils/emailsHelper";
 
 export = {
@@ -32,21 +32,21 @@ export = {
         cacheFullName(recipientUser);
       }
 
-      const validateEmail = validateEmailObj(args);
+      const errors = getErrors(args);
 
-      if (validateEmail.isValid) {
-        try {
-          const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
-          const newEmail = { ...email.toJSON() };
-          newEmail.sender = await formatParticipant(newEmail, "sender");
-          newEmail.recipient = await formatParticipant(newEmail, "recipient");
-          pubsub.publish("NEW_EMAIL", { newEmail });
-          return email;
-        } catch (err) {
-          throw new ApolloError(err);
-        }
-      } else {
-        throw new UserInputError(validateEmail.errors[0]);
+      if (errors) {
+        throw new UserInputError(errors);
+      }
+
+      try {
+        const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
+        const newEmail = { ...email.toJSON() };
+        newEmail.sender = await formatParticipant(newEmail, "sender");
+        newEmail.recipient = await formatParticipant(newEmail, "recipient");
+        pubsub.publish("NEW_EMAIL", { newEmail });
+        return email;
+      } catch (err) {
+        throw new ApolloError(err);
       }
     },
     deleteEmails: async (_parent: any, args: { ids: string[]; }, { user }: { user: IUser; }) => {
