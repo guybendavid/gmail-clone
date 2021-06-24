@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import generateToken from "../../utils/generateToken";
 import { UserInputError, ApolloError } from "apollo-server";
 import { User } from "../../db/models/modelsConfig";
-import { validateRegisterObj, validateLoginObj } from "../../utils/validatons";
+import { validateRegisterObj, validateLoginObj } from "../../utils/validations";
 import { User as IUSER } from "../../db/interfaces/interfaces";
 // eslint-disable-next-line
 const imageGenerator = require("../../utils/imageGenerator");

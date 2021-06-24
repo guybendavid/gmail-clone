@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { UserInputError, AuthenticationError, ApolloError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/modelsConfig";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
-import { validateEmailObj } from "../../utils/validatons";
+import { validateEmailObj } from "../../utils/validations";
 import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "../../utils/emailsHelper";
 
 export = {
