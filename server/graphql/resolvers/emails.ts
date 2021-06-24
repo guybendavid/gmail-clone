@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { UserInputError, AuthenticationError, ApolloError, withFilter, PubSub } from "apollo-server";
+import { UserInputError, ApolloError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/modelsConfig";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
 import { getErrors } from "../../utils/validations";
@@ -7,23 +7,18 @@ import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "
 
 export = {
   Query: {
-    getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, { user }: { user: IUser; }) => {
+    getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: IUser; }) => {
       const { loggedInUserEmail } = args;
-      return getEmails({ user, loggedInUserEmail, participantType: "recipient" });
+      return getEmails({ loggedInUserEmail, participantType: "recipient" });
     },
-    getSentEmails: (_parent: any, args: { loggedInUserEmail: string; }, { user }: { user: IUser; }) => {
+    getSentEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: IUser; }) => {
       const { loggedInUserEmail } = args;
-      return getEmails({ user, loggedInUserEmail, participantType: "sender" });
+      return getEmails({ loggedInUserEmail, participantType: "sender" });
     }
   },
   Mutation: {
-    sendEmail: async (_parent: any, args: SendEmailPayload, { user, pubsub }: { user: IUser; pubsub: PubSub; }) => {
+    sendEmail: async (_parent: any, args: SendEmailPayload, { pubsub }: { pubsub: PubSub; }) => {
       const { senderEmail, recipientEmail, subject, content } = args;
-
-      if (!user) {
-        throw new AuthenticationError("Unauthenticated");
-      }
-
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
 
       if (!recipientUser) {
@@ -49,13 +44,9 @@ export = {
         throw new ApolloError(err);
       }
     },
-    deleteEmails: async (_parent: any, args: { ids: string[]; }, { user }: { user: IUser; }) => {
+    deleteEmails: async (_parent: any, args: { ids: string[]; }, _context: { user: IUser; }) => {
       const { ids } = args;
       const idIsNotValid = (id: string) => isNaN(Number(id));
-
-      if (!user) {
-        throw new AuthenticationError("Unauthenticated");
-      }
 
       if (ids.length > 0 && !ids.find(id => idIsNotValid(id))) {
         try {
@@ -70,11 +61,7 @@ export = {
   },
   Subscription: {
     newEmail: {
-      subscribe: withFilter((_parent, _args, { pubsub, user }) => {
-        if (!user) {
-          throw new AuthenticationError("Unauthenticated");
-        }
-
+      subscribe: withFilter((_parent, _args, { pubsub }) => {
         return pubsub.asyncIterator(["NEW_EMAIL"]);
       }, ({ newEmail }, _args, { user }) => newEmail.sender.email === user.email || newEmail.recipient.email === user.email)
     }

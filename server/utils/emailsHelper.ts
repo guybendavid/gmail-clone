@@ -10,16 +10,11 @@ interface Participant extends IUser {
 }
 
 interface GetEmails {
-  user: IUser;
   loggedInUserEmail: string;
   participantType: ParticipantType;
 }
 
-const getEmails = async ({ user, loggedInUserEmail, participantType }: GetEmails) => {
-  if (!user) {
-    throw new AuthenticationError("Unauthenticated");
-  }
-
+const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
   if (!loggedInUserEmail) {
     throw new AuthenticationError("Please send a valid email");
   }
