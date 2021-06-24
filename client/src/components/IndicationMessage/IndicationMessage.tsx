@@ -23,7 +23,6 @@ const IndicationMessage = () => {
     // eslint-disable-next-line
   }, [content]);
 
-  // To do: ??
   return (
     <>
       {content && <Snackbar className={"indication-message " + (severity === "error" ? "error" : "")}
