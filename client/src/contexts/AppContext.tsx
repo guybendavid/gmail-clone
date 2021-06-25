@@ -59,29 +59,28 @@ const AppContextProvider = ({ children, history }: Props) => {
   };
 
   const handleErrors = (error: any) => {
-    const { message: errorMessage } = error;
-    const severity = "error";
+    const { message: gqlErrorMessage } = error;
     let content = null;
 
-    // To do: fix type, use formatError instead all of this mess and check all type of errors behavior
-    const isGraphQLErrorsIncludesError = (errorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(errorMessage);
+    const isGraphQLErrorsIncludesError = (gqlErrorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(gqlErrorMessage);
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
+    const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
-    if (error.networkError?.result?.errors[0]?.message) {
-      content = error.networkError.result.errors[0].message.split("Context creation failed: ")[1];
-
-      if (content === "Unauthenticated") {
+    if (gqlContextErrorMessage) {
+      if (gqlContextErrorMessage === "Unauthenticated") {
         logout();
       }
+
+      content = gqlContextErrorMessage;
     } else if (isUserInputError || isSequelizeValidationError) {
       content = error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2];
     } else {
-      content = errorMessage;
+      content = gqlErrorMessage;
     };
 
     if (content) {
-      setSnackBarMessage({ content, severity });
+      setSnackBarMessage({ content, severity: "error" });
     }
   };
 

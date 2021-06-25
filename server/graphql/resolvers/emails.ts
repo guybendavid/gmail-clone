@@ -2,7 +2,6 @@ import { Op } from "sequelize";
 import { UserInputError, ApolloError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/modelsConfig";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
-import { getErrors } from "../../utils/validations";
 import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "../../utils/emailsHelper";
 
 export = {
@@ -25,12 +24,6 @@ export = {
         throw new UserInputError("Email not found");
       } else if (!await getCachedFullName(recipientUser.email)) {
         cacheFullName(recipientUser);
-      }
-
-      const errors = getErrors(args);
-
-      if (errors) {
-        throw new UserInputError(errors);
       }
 
       try {
