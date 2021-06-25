@@ -58,28 +58,29 @@ const AppContextProvider = ({ children, history }: Props) => {
     (history as HistoryType).push("/login");
   };
 
-  const handleErrors = (error: ApolloError) => {
-    const { message: errorMessage } = error;
-    const severity = "error";
+  const handleErrors = (error: any) => {
+    const { message: gqlErrorMessage } = error;
     let content = null;
 
-    const isGraphQLErrorsIncludesError = (errorMessage: string) => {
-      return error.graphQLErrors && error.graphQLErrors[0]?.message?.includes(errorMessage);
-    };
-
+    const isGraphQLErrorsIncludesError = (gqlErrorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(gqlErrorMessage);
     const isUserInputError = isGraphQLErrorsIncludesError("UserInputError");
     const isSequelizeValidationError = isGraphQLErrorsIncludesError("SequelizeValidationError");
+    const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
-    if (errorMessage === "Unauthenticated") {
-      logout();
+    if (gqlContextErrorMessage) {
+      if (gqlContextErrorMessage === "Unauthenticated") {
+        logout();
+      }
+
+      content = gqlContextErrorMessage;
     } else if (isUserInputError || isSequelizeValidationError) {
       content = error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2];
     } else {
-      content = errorMessage;
+      content = gqlErrorMessage;
     };
 
     if (content) {
-      setSnackBarMessage({ content, severity });
+      setSnackBarMessage({ content, severity: "error" });
     }
   };
 

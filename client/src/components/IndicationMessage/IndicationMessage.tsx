@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Store, useStore } from "store/store";
+import { sanitize } from "dompurify";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import "./IndicationMessage.scss";
@@ -24,9 +25,11 @@ const IndicationMessage = () => {
 
   return (
     <>
-      {content && <Snackbar className={"indication-message " + (severity === "error" ? "error" : "")}
-        anchorOrigin={anchorOrigin} open={open} autoHideDuration={3000} onClose={closeMessage}>
-        <MuiAlert elevation={6} variant="filled" severity={severity} onClose={closeMessage}>{content}</MuiAlert>
+      {content && <Snackbar className={"indication-message" + (severity === "error" ? " error" : "")}
+        anchorOrigin={anchorOrigin} open={open} autoHideDuration={52000} onClose={closeMessage}>
+        <MuiAlert elevation={6} variant="filled" severity={severity} onClose={closeMessage}>
+          <div dangerouslySetInnerHTML={{ __html: sanitize(content) }}></div>
+        </MuiAlert>
       </Snackbar>}
     </>
   );
