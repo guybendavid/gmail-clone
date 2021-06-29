@@ -1,10 +1,10 @@
 import { Op } from "sequelize";
-import { UserInputError, ApolloError, withFilter, PubSub } from "apollo-server";
+import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/modelsConfig";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
 import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "../../utils/emailsHelper";
 
-export = {
+const emailsResolver = {
   Query: {
     getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: IUser; }) => {
       const { loggedInUserEmail } = args;
@@ -26,27 +26,19 @@ export = {
         cacheFullName(recipientUser);
       }
 
-      try {
-        const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
-        const newEmail = { ...email.toJSON() };
-        newEmail.sender = await formatParticipant(newEmail, "sender");
-        newEmail.recipient = await formatParticipant(newEmail, "recipient");
-        pubsub.publish("NEW_EMAIL", { newEmail });
-        return email;
-      } catch (err) {
-        throw new ApolloError(err);
-      }
+      const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
+      const newEmail = { ...email.toJSON() };
+      newEmail.sender = await formatParticipant(newEmail, "sender");
+      newEmail.recipient = await formatParticipant(newEmail, "recipient");
+      pubsub.publish("NEW_EMAIL", { newEmail });
+      return email;
     },
     deleteEmails: async (_parent: any, args: { ids: string[]; }, _context: { user: IUser; }) => {
       const { ids } = args;
       const idIsNotValid = (id: string) => isNaN(Number(id));
 
       if (ids.length > 0 && !ids.find(id => idIsNotValid(id))) {
-        try {
-          await Email.destroy({ where: { id: { [Op.in]: ids } } });
-        } catch (err) {
-          throw new ApolloError(err);
-        }
+        await Email.destroy({ where: { id: { [Op.in]: ids } } });
       } else {
         throw new UserInputError("Please send a valid id's array");
       }
@@ -60,3 +52,5 @@ export = {
     }
   }
 };
+
+export default emailsResolver;

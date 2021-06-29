@@ -6,7 +6,7 @@ interface User {
   password: string;
   image: string;
   token?: string;
-};
+}
 
 interface Email {
   id: string;
@@ -15,11 +15,11 @@ interface Email {
   subject: string;
   content: string;
   createdAt: string;
-};
+}
 
 interface Participant {
   email: string;
   fullName: string;
-};
+}
 
 export type { User, Email, Participant };
