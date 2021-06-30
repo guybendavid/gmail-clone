@@ -1,4 +1,4 @@
-import { redisClient, logger } from "../app";
+import { redisClient } from "../app";
 import { User, Email } from "../db/models/modelsConfig";
 import { User as IUser, Email as IEmail } from "../db/interfaces/interfaces";
 import { AuthenticationError } from "apollo-server";
@@ -49,11 +49,9 @@ const getFullNameByEmail = async (email: string) => {
 
   if (cachedFullName) {
     fullName = cachedFullName;
-    logger.info("cache hit: " + fullName);
   } else {
     const participant = await User.findOne({ where: { email } });
     fullName = await cacheFullName(participant);
-    logger.warn("cache miss: " + fullName);
   }
 
   return fullName;
