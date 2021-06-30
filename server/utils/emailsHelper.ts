@@ -1,7 +1,7 @@
 import { redisClient } from "../app";
 import { User, Email } from "../db/models/modelsConfig";
 import { User as IUser, Email as IEmail } from "../db/interfaces/interfaces";
-import { AuthenticationError, ApolloError } from "apollo-server";
+import { AuthenticationError } from "apollo-server";
 
 type ParticipantType = "sender" | "recipient";
 
@@ -19,27 +19,23 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
     throw new AuthenticationError("Please send a valid email");
   }
 
-  try {
-    const emails = await Email.findAll({
-      where: participantType === "sender" ? { sender: loggedInUserEmail } : { recipient: loggedInUserEmail },
-      order: [["createdAt", "ASC"]]
-    });
+  const emails = await Email.findAll({
+    where: participantType === "sender" ? { sender: loggedInUserEmail } : { recipient: loggedInUserEmail },
+    order: [["createdAt", "ASC"]]
+  });
 
-    for await (const email of emails) {
-      email.sender = formatParticipant(email, "sender");
-      email.recipient = formatParticipant(email, "recipient");
-    }
-
-    return emails;
-  } catch (err) {
-    throw new ApolloError(err);
+  for await (const email of emails) {
+    email.sender = formatParticipant(email, "sender");
+    email.recipient = formatParticipant(email, "recipient");
   }
+
+  return emails;
 };
 
 const cacheFullName = async (participant: Participant) => {
   const { email, firstName, lastName } = participant;
   const fullName = `${firstName} ${lastName}`;
-  await redisClient.set(email, fullName);
+  await redisClient.setex(email, 1800, fullName);
   return fullName;
 };
 
