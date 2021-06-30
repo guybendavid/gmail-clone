@@ -32,4 +32,4 @@ const connectToDB = async () => {
 
 connectToDB();
 
-export { redisClient };
+export { redisClient, logger };
