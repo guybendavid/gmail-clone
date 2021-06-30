@@ -35,7 +35,7 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
 const cacheFullName = async (participant: Participant) => {
   const { email, firstName, lastName } = participant;
   const fullName = `${firstName} ${lastName}`;
-  await redisClient.set(email, fullName);
+  await redisClient.setex(email, 1800, fullName);
   return fullName;
 };
 
