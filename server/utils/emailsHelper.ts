@@ -49,11 +49,11 @@ const getFullNameByEmail = async (email: string) => {
 
   if (cachedFullName) {
     fullName = cachedFullName;
-    logger.info("cache hit: ", fullName);
+    logger.info("cache hit: " + fullName);
   } else {
     const participant = await User.findOne({ where: { email } });
     fullName = await cacheFullName(participant);
-    logger.warn("cache miss: ", fullName);
+    logger.warn("cache miss: " + fullName);
   }
 
   return fullName;
