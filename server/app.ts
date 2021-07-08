@@ -46,7 +46,7 @@ const connect = async (server: ApolloServerDev | Server, isProd?: boolean) => {
 
     if (isProd) {
       await server.listen(port);
-      const baseUrl = "test-gmail-clone.herokuapp.com";
+      const baseUrl = "clone-of-gmail.herokuapp.com";
       logger.info(`Server ready at https://${baseUrl}`);
       logger.info(`Subscriptions ready at wss://${baseUrl}`);
     } else {
