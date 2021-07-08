@@ -19,7 +19,6 @@ const port = PORT || 4000;
 const startProductionServer = () => {
   const isProd = true;
   const app = express();
-  const server = new ApolloServerProd(serverConfig);
 
   app.use(express.static(path.join(__dirname, "client")));
 
@@ -27,8 +26,8 @@ const startProductionServer = () => {
     res.sendFile(path.resolve(__dirname, "client", "index.html"));
   });
 
+  const server = new ApolloServerProd(serverConfig);
   server.applyMiddleware({ app });
-
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);
   connect(httpServer, isProd);
