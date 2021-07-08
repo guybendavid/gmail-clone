@@ -22,8 +22,6 @@ const ComposeForm = () => {
     content: ""
   });
 
-  const { recipientEmail, subject, content } = mailValues;
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -39,11 +37,11 @@ const ComposeForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="fields-wrapper">
-        <TextField required fullWidth label="To" value={recipientEmail} onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value })} />
-        <TextField required fullWidth label="Subject" value={subject} onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />
+        <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value })} />
+        <TextField required fullWidth label="Subject" onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />
       </div>
       <div className="content-wrapper">
-        <textarea required value={content} onChange={(e) => setMailValues({ ...mailValues, content: e.target.value })} />
+        <textarea required onChange={(e) => setMailValues({ ...mailValues, content: e.target.value })} />
       </div>
       <Button type="submit" className="desktop-send-button">Send</Button>
     </form>

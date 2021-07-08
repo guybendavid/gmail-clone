@@ -13,7 +13,7 @@ const ComposeModal = () => {
   const [isMinimized, setIsMinimized] = useState(false);
 
   const headerIconsGenerator = () => {
-    return [MinimizeIcon, HeightIcon, CloseIcon].map((Icon, index) => {
+    return [MinimizeIcon, HeightIcon, CloseIcon].map((_Icon, index) => {
       if (index === 0 && !isMinimized) {
         return <MinimizeIcon key={index} onClick={() => setIsMinimized(true)} />;
       } else if (index === 0 && isMinimized) {
