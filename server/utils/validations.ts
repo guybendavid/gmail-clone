@@ -21,9 +21,11 @@ const getErrors = (payload: User | SendEmailPayload) => {
   const getFormattedMessage = (message: string, fields: string[]) =>
     `${message += isOnlyOneField(fields) ? ":" : "s:"} ${getInvalidFields(fields)}`;
 
-  if (emptyFields.length > 0) {
-    errors = getFormattedMessage("please send a non empty value for the field", emptyFields);
-  }
+  // To do: think what to do here
+
+  // if (emptyFields.length > 0) {
+  //   errors = getFormattedMessage("please send a non empty value for the field", emptyFields);
+  // }
 
   if (sideWhiteSpacesFields.length > 0) {
     const message = getFormattedMessage("please remove side white-spaces from the field", sideWhiteSpacesFields);

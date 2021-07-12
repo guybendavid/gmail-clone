@@ -18,6 +18,8 @@ interface SendEmailPayload {
   recipientEmail: string;
   subject: string;
   content: string;
+  isSenderNameInClient?: boolean;
+  isRecipientNameInClient?: boolean;
 }
 
 type ParticipantType = "sender" | "recipient";

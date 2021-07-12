@@ -1,13 +1,8 @@
-import { redisClient } from "../app";
-import { User as IUser, Email as IEmail, ParticipantType } from "../db/interfaces/interfaces";
+import { Email as IEmail, ParticipantType } from "../db/interfaces/interfaces";
 import { sequelize, User } from "../db/models/modelsConfig";
 import { QueryTypes } from "sequelize";
 import { AuthenticationError } from "apollo-server";
 import { getEmailsWithParticiapntsName } from "./rawQueries";
-
-interface Participant extends IUser {
-  email: string;
-}
 
 interface GetEmails {
   loggedInUserEmail: string;
@@ -34,33 +29,20 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
   return emails;
 };
 
-const cacheFullName = async (participant: Participant) => {
-  const { email, firstName, lastName } = participant;
-  const fullName = `${firstName} ${lastName}`;
-  await redisClient.setex(email, 1800, fullName);
-  return fullName;
+// To do: remove ts-ignore
+// @ts-ignore
+const formatParticipant = async (isParticipantFullName?: boolean, participantEmail: string, newEmail: IEmail,
+  participantType: ParticipantType) => {
+
+  const getFullNameByEmail = async () => {
+    // To do: here is the area to check
+    const { firstName, lastName } = await User.findOne({ where: { email: participantEmail } });
+    return `${firstName} ${lastName}`;
+  };
+
+  return isParticipantFullName ?
+    { email: participantEmail } :
+    { email: newEmail[participantType], fullName: await getFullNameByEmail() };
 };
 
-const getCachedFullName = async (email: string) => {
-  return await redisClient.get(email);
-};
-
-const getFullNameByEmail = async (email: string) => {
-  let fullName;
-  const cachedFullName = await getCachedFullName(email);
-
-  if (cachedFullName) {
-    fullName = cachedFullName;
-  } else {
-    const participant = await User.findOne({ where: { email } });
-    fullName = await cacheFullName(participant);
-  }
-
-  return fullName;
-};
-
-const formatParticipant = async (email: IEmail, participantType: ParticipantType) => {
-  return { email: email[participantType], fullName: await getFullNameByEmail(email[participantType]) };
-};
-
-export { cacheFullName, getCachedFullName, getFullNameByEmail, formatParticipant, getEmails };
+export { getEmails, formatParticipant };

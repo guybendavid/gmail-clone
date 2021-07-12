@@ -30,6 +30,7 @@ const EmailsList = () => {
 
   useEffect(() => {
     if (newEmail) {
+      console.log(newEmail);
       addNewEmailToCache(newEmail, loggedInUser.email, (apolloClient as ApolloClient<any>));
     }
     // eslint-disable-next-line

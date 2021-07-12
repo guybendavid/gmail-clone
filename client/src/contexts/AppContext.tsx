@@ -49,6 +49,7 @@ const AppContextProvider = ({ children, history }: Props) => {
   useEffect(() => {
     if ((loggedInUser as User)?.id) {
       getEmails();
+      // console.log("im here");
     }
     // eslint-disable-next-line
   }, [loggedInUser]);

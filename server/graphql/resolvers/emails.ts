@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/modelsConfig";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
-import { getEmails, cacheFullName, getCachedFullName, formatParticipant } from "../../utils/emailsHelper";
+import { getEmails, formatParticipant } from "../../utils/emailsHelper";
 
 const emailsResolver = {
   Query: {
@@ -17,21 +17,20 @@ const emailsResolver = {
   },
   Mutation: {
     sendEmail: async (_parent: any, args: SendEmailPayload, { pubsub }: { pubsub: PubSub; }) => {
-      const { senderEmail, recipientEmail, subject, content } = args;
+      const { senderEmail, recipientEmail, subject, content, isSenderNameInClient, isRecipientNameInClient } = args;
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
-
-      // To do: consider moving all of this cache manipulations to client side
 
       if (!recipientUser) {
         throw new UserInputError("Email not found");
-      } else if (!await getCachedFullName(recipientUser.email)) {
-        cacheFullName(recipientUser);
       }
 
       const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
       const newEmail = { ...email.toJSON() };
-      newEmail.sender = await formatParticipant(newEmail, "sender");
-      newEmail.recipient = await formatParticipant(newEmail, "recipient");
+
+      // To do: remove unnecessary awaits
+      // To do: try to not send a fullName with null
+      newEmail.sender = await formatParticipant(isSenderNameInClient, senderEmail, newEmail, "sender",);
+      newEmail.recipient = await formatParticipant(isRecipientNameInClient, recipientEmail, newEmail, "recipient");
       pubsub.publish("NEW_EMAIL", { newEmail });
       return email;
     },

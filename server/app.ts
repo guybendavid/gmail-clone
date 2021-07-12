@@ -8,11 +8,9 @@ import path from "path";
 import resolvers from "./graphql/resolvers/resolversConfig";
 import typeDefs from "./graphql/typeDefs";
 import contextMiddleware from "./utils/contextMiddleware";
-import asyncRedis from "async-redis";
 
-const { NODE_ENV, LOG_LEVEL, REDIS_URL, PORT } = process.env;
+const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
-const redisClient = (asyncRedis as any).createClient(REDIS_URL || "");
 const serverConfig = { typeDefs, resolvers, context: contextMiddleware, subscriptions: { path: "/" } };
 const port = PORT || 4000;
 
@@ -59,5 +57,3 @@ const connect = async (server: ApolloServerDev | Server, isProd?: boolean) => {
 };
 
 NODE_ENV === "production" ? startProductionServer() : startDevelopmentServer();
-
-export { redisClient };
