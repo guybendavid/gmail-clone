@@ -20,6 +20,8 @@ const emailsResolver = {
       const { senderEmail, recipientEmail, subject, content } = args;
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
 
+      // To do: consider moving all of this cache manipulations to client side
+
       if (!recipientUser) {
         throw new UserInputError("Email not found");
       } else if (!await getCachedFullName(recipientUser.email)) {
