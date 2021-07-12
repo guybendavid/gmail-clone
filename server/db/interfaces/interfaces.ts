@@ -20,4 +20,6 @@ interface SendEmailPayload {
   content: string;
 }
 
-export { User, Email, SendEmailPayload };
+type ParticipantType = "sender" | "recipient";
+
+export { User, Email, SendEmailPayload, ParticipantType };

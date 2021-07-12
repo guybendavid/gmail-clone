@@ -1,9 +1,9 @@
 import { redisClient } from "../app";
-import { User, Email } from "../db/models/modelsConfig";
-import { User as IUser, Email as IEmail } from "../db/interfaces/interfaces";
+import { User as IUser, Email as IEmail, ParticipantType } from "../db/interfaces/interfaces";
+import { sequelize, User } from "../db/models/modelsConfig";
+import { QueryTypes } from "sequelize";
 import { AuthenticationError } from "apollo-server";
-
-type ParticipantType = "sender" | "recipient";
+import { getEmailsWithParticiapntsName } from "./rawQueries";
 
 interface Participant extends IUser {
   email: string;
@@ -19,14 +19,16 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
     throw new AuthenticationError("Please send a valid email");
   }
 
-  const emails = await Email.findAll({
-    where: participantType === "sender" ? { sender: loggedInUserEmail } : { recipient: loggedInUserEmail },
-    order: [["createdAt", "ASC"]]
-  });
+  const emails = await sequelize.query(getEmailsWithParticiapntsName(participantType),
+    {
+      type: QueryTypes.SELECT,
+      replacements: [loggedInUserEmail, loggedInUserEmail]
+    }
+  );
 
   for await (const email of emails) {
-    email.sender = formatParticipant(email, "sender");
-    email.recipient = formatParticipant(email, "recipient");
+    email.sender = { email: email.sender_email, fullName: email.sender_full_name };
+    email.recipient = { email: email.recipient_email, fullName: email.recipient_full_name };
   }
 
   return emails;
