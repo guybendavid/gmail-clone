@@ -61,6 +61,7 @@ const AppContextProvider = ({ children, history }: Props) => {
         const { sender, recipient } = email;
 
         // To do: try to store an array in localstorage
+        // To do: add an expiration
         if (isReceivedEmails) {
           localStorage[(sender as Participant).email] = sender?.fullName;
         } else {
