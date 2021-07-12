@@ -1,6 +1,6 @@
 import { useEffect, createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
-import { Email, User } from "interfaces/interfaces";
+import { Email, Participant, User } from "interfaces/interfaces";
 import { History, LocationState } from "history";
 import { ApolloClient, ApolloError, useLazyQuery } from "@apollo/client";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
@@ -49,10 +49,27 @@ const AppContextProvider = ({ children, history }: Props) => {
   useEffect(() => {
     if ((loggedInUser as User)?.id) {
       getEmails();
-      // console.log("im here");
     }
     // eslint-disable-next-line
   }, [loggedInUser]);
+
+  useEffect(() => {
+    if (emails) {
+      const isReceivedEmails = emailsToFetch === GET_RECEIVED_EMAILS;
+
+      emails.forEach((email: Email) => {
+        const { sender, recipient } = email;
+
+        // To do: try to store an array in localstorage
+        if (isReceivedEmails) {
+          localStorage[(sender as Participant).email] = sender?.fullName;
+        } else {
+          localStorage[(recipient as Participant).email] = recipient?.fullName;
+        }
+      });
+    }
+    // eslint-disable-next-line
+  }, [emails]);
 
   const logout = () => {
     localStorage.clear();
