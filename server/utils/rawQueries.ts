@@ -2,7 +2,6 @@ import { ParticipantType } from "../db/interfaces/interfaces";
 
 // To do: rename participant type to tabs type or something differnet
 // To do: be more specific with email and email address
-// To do: change the as in whatsapp clone
 
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
