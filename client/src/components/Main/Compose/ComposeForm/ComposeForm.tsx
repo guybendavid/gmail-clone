@@ -7,8 +7,7 @@ import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
-// To do: insert emails to local storage
-
+// To do: save in state instead of local storage
 // To do: insert email as the destructed value here
 // const { email: loggedInUserEmail } = localStorage;
 
