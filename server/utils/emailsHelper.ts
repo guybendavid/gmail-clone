@@ -29,10 +29,8 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
   return emails;
 };
 
-// To do: remove ts-ignore
-// @ts-ignore
-const formatParticipant = async (isParticipantFullName?: boolean, participantEmail: string, newEmail: IEmail,
-  participantType: ParticipantType) => {
+const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: IEmail,
+  isParticipantFullName?: boolean) => {
 
   const getFullNameByEmail = async () => {
     // To do: here is the area to check
