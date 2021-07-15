@@ -33,7 +33,6 @@ const formatParticipant = async (participantType: ParticipantType, participantEm
   isParticipantFullName?: boolean) => {
 
   const getFullNameByEmail = async () => {
-    // To do: here is the area to check
     const { firstName, lastName } = await User.findOne({ where: { email: participantEmail } });
     return `${firstName} ${lastName}`;
   };

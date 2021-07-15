@@ -8,8 +8,6 @@ import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
 // To do: save in state instead of local storage
-// To do: insert email as the destructed value here
-// const { email: loggedInUserEmail } = localStorage;
 
 const ComposeForm = () => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
