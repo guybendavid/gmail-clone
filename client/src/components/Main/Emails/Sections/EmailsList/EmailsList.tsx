@@ -11,7 +11,7 @@ import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
-  const { apolloClient, emails } = useContext(AppContext) as AppContextType;
+  const { apolloClient, emails, getFullNameByStoredEmail } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
@@ -27,13 +27,12 @@ const EmailsList = () => {
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
 
     return activeTab === 0 ?
-      getTextToDisplay((sender as Participant).fullName || localStorage[(sender as Participant).email]) :
-      getTextToDisplay((recipient as Participant).fullName || localStorage[(recipient as Participant).email]);
+      getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email)) :
+      getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email));
   };
 
   useEffect(() => {
     if (newEmail) {
-      console.log(newEmail);
       addNewEmailToCache(newEmail, loggedInUser.email, (apolloClient as ApolloClient<any>));
     }
     // eslint-disable-next-line

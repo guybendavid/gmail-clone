@@ -7,13 +7,12 @@ import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
-// To do: save in state instead of local storage
-
 const ComposeForm = () => {
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const { handleErrors, isEmailInStore } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
+  const isParticipantEmailInStore = (email: string) => Boolean(isEmailInStore(email));
   const [sendEmail] = useMutation(SEND_EMAIL);
 
   const [mailValues, setMailValues] = useState({
@@ -21,7 +20,7 @@ const ComposeForm = () => {
     recipientEmail: "",
     subject: "",
     content: "",
-    isSenderNameInClient: localStorage[loggedInUser.email] === true,
+    isSenderNameInClient: isParticipantEmailInStore(loggedInUser.email),
     isRecipientNameInClient: false
   });
 
@@ -40,7 +39,7 @@ const ComposeForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="fields-wrapper">
-        <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value, isRecipientNameInClient: Boolean(localStorage[e.target.value]) })} />
+        <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value, isRecipientNameInClient: isParticipantEmailInStore(e.target.value) })} />
         <TextField required fullWidth label="Subject" onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />
       </div>
       <div className="content-wrapper">
