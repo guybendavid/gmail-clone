@@ -25,7 +25,10 @@ const EmailsList = () => {
   const displayParticipantName = ({ sender, recipient }: Email) => {
     const { firstName, lastName } = loggedInUser;
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
-    return activeTab === 0 ? getTextToDisplay((sender as Participant).fullName) : getTextToDisplay((recipient as Participant).fullName);
+
+    return activeTab === 0 ?
+      getTextToDisplay((sender as Participant).fullName || localStorage[(sender as Participant).email]) :
+      getTextToDisplay((recipient as Participant).fullName || localStorage[(recipient as Participant).email]);
   };
 
   useEffect(() => {

@@ -60,12 +60,13 @@ const AppContextProvider = ({ children, history }: Props) => {
       emails.forEach((email: Email) => {
         const { sender, recipient } = email;
 
-        // To do: try to store as array
-        if (isReceivedEmails) {
-          localStorage[(sender as Participant).email] = sender?.fullName;
-        } else {
-          localStorage[(recipient as Participant).email] = recipient?.fullName;
-        }
+        const updateLS = (participant: Participant) => {
+          if (participant.fullName) {
+            localStorage[(participant as Participant).email] = participant.fullName;
+          }
+        };
+
+        isReceivedEmails ? updateLS(sender as Participant) : updateLS(recipient as Participant);
       });
     }
     // eslint-disable-next-line

@@ -21,7 +21,7 @@ const getErrors = (payload: User | SendEmailPayload) => {
   const getFormattedMessage = (message: string, fields: string[]) =>
     `${message += isOnlyOneField(fields) ? ":" : "s:"} ${getInvalidFields(fields)}`;
 
-  // To do: think what to do here
+  // To do: think how to handle it
 
   // if (emptyFields.length > 0) {
   //   errors = getFormattedMessage("please send a non empty value for the field", emptyFields);

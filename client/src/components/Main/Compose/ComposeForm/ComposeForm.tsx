@@ -27,8 +27,6 @@ const ComposeForm = () => {
     isRecipientNameInClient: false
   });
 
-  // To do: fix sending to an old email issue
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
