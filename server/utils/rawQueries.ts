@@ -1,6 +1,5 @@
 import { ParticipantType } from "../db/interfaces/interfaces";
 
-// To do: rename participant type to tabs type or something different
 // To do: be more specific with email and email address
 
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
