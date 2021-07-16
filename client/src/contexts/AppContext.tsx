@@ -63,7 +63,6 @@ const AppContextProvider = ({ children, history }: Props) => {
     if (emails) {
       const isReceivedEmails = emailsToFetch === GET_RECEIVED_EMAILS;
 
-      // To do: check that there are no duplicates
       const setEmailToFullNameMapping = (participant: Participant) => {
         const { email, fullName } = participant;
 

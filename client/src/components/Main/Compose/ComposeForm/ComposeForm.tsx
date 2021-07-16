@@ -7,6 +7,8 @@ import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
+// To do: keep state after minimizing
+
 const ComposeForm = () => {
   const { handleErrors, isParticipantEmailInStore } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
