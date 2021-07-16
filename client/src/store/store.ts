@@ -6,6 +6,11 @@ type SnackBarMessage = {
   severity: "error" | "info" | "success" | "warning";
 };
 
+type EmailFullNameMap = {
+  email: string;
+  fullName: string;
+};
+
 interface Store {
   loggedInUser: User | {};
   setLoggedInUser: (user: User | {}) => void;
@@ -20,6 +25,8 @@ interface Store {
   setIsComposeOpened: (isComposeOpened: boolean) => void;
   activeTab: number;
   setActiveTab: (activeTab: number) => void;
+  emailsToFullNames: EmailFullNameMap[];
+  setEmailToFullName: (emailToFullName: EmailFullNameMap) => void;
 }
 
 const initalSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
@@ -38,7 +45,9 @@ const store = (set: any) => ({
   setIsComposeOpened: (isComposeOpened: boolean) => set(() => ({ isComposeOpened })),
   activeTab: 0,
   setActiveTab: (activeTab: number) =>
-    set((state: Store) => activeTab !== state.activeTab && ({ activeTab, selectedEmails: [], searchValue: "" }))
+    set((state: Store) => activeTab !== state.activeTab && ({ activeTab, selectedEmails: [], searchValue: "" })),
+  emailsToFullNames: [],
+  setEmailToFullName: (emailToFullName: EmailFullNameMap) => set((state: Store) => state.emailsToFullNames.push(emailToFullName))
 });
 
 export const useStore = create(store);

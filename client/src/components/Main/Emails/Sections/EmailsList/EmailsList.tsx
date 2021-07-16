@@ -16,7 +16,8 @@ const EmailsList = () => {
   const searchValue = useStore((state: Store) => state.searchValue);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);
-
+  const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
+  
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
@@ -25,7 +26,13 @@ const EmailsList = () => {
   const displayParticipantName = ({ sender, recipient }: Email) => {
     const { firstName, lastName } = loggedInUser;
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
-    return activeTab === 0 ? getTextToDisplay((sender as Participant).fullName) : getTextToDisplay((recipient as Participant).fullName);
+
+    const getFullNameByStoredEmail = (email: string) =>
+      emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
+
+    return activeTab === 0 ?
+      getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email)) :
+      getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email));
   };
 
   useEffect(() => {

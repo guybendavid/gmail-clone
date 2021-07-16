@@ -18,6 +18,10 @@ interface SendEmailPayload {
   recipientEmail: string;
   subject: string;
   content: string;
+  isSenderNameInClient?: boolean;
+  isRecipientNameInClient?: boolean;
 }
 
-export { User, Email, SendEmailPayload };
+type ParticipantType = "sender" | "recipient";
+
+export { User, Email, SendEmailPayload, ParticipantType };

@@ -15,7 +15,6 @@
 - TypeScript
 - Apollo GraphQL Server
 - PostgreSQL
-- Redis
 
 ## Live Demo
 

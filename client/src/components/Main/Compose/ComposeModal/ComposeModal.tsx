@@ -32,7 +32,7 @@ const ComposeModal = () => {
         <Typography component="span">New Message</Typography>
         <div className="icons-wrapper">{headerIconsGenerator()}</div>
       </div>
-      {!isMinimized && <ComposeForm />}
+      <ComposeForm isMinimized={isMinimized} />
     </div>
   );
 };

@@ -12,7 +12,7 @@ const typeDefs = gql`
   }
   type Participant {
     email: String!
-    fullName: String!
+    fullName: String
   }
   type Email {
     id: ID!
@@ -29,7 +29,8 @@ const typeDefs = gql`
   type Mutation {
     login(email: String! password: String!): User!
     register(firstName: String! lastName: String! email: String! password: String!): User!
-    sendEmail(senderEmail: String! recipientEmail: String! subject: String! content: String!): Email!
+    sendEmail(senderEmail: String! recipientEmail: String! subject: String! content: String!
+    isSenderNameInClient: Boolean! isRecipientNameInClient: Boolean!): Email!
     deleteEmails(ids: [ID]!): Boolean
   }
   type Subscription {
