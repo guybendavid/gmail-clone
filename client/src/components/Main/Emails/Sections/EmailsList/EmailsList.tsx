@@ -1,4 +1,4 @@
-import { useContext, Fragment, useEffect } from "react";
+import { useContext, useEffect, Fragment } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { ApolloClient, useSubscription } from "@apollo/client";
@@ -17,12 +17,13 @@ const EmailsList = () => {
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);
   const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
-  
+
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
   const isEmailSelected = (email: Email) => selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id);
 
+  // To do: maybe useCallback here
   const displayParticipantName = ({ sender, recipient }: Email) => {
     const { firstName, lastName } = loggedInUser;
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;

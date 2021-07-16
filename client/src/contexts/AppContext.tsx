@@ -89,6 +89,7 @@ const AppContextProvider = ({ children, history }: Props) => {
     (history as HistoryType).push("/login");
   };
 
+  // To do: maybe useCallback
   const handleErrors = (error: any) => {
     const { message: gqlErrorMessage } = error;
     let content = null;
