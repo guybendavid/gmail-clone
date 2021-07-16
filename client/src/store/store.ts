@@ -31,7 +31,7 @@ interface Store {
 
 const initalSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
 
-const store = (set: any, get: any) => ({
+const store = (set: any) => ({
   loggedInUser: {},
   setLoggedInUser: (user: User | {}) => set(() => ({ loggedInUser: user })),
   snackBarMessage: initalSnackBarMessage,
