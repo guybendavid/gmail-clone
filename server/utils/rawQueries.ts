@@ -1,7 +1,5 @@
 import { ParticipantType } from "../db/interfaces/interfaces";
 
-// To do: be more specific with email and email address
-
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
   select emails.id, emails.subject,

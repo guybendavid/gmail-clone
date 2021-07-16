@@ -41,11 +41,22 @@ const splitLink = split(
   httpLink
 );
 
-// To do: fix apollo cache warning after delete
-
 const client = new ApolloClient({
   link: splitLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          getReceivedEmails: {
+            merge: (_prevResult, incomingResult) => incomingResult
+          },
+          getSentEmails: {
+            merge: (_prevResult, incomingResult) => incomingResult
+          }
+        }
+      }
+    }
+  })
 });
 
 export default (
