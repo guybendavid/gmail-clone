@@ -41,7 +41,7 @@ const splitLink = split(
   httpLink
 );
 
-// To do: fix delete
+// To do: fix apollo cache warning after delete
 
 const client = new ApolloClient({
   link: splitLink,

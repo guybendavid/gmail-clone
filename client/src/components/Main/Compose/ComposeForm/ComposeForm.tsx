@@ -7,9 +7,11 @@ import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
-// To do: keep state after minimizing
+interface Props {
+  isMinimized?: boolean;
+}
 
-const ComposeForm = () => {
+const ComposeForm = ({ isMinimized }: Props) => {
   const { handleErrors, isParticipantEmailInStore } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
@@ -38,7 +40,7 @@ const ComposeForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={isMinimized ? "is-minimized" : ""}>
       <div className="fields-wrapper">
         <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value, isRecipientNameInClient: isParticipantEmailInStore(e.target.value) })} />
         <TextField required fullWidth label="Subject" onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />

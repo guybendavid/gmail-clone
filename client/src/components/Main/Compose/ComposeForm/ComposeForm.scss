@@ -3,6 +3,10 @@
 .compose-modal,
 .compose-dialog {
   form {
+    &.is-minimized {
+      display: none;
+    }
+
     padding: 0 10px;
     display: flex;
     flex-direction: column;
