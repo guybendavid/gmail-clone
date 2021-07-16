@@ -8,11 +8,10 @@ import { User } from "interfaces/interfaces";
 import "./ComposeForm.scss";
 
 const ComposeForm = () => {
-  const { handleErrors, isEmailInStore } = useContext(AppContext) as AppContextType;
+  const { handleErrors, isParticipantEmailInStore } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
-  const isParticipantEmailInStore = (email: string) => Boolean(isEmailInStore(email));
   const [sendEmail] = useMutation(SEND_EMAIL);
 
   const [mailValues, setMailValues] = useState({

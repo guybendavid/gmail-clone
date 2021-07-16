@@ -11,12 +11,13 @@ import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
-  const { apolloClient, emails, getFullNameByStoredEmail } = useContext(AppContext) as AppContextType;
+  const { apolloClient, emails } = useContext(AppContext) as AppContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);
-
+  const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
+  
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
@@ -25,6 +26,9 @@ const EmailsList = () => {
   const displayParticipantName = ({ sender, recipient }: Email) => {
     const { firstName, lastName } = loggedInUser;
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
+
+    const getFullNameByStoredEmail = (email: string) =>
+      emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
 
     return activeTab === 0 ?
       getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email)) :

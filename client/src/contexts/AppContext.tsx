@@ -12,8 +12,7 @@ export type AppContextType = {
   isSmallScreen: boolean;
   logout: () => void;
   handleErrors: (error: ApolloError) => void;
-  isEmailInStore: (email: string) => string;
-  getFullNameByStoredEmail: (email: string) => string;
+  isParticipantEmailInStore: (email: string) => boolean;
 };
 
 type HistoryType = History<LocationState>;
@@ -36,15 +35,8 @@ const AppContextProvider = ({ children, history }: Props) => {
   const isSmallScreen = useMediaQuery("(max-width:765px)");
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
-  // To do: try to do it from inside store
-  // To do: set in store with expiration
-  // To do: maybe there is no need for ?.email here
-  const isEmailInStore = (email: string) =>
-    emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.email || "";
-
-  // To do: maybe it's not needed to be global
-  const getFullNameByStoredEmail = (email: string) =>
-    emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
+  const isParticipantEmailInStore = (email: string) =>
+    Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
 
   const [getEmails, { data, client: apolloClient }] = useLazyQuery(emailsToFetch, {
     variables: { loggedInUserEmail: (loggedInUser as User)?.email },
@@ -72,17 +64,20 @@ const AppContextProvider = ({ children, history }: Props) => {
       const isReceivedEmails = emailsToFetch === GET_RECEIVED_EMAILS;
 
       // To do: check that there are no duplicates
-      const updateLS = (participant: Participant) => {
+      const setEmailToFullNameMapping = (participant: Participant) => {
         const { email, fullName } = participant;
 
-        if (fullName) {
+        if (fullName && !isParticipantEmailInStore(email)) {
           setEmailToFullName({ email, fullName });
         }
       };
 
       emails.forEach((email: Email) => {
         const { sender, recipient } = email;
-        isReceivedEmails ? updateLS(sender as Participant) : updateLS(recipient as Participant);
+
+        isReceivedEmails ?
+          setEmailToFullNameMapping(sender as Participant) :
+          setEmailToFullNameMapping(recipient as Participant);
       });
     }
     // eslint-disable-next-line
@@ -120,7 +115,7 @@ const AppContextProvider = ({ children, history }: Props) => {
   };
 
   return (
-    <AppContext.Provider value={{ apolloClient, emails, isSmallScreen, logout, handleErrors, isEmailInStore, getFullNameByStoredEmail }}>
+    <AppContext.Provider value={{ apolloClient, emails, isSmallScreen, logout, handleErrors, isParticipantEmailInStore }}>
       {children}
     </AppContext.Provider>
   );

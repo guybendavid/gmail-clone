@@ -41,6 +41,8 @@ const splitLink = split(
   httpLink
 );
 
+// To do: fix delete
+
 const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache()
