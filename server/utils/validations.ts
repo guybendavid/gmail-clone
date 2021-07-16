@@ -9,7 +9,8 @@ const getErrors = (payload: User | SendEmailPayload) => {
   const validString = /^[^\s]+(\s+[^\s]+)*$/;
 
   Object.entries(payload).forEach(([key, value]) => {
-    if (!value || !validString.test(value)) {
+    // It is important to check here that the value is not explicitly set to false
+    if (!value && value !== false || !validString.test(value)) {
       !value ? emptyFields.push(key) : sideWhiteSpacesFields.push(key);
     }
   });
@@ -21,11 +22,9 @@ const getErrors = (payload: User | SendEmailPayload) => {
   const getFormattedMessage = (message: string, fields: string[]) =>
     `${message += isOnlyOneField(fields) ? ":" : "s:"} ${getInvalidFields(fields)}`;
 
-  // To do: think how to handle it
-
-  // if (emptyFields.length > 0) {
-  //   errors = getFormattedMessage("please send a non empty value for the field", emptyFields);
-  // }
+  if (emptyFields.length > 0) {
+    errors = getFormattedMessage("please send a non empty value for the field", emptyFields);
+  }
 
   if (sideWhiteSpacesFields.length > 0) {
     const message = getFormattedMessage("please remove side white-spaces from the field", sideWhiteSpacesFields);

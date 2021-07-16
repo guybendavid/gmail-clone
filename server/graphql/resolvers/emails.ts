@@ -26,8 +26,6 @@ const emailsResolver = {
 
       const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
       const newEmail = { ...email.toJSON() };
-
-      // To do: try not to send a fullName with null
       newEmail.sender = await formatParticipant("sender", senderEmail, newEmail, isSenderNameInClient);
       newEmail.recipient = await formatParticipant("recipient", recipientEmail, newEmail, isRecipientNameInClient);
       pubsub.publish("NEW_EMAIL", { newEmail });
