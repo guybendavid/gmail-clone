@@ -12,6 +12,7 @@ const ComposeModal = () => {
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const [isMinimized, setIsMinimized] = useState(false);
 
+  // To do: check that the useCallback is necessary here, check for different places to use it
   const headerIconsGenerator = useCallback(() => {
     return [MinimizeIcon, HeightIcon, CloseIcon].map((_Icon, index) => {
       if (index === 0 && !isMinimized) {

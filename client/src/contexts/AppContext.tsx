@@ -6,6 +6,8 @@ import { ApolloClient, ApolloError, useLazyQuery } from "@apollo/client";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 import { useMediaQuery } from "@material-ui/core";
 
+// To do: create a custom context for email related components
+
 export type AppContextType = {
   apolloClient: ApolloClient<any> | undefined;
   emails: Email[];
