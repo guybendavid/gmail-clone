@@ -1,5 +1,7 @@
 import { ParticipantType } from "../db/interfaces/interfaces";
 
+// To do: check why i need to add order by now
+
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
   select emails.id, emails.subject,
@@ -12,7 +14,8 @@ const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   from public.emails
   inner join public.users as users_sender on emails.sender = users_sender.email
   inner join public.users as users_recipient on emails.recipient = users_recipient.email
-  where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}`;
+  where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}
+  order by created_At asc`;
 };
 
 export { getEmailsWithParticiapntsName };

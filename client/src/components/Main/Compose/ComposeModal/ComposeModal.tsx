@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { Store, useStore } from "store/store";
 import { Typography } from "@material-ui/core";
 import MinimizeIcon from '@material-ui/icons/Minimize';
@@ -12,7 +12,7 @@ const ComposeModal = () => {
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const [isMinimized, setIsMinimized] = useState(false);
 
-  const headerIconsGenerator = useCallback(() => {
+  const headerIconsGenerator = () => {
     return [MinimizeIcon, HeightIcon, CloseIcon].map((_Icon, index) => {
       if (index === 0 && !isMinimized) {
         return <MinimizeIcon key={index} onClick={() => setIsMinimized(true)} />;
@@ -24,8 +24,7 @@ const ComposeModal = () => {
         return <HeightIcon key={index} onClick={(e) => e.stopPropagation()} />;
       }
     });
-    // eslint-disable-next-line
-  }, [isMinimized]);
+  };
 
   return (
     <div className={"compose-modal" + (isMinimized ? " is-minimized" : "")}>

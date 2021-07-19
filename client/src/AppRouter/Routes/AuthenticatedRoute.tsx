@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Route, Redirect } from "react-router";
+import { EmailsContextProvider } from "contexts/EmailsContext";
 import Navbar from "components/Navbar/Navbar";
 
 interface Props {
@@ -14,10 +15,10 @@ const AuthenticatedRoute = ({ path, Component }: Props) => {
 
   return (
     <Route path={path} render={() => loggedInUser ?
-      <>
+      <EmailsContextProvider>
         <Navbar />
         <Component />
-      </>
+      </EmailsContextProvider>
       :
       <Redirect to="/login" />} />
   );

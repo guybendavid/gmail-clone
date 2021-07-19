@@ -1,5 +1,5 @@
 import { useContext, useEffect, Fragment } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
 import { ApolloClient, useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
@@ -11,7 +11,7 @@ import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
-  const { apolloClient, emails } = useContext(AppContext) as AppContextType;
+  const { apolloClient, emails } = useContext(EmailsContext) as EmailsContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
@@ -23,7 +23,6 @@ const EmailsList = () => {
 
   const isEmailSelected = (email: Email) => selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id);
 
-  // To do: maybe useCallback here
   const displayParticipantName = ({ sender, recipient }: Email) => {
     const { firstName, lastName } = loggedInUser;
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
