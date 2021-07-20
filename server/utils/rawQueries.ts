@@ -1,7 +1,5 @@
 import { ParticipantType } from "../db/interfaces/interfaces";
 
-// To do: check why i need to add order by now
-
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
   select emails.id,
