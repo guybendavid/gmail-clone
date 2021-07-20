@@ -2,7 +2,8 @@ import { ParticipantType } from "../db/interfaces/interfaces";
 
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
-  select emails.id, emails.subject,
+  select emails.id,
+  emails.subject,
   emails.content, 
   emails.created_at as "createdAt",
   users_sender.email as sender_email, 
@@ -12,7 +13,8 @@ const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   from public.emails
   inner join public.users as users_sender on emails.sender = users_sender.email
   inner join public.users as users_recipient on emails.recipient = users_recipient.email
-  where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}`;
+  where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}
+  order by created_At asc`;
 };
 
 export { getEmailsWithParticiapntsName };

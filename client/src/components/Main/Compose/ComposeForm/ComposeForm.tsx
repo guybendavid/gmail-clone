@@ -1,5 +1,6 @@
 import { useState, useContext, SyntheticEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
+import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
 import { SEND_EMAIL } from "services/graphql";
 import { useMutation } from "@apollo/client";
@@ -12,7 +13,8 @@ interface Props {
 }
 
 const ComposeForm = ({ isMinimized }: Props) => {
-  const { handleErrors, isParticipantEmailInStore } = useContext(AppContext) as AppContextType;
+  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const { isParticipantEmailInStore } = useContext(EmailsContext) as EmailsContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);

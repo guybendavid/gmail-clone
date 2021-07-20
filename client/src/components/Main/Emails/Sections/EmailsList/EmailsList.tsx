@@ -1,5 +1,5 @@
-import { useContext, Fragment, useEffect } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { useContext, useEffect, Fragment } from "react";
+import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
 import { ApolloClient, useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
@@ -11,13 +11,13 @@ import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
-  const { apolloClient, emails } = useContext(AppContext) as AppContextType;
+  const { apolloClient, emails } = useContext(EmailsContext) as EmailsContextType;
   const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);
   const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
-  
+
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
