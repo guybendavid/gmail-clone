@@ -20,6 +20,7 @@ interface Props {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children, history }: Props) => {
+  const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const setLoggedInUser = useStore((state: Store) => state.setLoggedInUser);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const isSmallScreen = useMediaQuery("(max-width:765px)");
@@ -31,6 +32,7 @@ const AppContextProvider = ({ children, history }: Props) => {
   }, []);
 
   const logout = () => {
+    setIsComposeOpened(false);
     localStorage.clear();
     (history as HistoryType).push("/login");
   };

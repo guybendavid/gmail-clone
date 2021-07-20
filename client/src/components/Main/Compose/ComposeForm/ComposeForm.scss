@@ -3,7 +3,6 @@
 .compose-modal,
 .compose-dialog {
   form {
-    // To do: fix issue when I log out and it's open, and then logging in again
     &.is-minimized {
       display: none;
     }
