@@ -4,7 +4,8 @@ import { ParticipantType } from "../db/interfaces/interfaces";
 
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
-  select emails.id, emails.subject,
+  select emails.id,
+  emails.subject,
   emails.content, 
   emails.created_at as "createdAt",
   users_sender.email as sender_email, 
