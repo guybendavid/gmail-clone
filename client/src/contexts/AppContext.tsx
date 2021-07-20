@@ -35,6 +35,7 @@ const AppContextProvider = ({ children, history }: Props) => {
     setIsComposeOpened(false);
     localStorage.clear();
     (history as HistoryType).push("/login");
+    window.location.reload();
   };
 
   const handleErrors = (error: any) => {
