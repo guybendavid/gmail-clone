@@ -18,7 +18,7 @@ module.exports = {
         field: "last_name"
       },
       email: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(50),
         allowNull: false,
         unique: true,
         validate: {

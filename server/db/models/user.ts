@@ -13,7 +13,7 @@ const user = (sequelize: Sequelize, DataTypes: any) => {
       field: "last_name"
     },
     email: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
       validate: {
