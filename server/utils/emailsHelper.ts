@@ -29,17 +29,13 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
   return emails;
 };
 
-const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: IEmail,
-  isParticipantFullName?: boolean) => {
-
+const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: IEmail) => {
   const getFullNameByEmail = async () => {
     const { firstName, lastName } = await User.findOne({ where: { email: participantEmail } });
     return `${firstName} ${lastName}`;
   };
 
-  return isParticipantFullName ?
-    { email: participantEmail } :
-    { email: newEmail[participantType], fullName: await getFullNameByEmail() };
+  return { email: newEmail[participantType], fullName: await getFullNameByEmail() };
 };
 
 export { getEmails, formatParticipant };

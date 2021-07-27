@@ -14,7 +14,7 @@ const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   inner join public.users as users_sender on emails.sender = users_sender.email
   inner join public.users as users_recipient on emails.recipient = users_recipient.email
   where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}
-  order by "createdAt" asc`;
+  order by "createdAt" desc`;
 };
 
 export { getEmailsWithParticiapntsName };

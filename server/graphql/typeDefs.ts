@@ -29,8 +29,7 @@ const typeDefs = gql`
   type Mutation {
     login(email: String! password: String!): User!
     register(firstName: String! lastName: String! email: String! password: String!): User!
-    sendEmail(senderEmail: String! recipientEmail: String! subject: String! content: String!
-    isSenderNameInClient: Boolean! isRecipientNameInClient: Boolean!): Email!
+    sendEmail(senderEmail: String! recipientEmail: String! subject: String! content: String!): Email!
     deleteEmails(ids: [ID]!): Boolean
   }
   type Subscription {

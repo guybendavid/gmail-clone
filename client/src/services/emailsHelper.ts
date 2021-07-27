@@ -44,7 +44,7 @@ const addNewEmailToCache = (newEmail: Email, loggedInUserEmail: string, client: 
 
     if (client.readQuery(queryOptions)) {
       const prevData = getPrevData({ query, loggedInUserEmail, client });
-      const newData = [...prevData, newEmail];
+      const newData = [newEmail, ...prevData];
       const isReceivedEmails = query === GET_RECEIVED_EMAILS;
       writeToCache(client, queryOptions, isReceivedEmails, newData);
     }

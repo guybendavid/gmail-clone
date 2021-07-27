@@ -9,8 +9,7 @@ const getErrors = (payload: User | SendEmailPayload) => {
   const validString = /^[^\s]+(\s+[^\s]+)*$/;
 
   Object.entries(payload).forEach(([key, value]) => {
-    // It is important to check here that the value is not explicitly set to false
-    if (!value && value !== false || !validString.test(value)) {
+    if (!value || !validString.test(value)) {
       !value ? emptyFields.push(key) : sideWhiteSpacesFields.push(key);
     }
   });

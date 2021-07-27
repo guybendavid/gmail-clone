@@ -72,10 +72,8 @@ const GET_SENT_EMAILS = gql`
 `;
 
 const SEND_EMAIL = gql`
-  mutation SendEmail($senderEmail: String! $recipientEmail: String! $subject: String! $content: String!
-    $isSenderNameInClient: Boolean! $isRecipientNameInClient: Boolean!) {
-    sendEmail(senderEmail: $senderEmail recipientEmail: $recipientEmail subject: $subject content: $content
-      isSenderNameInClient: $isSenderNameInClient isRecipientNameInClient: $isRecipientNameInClient) {
+  mutation SendEmail($senderEmail: String! $recipientEmail: String! $subject: String! $content: String!) {
+    sendEmail(senderEmail: $senderEmail recipientEmail: $recipientEmail subject: $subject content: $content) {
       id
     }
   }

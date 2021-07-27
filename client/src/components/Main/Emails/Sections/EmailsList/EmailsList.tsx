@@ -28,11 +28,11 @@ const EmailsList = () => {
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
 
     const getFullNameByStoredEmail = (email: string) =>
-      emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
+      emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName;
 
     return activeTab === 0 ?
-      getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email)) :
-      getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email));
+      getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email) as string) :
+      getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email) as string);
   };
 
   useEffect(() => {

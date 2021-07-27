@@ -17,7 +17,7 @@ const emailsResolver = {
   },
   Mutation: {
     sendEmail: async (_parent: any, args: SendEmailPayload, { pubsub }: { pubsub: PubSub; }) => {
-      const { senderEmail, recipientEmail, subject, content, isSenderNameInClient, isRecipientNameInClient } = args;
+      const { senderEmail, recipientEmail, subject, content } = args;
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
 
       if (!recipientUser) {
@@ -26,8 +26,8 @@ const emailsResolver = {
 
       const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
       const newEmail = { ...email.toJSON() };
-      newEmail.sender = await formatParticipant("sender", senderEmail, newEmail, isSenderNameInClient);
-      newEmail.recipient = await formatParticipant("recipient", recipientEmail, newEmail, isRecipientNameInClient);
+      newEmail.sender = await formatParticipant("sender", senderEmail, newEmail);
+      newEmail.recipient = await formatParticipant("recipient", recipientEmail, newEmail);
       pubsub.publish("NEW_EMAIL", { newEmail });
       return email;
     },
