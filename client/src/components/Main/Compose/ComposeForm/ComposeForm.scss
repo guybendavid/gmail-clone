@@ -3,6 +3,7 @@
 .compose-modal,
 .compose-dialog {
   form {
+    // To do: fix the tablet issue when opening and closing
     &.is-minimized {
       display: none;
     }
