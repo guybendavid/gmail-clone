@@ -29,6 +29,7 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
   return emails;
 };
 
+// To do: 1
 const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: IEmail,
   isParticipantFullName?: boolean) => {
 

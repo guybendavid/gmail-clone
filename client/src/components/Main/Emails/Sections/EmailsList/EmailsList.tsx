@@ -28,6 +28,7 @@ const EmailsList = () => {
     const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
 
     const getFullNameByStoredEmail = (email: string) =>
+      // To do: 1
       emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
 
     return activeTab === 0 ?
@@ -37,6 +38,7 @@ const EmailsList = () => {
 
   useEffect(() => {
     if (newEmail) {
+      // To do: 1
       addNewEmailToCache(newEmail, loggedInUser.email, (apolloClient as ApolloClient<any>));
     }
     // eslint-disable-next-line
