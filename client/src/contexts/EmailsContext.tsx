@@ -9,7 +9,6 @@ import { useContext } from "react";
 export type EmailsContextType = {
   apolloClient: ApolloClient<any> | undefined;
   emails: Email[];
-  isParticipantEmailInStore: (email: string) => boolean;
 };
 
 interface Props {
@@ -26,9 +25,6 @@ const EmailsContextProvider = ({ children }: Props) => {
   const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
   const setEmailToFullName = useStore((state: Store) => state.setEmailToFullName);
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
-
-  const isParticipantEmailInStore = (email: string) =>
-    Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
 
   const [getEmails, { data, client: apolloClient }] = useLazyQuery(emailsToFetch, {
     variables: { loggedInUserEmail: (loggedInUser as User)?.email },
@@ -48,6 +44,9 @@ const EmailsContextProvider = ({ children }: Props) => {
   useEffect(() => {
     if (emails) {
       const isReceivedEmails = emailsToFetch === GET_RECEIVED_EMAILS;
+
+      const isParticipantEmailInStore = (email: string) =>
+        Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
 
       const setEmailToFullNameMapping = (participant: Participant) => {
         const { email, fullName } = participant;
@@ -69,7 +68,7 @@ const EmailsContextProvider = ({ children }: Props) => {
   }, [emails]);
 
   return (
-    <EmailsContext.Provider value={{ apolloClient, emails, isParticipantEmailInStore }}>
+    <EmailsContext.Provider value={{ apolloClient, emails }}>
       {children}
     </EmailsContext.Provider>
   );
