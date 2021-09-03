@@ -1,7 +1,7 @@
 import { useEffect, createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
-import { History, LocationState } from "history";
 import { ApolloError } from "@apollo/client";
+import { HistoryType } from "App";
 import { useMediaQuery } from "@material-ui/core";
 
 export type AppContextType = {
@@ -10,11 +10,9 @@ export type AppContextType = {
   handleErrors: (error: ApolloError) => void;
 };
 
-type HistoryType = History<LocationState>;
-
 interface Props {
   children: ReactNode;
-  history: HistoryType | {};
+  history?: HistoryType;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -34,7 +32,7 @@ const AppContextProvider = ({ children, history }: Props) => {
   const logout = () => {
     setIsComposeOpened(false);
     localStorage.clear();
-    (history as HistoryType).push("/login");
+    history?.push("/login");
     window.location.reload();
   };
 
