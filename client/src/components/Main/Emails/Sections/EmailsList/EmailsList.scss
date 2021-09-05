@@ -35,7 +35,7 @@
 
       .participant-name,
       .email-body {
-        @include overflow-handler;
+        @include overflow-handler();
         width: 145px;
 
         &.email-body {

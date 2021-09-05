@@ -84,8 +84,7 @@
         }
 
         span {
-          @include overflow-handler;
-          max-width: 180px;
+          @include overflow-handler(180px);
         }
       }
     }

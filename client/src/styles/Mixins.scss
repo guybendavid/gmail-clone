@@ -1,7 +1,11 @@
-@mixin overflow-handler {
+@mixin overflow-handler($max-width: 0) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @if $max-width != 0 {
+    max-width: $max-width;
+  }
 }
 
 @mixin search-input {
