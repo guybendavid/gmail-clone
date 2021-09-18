@@ -13,6 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import VideocamIcon from '@material-ui/icons/Videocam';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import composeImg from "images/compose-img.png";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./LeftSidebar.scss";
 
 const firstListTexts = [
@@ -49,7 +50,7 @@ const LeftSidebar = () => {
       <div className="list">
         <div className="list-items-wrapper first-list">
           {[InboxIcon, SendIcon, StarIcon, WatchLaterIcon, LabelImportantIcon, DraftsIcon, MailIcon, DeleteIcon, LabelIcon, ExpandMoreIcon].map((Icon, index) => (
-            <ListItem key={index} button className={"list-item" + (activeTab === index ? " active" : "") + (index === 0 ? " first" : "")}
+            <ListItem key={index} button className={classNamesGenerator("list-item", activeTab === index && "active", index === 0 && "first")}
               onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />

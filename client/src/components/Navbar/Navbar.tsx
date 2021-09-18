@@ -11,6 +11,7 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AppIcon from "images/app-icon.png";
 import MenuIcon from '@material-ui/icons/Menu';
+import classNamesGenerator from "services/classNamesGenerator";
 import "./Navbar.scss";
 
 const Navbar = () => {
@@ -64,7 +65,7 @@ const Navbar = () => {
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
-          <div className={"search-wrapper" + (isSmallScreen || searchBarIsOpened ? " white" : "")}>
+          <div className={classNamesGenerator("search-wrapper", (isSmallScreen || searchBarIsOpened) && "white")}>
             <IconButton>
               {isSmallScreen ? <MenuIcon /> : <SearchIcon />}
             </IconButton>

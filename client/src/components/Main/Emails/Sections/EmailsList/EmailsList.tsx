@@ -8,6 +8,7 @@ import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emailsHelper";
 import timeDisplayer from "services/timeDisplayer";
 import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
@@ -47,7 +48,7 @@ const EmailsList = () => {
       {emails?.filter((email: Email) =>
         `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: Email, index: number) => (
           <Fragment key={index}>
-            <ListItem button className={"email" + (isEmailSelected(email) ? " is-selected" : "")}>
+            <ListItem button className={classNamesGenerator("email", isEmailSelected(email) && "is-selected")}>
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />

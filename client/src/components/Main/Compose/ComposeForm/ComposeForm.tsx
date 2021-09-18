@@ -5,6 +5,7 @@ import { SEND_EMAIL } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./ComposeForm.scss";
 
 interface Props {
@@ -33,12 +34,13 @@ const ComposeForm = ({ isMinimized }: Props) => {
       setSnackBarMessage({ content: "Message sent successfully", severity: "info" });
       setIsComposeOpened(false);
     } catch (err) {
+      // To do:
       handleErrors(err);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className={isMinimized ? "is-minimized" : ""}>
+    <form onSubmit={handleSubmit} className={classNamesGenerator(isMinimized && "is-minimized")}>
       <div className="fields-wrapper">
         <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value })} />
         <TextField required fullWidth label="Subject" onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />

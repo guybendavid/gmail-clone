@@ -3,6 +3,7 @@ import { Store, useStore } from "store/store";
 import { sanitize } from "dompurify";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./IndicationMessage.scss";
 
 const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };
@@ -25,7 +26,7 @@ const IndicationMessage = () => {
 
   return (
     <>
-      {content && <Snackbar className={"indication-message" + (severity === "error" ? " error" : "")}
+      {content && <Snackbar className={classNamesGenerator("indication-message", severity === "error" && "error")}
         anchorOrigin={anchorOrigin} open={open} autoHideDuration={5000} onClose={closeMessage}>
         <MuiAlert elevation={6} variant="filled" severity={severity} onClose={closeMessage}>
           <div dangerouslySetInnerHTML={{ __html: sanitize(content) }}></div>

@@ -9,6 +9,7 @@ import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
 import Main from "components/Main/Main";
 import IndicationMessage from "components/IndicationMessage/IndicationMessage";
+import classNamesGenerator from "services/classNamesGenerator";
 
 interface Props extends RouteComponentProps {
   setHistory: (history: History<LocationState>) => void;
@@ -25,7 +26,7 @@ const AppRouter = ({ setHistory }: Props) => {
   }, []);
 
   return (
-    <Container className={"container" + (isAuthForm ? " is-auth-form" : "")}>
+    <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />

@@ -6,6 +6,7 @@ import MaximizeIcon from '@material-ui/icons/Maximize';
 import HeightIcon from '@material-ui/icons/Height';
 import CloseIcon from '@material-ui/icons/Close';
 import ComposeForm from "../ComposeForm/ComposeForm";
+import classNamesGenerator from "services/classNamesGenerator";
 import "./ComposeModal.scss";
 
 const ComposeModal = () => {
@@ -27,7 +28,7 @@ const ComposeModal = () => {
   };
 
   return (
-    <div className={"compose-modal" + (isMinimized ? " is-minimized" : "")}>
+    <div className={classNamesGenerator("compose-modal", isMinimized && "is-minimized")}>
       <div className="header" onClick={() => setIsMinimized(!isMinimized)}>
         <Typography component="span">New Message</Typography>
         <div className="icons-wrapper">{headerIconsGenerator()}</div>
