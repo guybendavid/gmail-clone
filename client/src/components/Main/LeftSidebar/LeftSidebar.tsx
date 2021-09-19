@@ -1,5 +1,6 @@
 import { Store, useStore } from "store/store";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import InboxIcon from "@material-ui/icons/Inbox";
 import SendIcon from "@material-ui/icons/Send";
 import StarIcon from "@material-ui/icons/Star";
@@ -13,7 +14,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import VideocamIcon from '@material-ui/icons/Videocam';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import composeImg from "images/compose-img.png";
-import classNamesGenerator from "services/classNamesGenerator";
 import "./LeftSidebar.scss";
 
 const firstListTexts = [

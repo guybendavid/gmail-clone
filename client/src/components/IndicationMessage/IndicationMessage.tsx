@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Store, useStore } from "store/store";
 import { sanitize } from "dompurify";
+import { classNamesGenerator } from "@guybendavid/utils";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import classNamesGenerator from "services/classNamesGenerator";
 import "./IndicationMessage.scss";
 
 const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };

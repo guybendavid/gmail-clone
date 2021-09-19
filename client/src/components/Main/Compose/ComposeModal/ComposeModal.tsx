@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Store, useStore } from "store/store";
 import { Typography } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import MinimizeIcon from '@material-ui/icons/Minimize';
 import MaximizeIcon from '@material-ui/icons/Maximize';
 import HeightIcon from '@material-ui/icons/Height';
 import CloseIcon from '@material-ui/icons/Close';
 import ComposeForm from "../ComposeForm/ComposeForm";
-import classNamesGenerator from "services/classNamesGenerator";
 import "./ComposeModal.scss";
 
 const ComposeModal = () => {

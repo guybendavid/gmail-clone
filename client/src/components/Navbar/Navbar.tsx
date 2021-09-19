@@ -3,6 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { User } from "interfaces/interfaces";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -11,7 +12,6 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AppIcon from "images/app-icon.png";
 import MenuIcon from '@material-ui/icons/Menu';
-import classNamesGenerator from "services/classNamesGenerator";
 import "./Navbar.scss";
 
 const Navbar = () => {

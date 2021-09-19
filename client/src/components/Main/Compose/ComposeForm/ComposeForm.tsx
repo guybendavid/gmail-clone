@@ -5,7 +5,7 @@ import { SEND_EMAIL } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
-import classNamesGenerator from "services/classNamesGenerator";
+import { classNamesGenerator } from "@guybendavid/utils";
 import "./ComposeForm.scss";
 
 interface Props {

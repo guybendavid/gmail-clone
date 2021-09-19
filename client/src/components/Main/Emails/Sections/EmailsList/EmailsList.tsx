@@ -6,9 +6,8 @@ import { NEW_EMAIL } from "services/graphql";
 import { Email, Participant, User } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emailsHelper";
-import timeDisplayer from "services/timeDisplayer";
+import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
-import classNamesGenerator from "services/classNamesGenerator";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
