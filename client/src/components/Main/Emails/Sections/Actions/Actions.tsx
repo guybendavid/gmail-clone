@@ -3,7 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
 import { Email, User } from "interfaces/interfaces";
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { DELETE_EMAILS } from "services/graphql";
 import { deleteEmailsFromCache } from "services/emailsHelper";
 import { IconButton, TablePagination } from "@material-ui/core";
@@ -33,7 +33,7 @@ const Actions = () => {
         setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
         setSelectedEmails([]);
       } catch (err) {
-        handleErrors(err);
+        handleErrors(err as ApolloError);
       }
     }
   };

@@ -2,7 +2,7 @@ import { useState, useContext, SyntheticEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { SEND_EMAIL } from "services/graphql";
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
 import { classNamesGenerator } from "@guybendavid/utils";
@@ -34,8 +34,7 @@ const ComposeForm = ({ isMinimized }: Props) => {
       setSnackBarMessage({ content: "Message sent successfully", severity: "info" });
       setIsComposeOpened(false);
     } catch (err) {
-      // To do:
-      handleErrors(err);
+      handleErrors(err as ApolloError);
     }
   };
 
