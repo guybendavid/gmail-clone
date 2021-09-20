@@ -4,7 +4,7 @@ import { UserInputError } from "apollo-server";
 import { User } from "../../db/models/models-config";
 import { User as IUSER } from "../../db/interfaces/interfaces";
 // eslint-disable-next-line
-const generateImage = require("../../utils/generateImage");
+const generateImage = require("../../utils/generate-image");
 
 const usersResolver = {
   Mutation: {
