@@ -1,16 +1,12 @@
 @import "styles/Mixins.scss";
 
-@mixin mobile-padding {
-  padding: 10px 16px;
-}
-
 .emails-wrapper {
   display: flex;
   flex-direction: column;
   background: white;
 
   .scroll-area {
-    @include scrollbar;
+    @extend %scrollbar;
     flex: 0.75;
     overflow-y: auto;
   }

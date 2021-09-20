@@ -4,7 +4,7 @@
   text-align: center;
 
   .tabs {
-    @include tabs;
+    @extend %tabs;
 
     button {
       &.active {
@@ -18,7 +18,7 @@
   }
 
   .compose-button {
-    @include blue-button;
+    @extend %blue-button;
     width: 98%;
     margin: 0 auto;
   }
