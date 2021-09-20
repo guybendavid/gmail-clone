@@ -1,13 +1,13 @@
 import express from "express";
 import { ApolloServer as ApolloServerDev } from "apollo-server";
 import { ApolloServer as ApolloServerProd } from "apollo-server-express";
-import { sequelize } from "./db/models/modelsConfig";
+import { sequelize } from "./db/models/models-config";
 import http, { Server } from "http";
 import pino from "pino";
 import path from "path";
-import resolvers from "./graphql/resolvers/resolversConfig";
+import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/typeDefs";
-import contextMiddleware from "./utils/contextMiddleware";
+import contextMiddleware from "./utils/context-middleware";
 
 const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });

@@ -5,7 +5,7 @@ import { ApolloClient, useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
 import { Email, Participant, User } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
-import { addNewEmailToCache } from "services/emailsHelper";
+import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
