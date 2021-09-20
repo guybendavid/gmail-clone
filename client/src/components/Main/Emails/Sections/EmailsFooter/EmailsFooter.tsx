@@ -1,9 +1,9 @@
 import { Store, useStore } from 'store/store';
 import { Button } from '@material-ui/core';
+import { classNamesGenerator } from '@guybendavid/utils';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import classNamesGenerator from 'services/classNamesGenerator';
 import "./EmailsFooter.scss";
 
 const texts = [
