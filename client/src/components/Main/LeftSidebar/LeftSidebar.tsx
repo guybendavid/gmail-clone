@@ -1,5 +1,6 @@
 import { Store, useStore } from "store/store";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import InboxIcon from "@material-ui/icons/Inbox";
 import SendIcon from "@material-ui/icons/Send";
 import StarIcon from "@material-ui/icons/Star";
@@ -49,7 +50,7 @@ const LeftSidebar = () => {
       <div className="list">
         <div className="list-items-wrapper first-list">
           {[InboxIcon, SendIcon, StarIcon, WatchLaterIcon, LabelImportantIcon, DraftsIcon, MailIcon, DeleteIcon, LabelIcon, ExpandMoreIcon].map((Icon, index) => (
-            <ListItem key={index} button className={"list-item" + (activeTab === index ? " active" : "") + (index === 0 ? " first" : "")}
+            <ListItem key={index} button className={classNamesGenerator("list-item", activeTab === index && "active", index === 0 && "first")}
               onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />

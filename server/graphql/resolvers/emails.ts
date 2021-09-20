@@ -1,8 +1,8 @@
 import { Op } from "sequelize";
 import { UserInputError, withFilter, PubSub } from "apollo-server";
-import { Email, User } from "../../db/models/modelsConfig";
+import { Email, User } from "../../db/models/models-config";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
-import { getEmails, formatParticipant } from "../../utils/emailsHelper";
+import { getEmails, formatParticipant } from "../../utils/emails-helper";
 
 const emailsResolver = {
   Query: {

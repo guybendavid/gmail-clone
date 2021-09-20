@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Store, useStore } from "store/store";
 import { Typography } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import MinimizeIcon from '@material-ui/icons/Minimize';
 import MaximizeIcon from '@material-ui/icons/Maximize';
 import HeightIcon from '@material-ui/icons/Height';
@@ -27,7 +28,7 @@ const ComposeModal = () => {
   };
 
   return (
-    <div className={"compose-modal" + (isMinimized ? " is-minimized" : "")}>
+    <div className={classNamesGenerator("compose-modal", isMinimized && "is-minimized")}>
       <div className="header" onClick={() => setIsMinimized(!isMinimized)}>
         <Typography component="span">New Message</Typography>
         <div className="icons-wrapper">{headerIconsGenerator()}</div>

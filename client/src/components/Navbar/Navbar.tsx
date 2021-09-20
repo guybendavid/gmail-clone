@@ -3,6 +3,7 @@ import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { User } from "interfaces/interfaces";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
+import { classNamesGenerator } from "@guybendavid/utils";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -64,7 +65,7 @@ const Navbar = () => {
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
-          <div className={"search-wrapper" + (isSmallScreen || searchBarIsOpened ? " white" : "")}>
+          <div className={classNamesGenerator("search-wrapper", (isSmallScreen || searchBarIsOpened) && "white")}>
             <IconButton>
               {isSmallScreen ? <MenuIcon /> : <SearchIcon />}
             </IconButton>

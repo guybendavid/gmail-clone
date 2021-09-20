@@ -5,8 +5,8 @@ import { ApolloClient, useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
 import { Email, Participant, User } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
-import { addNewEmailToCache } from "services/emailsHelper";
-import timeDisplayer from "services/timeDisplayer";
+import { addNewEmailToCache } from "services/emails-helper";
+import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
@@ -47,7 +47,7 @@ const EmailsList = () => {
       {emails?.filter((email: Email) =>
         `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: Email, index: number) => (
           <Fragment key={index}>
-            <ListItem button className={"email" + (isEmailSelected(email) ? " is-selected" : "")}>
+            <ListItem button className={classNamesGenerator("email", isEmailSelected(email) && "is-selected")}>
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />

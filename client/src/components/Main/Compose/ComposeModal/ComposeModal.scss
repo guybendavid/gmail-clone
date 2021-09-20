@@ -1,7 +1,7 @@
 @import "styles/Mixins.scss";
 
 .compose-modal {
-  @include box-shadow;
+  @extend %box-shadow;
   z-index: 9999;
   position: absolute;
   bottom: 0;

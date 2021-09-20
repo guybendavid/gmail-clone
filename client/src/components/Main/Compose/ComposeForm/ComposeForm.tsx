@@ -2,9 +2,10 @@ import { useState, useContext, SyntheticEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { SEND_EMAIL } from "services/graphql";
-import { useMutation } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
 import { User } from "interfaces/interfaces";
+import { classNamesGenerator } from "@guybendavid/utils";
 import "./ComposeForm.scss";
 
 interface Props {
@@ -33,12 +34,12 @@ const ComposeForm = ({ isMinimized }: Props) => {
       setSnackBarMessage({ content: "Message sent successfully", severity: "info" });
       setIsComposeOpened(false);
     } catch (err) {
-      handleErrors(err);
+      handleErrors(err as ApolloError);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className={isMinimized ? "is-minimized" : ""}>
+    <form onSubmit={handleSubmit} className={classNamesGenerator(isMinimized && "is-minimized")}>
       <div className="fields-wrapper">
         <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value })} />
         <TextField required fullWidth label="Subject" onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />
