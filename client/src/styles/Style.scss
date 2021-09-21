@@ -50,7 +50,12 @@ body {
       }
 
       @media only screen and (max-width: 765px) {
+        margin-top: 100px;
         max-width: 350px;
+
+        &::before {
+          height: 60px;
+        }
       }
     }
   }

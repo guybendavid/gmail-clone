@@ -18,11 +18,11 @@
 
     div {
       .MuiFormLabel-root.Mui-focused {
-        color: var(--gradient-color);
+        color: var(--text-secondary-color);
       }
 
       .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-        border-color: var(--gradient-color);
+        border-color: var(--text-secondary-color);
       }
     }
 
