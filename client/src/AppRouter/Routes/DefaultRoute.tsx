@@ -2,7 +2,7 @@ import { Route, Redirect } from "react-router";
 
 const DefaultRoute = () => {
   return (
-    <Route render={() => localStorage.loggedInUser ? <Redirect to="/" /> : <Redirect to="/login" />} />
+    <Route render={() => localStorage.token ? <Redirect to="/" /> : <Redirect to="/login" />} />
   );
 };
 

@@ -10,7 +10,7 @@ interface Props {
 
 const UnauthenticatedRoute = ({ path, Component }: Props) => {
   return (
-    <Route path={path} render={props => !localStorage.loggedInUser ? <Component {...props} /> : <Redirect to="/" />} />
+    <Route path={path} render={props => !localStorage.token ? <Component {...props} /> : <Redirect to="/" />} />
   );
 };
 
