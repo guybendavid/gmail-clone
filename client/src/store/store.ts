@@ -1,5 +1,5 @@
 import create from "zustand";
-import { User, Email } from "interfaces/interfaces";
+import { Email } from "interfaces/interfaces";
 
 type SnackBarMessage = {
   content: string;
@@ -12,8 +12,6 @@ type EmailFullNameMap = {
 };
 
 interface Store {
-  loggedInUser: User | {};
-  setLoggedInUser: (user: User | {}) => void;
   snackBarMessage: SnackBarMessage;
   setSnackBarMessage: (snackBarMessage: SnackBarMessage) => void;
   clearSnackBarMessage: () => void;
@@ -32,8 +30,6 @@ interface Store {
 const initalSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
 
 const store = (set: any) => ({
-  loggedInUser: {},
-  setLoggedInUser: (user: User | {}) => set(() => ({ loggedInUser: user })),
   snackBarMessage: initalSnackBarMessage,
   setSnackBarMessage: (snackBarMessage: SnackBarMessage) => set(() => ({ snackBarMessage })),
   clearSnackBarMessage: () => set(() => ({ snackBarMessage: initalSnackBarMessage })),

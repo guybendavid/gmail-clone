@@ -1,8 +1,9 @@
 import { useEffect, createContext, ReactNode } from "react";
 import { AppContext, AppContextType } from "./AppContext";
 import { Store, useStore } from "store/store";
-import { Email, Participant, User } from "interfaces/interfaces";
-import { useLazyQuery, ApolloClient } from "@apollo/client";
+import { Email, Participant } from "interfaces/interfaces";
+import { useQuery, ApolloClient } from "@apollo/client";
+import { getLoggedInUser } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 import { useContext } from "react";
 
@@ -18,28 +19,21 @@ interface Props {
 const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
 
 const EmailsContextProvider = ({ children }: Props) => {
+  const loggedInUser = getLoggedInUser();
   const { handleErrors } = useContext(AppContext) as AppContextType;
-  const loggedInUser = useStore((state: Store) => state.loggedInUser);
   const clearSnackBarMessage = useStore((state: Store) => state.clearSnackBarMessage);
   const activeTab = useStore((state: Store) => state.activeTab);
   const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
   const setEmailToFullName = useStore((state: Store) => state.setEmailToFullName);
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
-  const [getEmails, { data, client: apolloClient }] = useLazyQuery(emailsToFetch, {
-    variables: { loggedInUserEmail: (loggedInUser as User)?.email },
+  const { data, client: apolloClient } = useQuery(emailsToFetch, {
+    variables: { loggedInUserEmail: loggedInUser.email },
     onError: (error) => handleErrors(error),
     onCompleted: () => clearSnackBarMessage()
   });
 
   const emails = data?.getReceivedEmails || data?.getSentEmails;
-
-  useEffect(() => {
-    if ((loggedInUser as User)?.id) {
-      getEmails();
-    }
-    // eslint-disable-next-line
-  }, [loggedInUser]);
 
   useEffect(() => {
     if (emails) {

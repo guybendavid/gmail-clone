@@ -1,10 +1,10 @@
 import { useState, useContext, SyntheticEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
+import { getLoggedInUser } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
 import { useMutation, ApolloError } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
-import { User } from "interfaces/interfaces";
 import { classNamesGenerator } from "@guybendavid/utils";
 import "./ComposeForm.scss";
 
@@ -13,8 +13,8 @@ interface Props {
 }
 
 const ComposeForm = ({ isMinimized }: Props) => {
+  const loggedInUser = getLoggedInUser();
   const { handleErrors } = useContext(AppContext) as AppContextType;
-  const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const [sendEmail] = useMutation(SEND_EMAIL);

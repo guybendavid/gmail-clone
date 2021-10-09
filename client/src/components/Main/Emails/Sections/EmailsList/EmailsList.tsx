@@ -1,9 +1,10 @@
 import { useContext, useEffect, Fragment } from "react";
 import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
+import { getLoggedInUser } from "services/auth";
 import { ApolloClient, useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
-import { Email, Participant, User } from "interfaces/interfaces";
+import { Email, Participant } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
@@ -11,8 +12,8 @@ import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
+  const loggedInUser = getLoggedInUser();
   const { apolloClient, emails } = useContext(EmailsContext) as EmailsContextType;
-  const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const searchValue = useStore((state: Store) => state.searchValue);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);

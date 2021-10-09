@@ -1,4 +1,4 @@
-import { useEffect, createContext, ReactNode } from "react";
+import { createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
 import { ApolloError } from "@apollo/client";
 import { HistoryType } from "App";
@@ -19,15 +19,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children, history }: Props) => {
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
-  const setLoggedInUser = useStore((state: Store) => state.setLoggedInUser);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const isSmallScreen = useMediaQuery("(max-width:765px)");
-
-  useEffect(() => {
-    const user = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
-    setLoggedInUser(user);
-    // eslint-disable-next-line
-  }, []);
 
   const logout = () => {
     setIsComposeOpened(false);

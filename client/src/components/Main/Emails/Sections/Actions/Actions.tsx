@@ -2,8 +2,9 @@ import { useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
-import { Email, User } from "interfaces/interfaces";
+import { Email } from "interfaces/interfaces";
 import { useMutation, ApolloError } from "@apollo/client";
+import { getLoggedInUser } from "services/auth";
 import { DELETE_EMAILS } from "services/graphql";
 import { deleteEmailsFromCache } from "services/emails-helper";
 import { IconButton, TablePagination } from "@material-ui/core";
@@ -14,9 +15,9 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./Actions.scss";
 
 const Actions = () => {
+  const loggedInUser = getLoggedInUser();
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const { emails } = useContext(EmailsContext) as EmailsContextType;
-  const loggedInUser = useStore((state: Store) => state.loggedInUser as User);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const setSelectedEmails = useStore((state: Store) => state.setSelectedEmails);
