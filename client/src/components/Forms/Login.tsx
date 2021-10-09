@@ -1,10 +1,10 @@
-import { useState, SyntheticEvent, useContext } from "react";
+import { useState, SyntheticEvent, useContext, ChangeEvent } from "react";
 import { History, LocationState } from "history";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { LOGIN_USER } from "services/graphql";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
-import { Avatar, Button, TextField, Typography } from "@material-ui/core";
+import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./Forms.scss";
@@ -12,6 +12,8 @@ import "./Forms.scss";
 interface Props {
   history: History<LocationState>;
 }
+
+const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Login = ({ history }: Props) => {
   const { handleErrors } = useContext(AppContext) as AppContextType;
@@ -22,6 +24,9 @@ const Login = ({ history }: Props) => {
     onCompleted: (data) => handleAuth({ ...data.login, email }, history),
     onError: (error) => handleErrors(error)
   });
+
+  const handleOnChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, field: keyof typeof formValues) =>
+    setFormValues({ ...formValues, [field]: e.target.value });
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -35,8 +40,8 @@ const Login = ({ history }: Props) => {
       </Avatar>
       <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField required variant="outlined" margin="normal" fullWidth label="email" autoComplete="Email" onChange={(e) => setFormValues({ ...formValues, email: e.target.value })} />
-        <TextField required variant="outlined" margin="normal" fullWidth label="password" autoComplete="Password" type="password" onChange={(e) => setFormValues({ ...formValues, password: e.target.value })} />
+        <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
+        <TextField {...textFieldProps} label="password" autoComplete="Password" type="password" onChange={(e) => handleOnChange(e, "password")} />
         <Link to="/register">Don't have an account yet?</Link>
         <Button type="submit" fullWidth variant="contained">Login</Button>
       </form>
