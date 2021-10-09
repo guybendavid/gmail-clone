@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import "./Forms.scss";
+import "./AuthForms.scss";
 
 interface Props {
   history: History<LocationState>;
