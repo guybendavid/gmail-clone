@@ -4,7 +4,7 @@ import { Store, useStore } from "store/store";
 import { getLoggedInUser } from "services/auth";
 import { ApolloClient, useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
-import { Email, Participant } from "interfaces/interfaces";
+import { User, Email, Participant } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
@@ -25,8 +25,8 @@ const EmailsList = () => {
   const isEmailSelected = (email: Email) => selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id);
 
   const displayParticipantName = ({ sender, recipient }: Email) => {
-    const { firstName, lastName } = loggedInUser;
-    const getTextToDisplay = (participantName: string) => participantName === `${firstName} ${lastName}` ? "Me" : participantName;
+    const getTextToDisplay = (participantName: string) =>
+      participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
 
     const getFullNameByStoredEmail = (email: string) =>
       emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName;
@@ -38,7 +38,7 @@ const EmailsList = () => {
 
   useEffect(() => {
     if (newEmail) {
-      addNewEmailToCache(newEmail, loggedInUser.email, (apolloClient as ApolloClient<any>));
+      addNewEmailToCache(newEmail, (loggedInUser as User)?.email, (apolloClient as ApolloClient<any>));
     }
     // eslint-disable-next-line
   }, [newEmail]);

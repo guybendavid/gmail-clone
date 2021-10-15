@@ -34,6 +34,7 @@ const contextMiddleware = (context: any) => {
     if (context.req?.body) {
       const { operationName, variables } = context.req.body;
 
+      // Check errors only for specific operations (mutations with payload)
       if ([...authOperations, "SendEmail"].includes(operationName)) {
         const errors = getErrors(variables);
 

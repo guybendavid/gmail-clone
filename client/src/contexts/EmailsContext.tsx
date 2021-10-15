@@ -1,7 +1,7 @@
 import { useEffect, createContext, ReactNode } from "react";
 import { AppContext, AppContextType } from "./AppContext";
 import { Store, useStore } from "store/store";
-import { Email, Participant } from "interfaces/interfaces";
+import { User, Email, Participant } from "interfaces/interfaces";
 import { useQuery, ApolloClient } from "@apollo/client";
 import { getLoggedInUser } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
@@ -16,6 +16,23 @@ interface Props {
   children: ReactNode;
 }
 
+interface SetEmailToFullNameMappingData {
+  participant: Participant;
+  emailsToFullNames: Participant[];
+  setEmailToFullName: (emailFullNameMap: Participant) => void;
+}
+
+const isParticipantEmailInStore = (email: string, emailsToFullNames: Participant[]) =>
+  Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
+
+const setEmailToFullNameMapping = ({ participant, emailsToFullNames, setEmailToFullName }: SetEmailToFullNameMappingData) => {
+  const { email, fullName } = participant;
+
+  if (fullName && !isParticipantEmailInStore(email, emailsToFullNames)) {
+    setEmailToFullName({ email, fullName });
+  }
+};
+
 const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
 
 const EmailsContextProvider = ({ children }: Props) => {
@@ -28,7 +45,7 @@ const EmailsContextProvider = ({ children }: Props) => {
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
   const { data, client: apolloClient } = useQuery(emailsToFetch, {
-    variables: { loggedInUserEmail: loggedInUser.email },
+    variables: { loggedInUserEmail: (loggedInUser as User)?.email },
     onError: (error) => handleErrors(error),
     onCompleted: () => clearSnackBarMessage()
   });
@@ -38,24 +55,14 @@ const EmailsContextProvider = ({ children }: Props) => {
   useEffect(() => {
     if (emails) {
       const isReceivedEmails = emailsToFetch === GET_RECEIVED_EMAILS;
-
-      const isParticipantEmailInStore = (email: string) =>
-        Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
-
-      const setEmailToFullNameMapping = (participant: Participant) => {
-        const { email, fullName } = participant;
-
-        if (fullName && !isParticipantEmailInStore(email)) {
-          setEmailToFullName({ email, fullName });
-        }
-      };
+      const sharedProps = { emailsToFullNames, setEmailToFullName };
 
       emails.forEach((email: Email) => {
         const { sender, recipient } = email;
 
         isReceivedEmails ?
-          setEmailToFullNameMapping(sender as Participant) :
-          setEmailToFullNameMapping(recipient as Participant);
+          setEmailToFullNameMapping({ participant: sender as Participant, ...sharedProps }) :
+          setEmailToFullNameMapping({ participant: recipient as Participant, ...sharedProps });
       });
     }
     // eslint-disable-next-line

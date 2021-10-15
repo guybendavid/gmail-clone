@@ -1,14 +1,9 @@
 import create from "zustand";
-import { Email } from "interfaces/interfaces";
+import { Email, Participant } from "interfaces/interfaces";
 
 type SnackBarMessage = {
   content: string;
   severity: "error" | "info" | "success" | "warning";
-};
-
-type EmailFullNameMap = {
-  email: string;
-  fullName: string;
 };
 
 interface Store {
@@ -23,8 +18,8 @@ interface Store {
   setIsComposeOpened: (isComposeOpened: boolean) => void;
   activeTab: number;
   setActiveTab: (activeTab: number) => void;
-  emailsToFullNames: EmailFullNameMap[];
-  setEmailToFullName: (emailToFullName: EmailFullNameMap) => void;
+  emailsToFullNames: Participant[];
+  setEmailToFullName: (emailToFullName: Participant) => void;
 }
 
 const initalSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
@@ -43,7 +38,7 @@ const store = (set: any) => ({
   setActiveTab: (activeTab: number) =>
     set((state: Store) => activeTab !== state.activeTab && ({ activeTab, selectedEmails: [], searchValue: "" })),
   emailsToFullNames: [],
-  setEmailToFullName: (emailToFullName: EmailFullNameMap) => set((state: Store) => state.emailsToFullNames.push(emailToFullName))
+  setEmailToFullName: (emailToFullName: Participant) => set((state: Store) => state.emailsToFullNames.push(emailToFullName))
 });
 
 export const useStore = create(store);

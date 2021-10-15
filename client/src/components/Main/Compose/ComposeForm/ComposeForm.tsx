@@ -20,7 +20,7 @@ const ComposeForm = ({ isMinimized }: Props) => {
   const [sendEmail] = useMutation(SEND_EMAIL);
 
   const [mailValues, setMailValues] = useState({
-    senderEmail: loggedInUser.email,
+    senderEmail: loggedInUser?.email,
     recipientEmail: "",
     subject: "",
     content: ""
