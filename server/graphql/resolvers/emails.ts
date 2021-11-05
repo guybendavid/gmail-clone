@@ -35,7 +35,7 @@ const emailsResolver = {
       const { ids } = args;
       const idIsNotValid = (id: string) => isNaN(Number(id));
 
-      if (ids.length > 0 && !ids.find(id => idIsNotValid(id))) {
+      if (ids.length > 0 && !ids.find(idIsNotValid)) {
         await Email.destroy({ where: { id: { [Op.in]: ids } } });
       } else {
         throw new UserInputError("Please send a valid id's array");

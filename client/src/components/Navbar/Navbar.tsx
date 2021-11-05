@@ -15,44 +15,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import "./Navbar.scss";
 
 const Navbar = () => {
-  const loggedInUser = getLoggedInUser();
-  const { isSmallScreen, logout } = useContext(AppContext) as AppContextType;
+  const { isSmallScreen } = useContext(AppContext) as AppContextType;
   const searchValue = useStore((state: Store) => state.searchValue);
   const setSearchValue = useStore((state: Store) => state.setSearchValue);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
-
-  const refreshPage = () => {
-    window.location.reload();
-  };
-
-  const AvatarMenu = () => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-
-    return (
-      <>
-        <IconButton onClick={handleClick}>
-          <Avatar className="avatar" alt="avatar" src={loggedInUser?.image} />
-        </IconButton>
-        <Menu
-          id="logout-menu"
-          keepMounted
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={logout}>Logout</MenuItem>
-        </Menu>
-      </>
-    );
-  };
 
   return (
     <div className="navbar">
@@ -61,7 +27,7 @@ const Navbar = () => {
           <IconButton>
             <MenuIcon />
           </IconButton>
-          <img src={AppIcon} alt="navbar-img" onClick={refreshPage} height="45" />
+          <img src={AppIcon} alt="navbar-img" onClick={() => window.location.reload()} height="45" />
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
@@ -97,6 +63,37 @@ const Navbar = () => {
           </div>}
       </div>
     </div>
+  );
+};
+
+const AvatarMenu = () => {
+  const loggedInUser = getLoggedInUser();
+  const { logout } = useContext(AppContext) as AppContextType;
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <IconButton onClick={handleClick}>
+        <Avatar className="avatar" alt="avatar" src={loggedInUser?.image} />
+      </IconButton>
+      <Menu
+        id="logout-menu"
+        keepMounted
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </Menu>
+    </>
   );
 };
 

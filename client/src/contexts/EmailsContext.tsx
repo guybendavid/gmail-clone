@@ -22,17 +22,6 @@ interface SetEmailToFullNameMappingData {
   setEmailToFullName: (emailFullNameMap: Participant) => void;
 }
 
-const isParticipantEmailInStore = (email: string, emailsToFullNames: Participant[]) =>
-  Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
-
-const setEmailToFullNameMapping = ({ participant, emailsToFullNames, setEmailToFullName }: SetEmailToFullNameMappingData) => {
-  const { email, fullName } = participant;
-
-  if (fullName && !isParticipantEmailInStore(email, emailsToFullNames)) {
-    setEmailToFullName({ email, fullName });
-  }
-};
-
 const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
 
 const EmailsContextProvider = ({ children }: Props) => {
@@ -73,6 +62,18 @@ const EmailsContextProvider = ({ children }: Props) => {
       {children}
     </EmailsContext.Provider>
   );
+};
+
+function isParticipantEmailInStore(email: string, emailsToFullNames: Participant[]) {
+  return Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
+}
+
+function setEmailToFullNameMapping({ participant, emailsToFullNames, setEmailToFullName }: SetEmailToFullNameMappingData) {
+  const { email, fullName } = participant;
+
+  if (fullName && !isParticipantEmailInStore(email, emailsToFullNames)) {
+    setEmailToFullName({ email, fullName });
+  }
 };
 
 export { EmailsContext, EmailsContextProvider };

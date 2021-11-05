@@ -18,23 +18,8 @@ const EmailsList = () => {
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);
   const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);
-
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
-
-  const isEmailSelected = (email: Email) => selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id);
-
-  const displayParticipantName = ({ sender, recipient }: Email) => {
-    const getTextToDisplay = (participantName: string) =>
-      participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
-
-    const getFullNameByStoredEmail = (email: string) =>
-      emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName;
-
-    return activeTab === 0 ?
-      getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email) as string) :
-      getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email) as string);
-  };
 
   useEffect(() => {
     if (newEmail) {
@@ -48,11 +33,11 @@ const EmailsList = () => {
       {emails?.filter((email: Email) =>
         `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: Email, index: number) => (
           <Fragment key={index}>
-            <ListItem button className={classNamesGenerator("email", isEmailSelected(email) && "is-selected")}>
+            <ListItem button className={classNamesGenerator("email", isEmailSelected(email, selectedEmails) && "is-selected")}>
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
-                  <Typography component="span">{displayParticipantName(email)}</Typography>
+                  <Typography component="span">{displayParticipantName(email, emailsToFullNames, activeTab)}</Typography>
                 </div>
                 <Typography component="span" className="email-body">{`${email.subject} - ${email.content}`}</Typography>
                 <Typography component="small" className="created-at">{timeDisplayer(email.createdAt)}</Typography>
@@ -63,6 +48,25 @@ const EmailsList = () => {
         ))}
     </List>
   );
+};
+
+function isEmailSelected(email: Email, selectedEmails: Email[]) {
+  return selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id);
+};
+
+function displayParticipantName({ sender, recipient }: Email, emailsToFullNames: Participant[], activeTab: number) {
+  function getTextToDisplay(participantName: string) {
+    const loggedInUser = getLoggedInUser();
+    return participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
+  }
+
+  function getFullNameByStoredEmail(email: string) {
+    return emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName;
+  }
+
+  return activeTab === 0 ?
+    getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email) as string) :
+    getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email) as string);
 };
 
 export default EmailsList;
