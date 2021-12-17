@@ -1,4 +1,4 @@
-import { useState, useContext, SyntheticEvent } from "react";
+import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
 import { getLoggedInUser } from "services/auth";
@@ -26,6 +26,9 @@ const ComposeForm = ({ isMinimized }: Props) => {
     content: ""
   });
 
+  const handleOnChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, field: keyof typeof mailValues) =>
+    setMailValues({ ...mailValues, [field]: e.target.value });
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -41,11 +44,11 @@ const ComposeForm = ({ isMinimized }: Props) => {
   return (
     <form onSubmit={handleSubmit} className={classNamesGenerator(isMinimized && "is-minimized")}>
       <div className="fields-wrapper">
-        <TextField required fullWidth label="To" onChange={(e) => setMailValues({ ...mailValues, recipientEmail: e.target.value })} />
-        <TextField required fullWidth label="Subject" onChange={(e) => setMailValues({ ...mailValues, subject: e.target.value })} />
+        <TextField required fullWidth label="To" onChange={(e) => handleOnChange(e, "recipientEmail")} />
+        <TextField required fullWidth label="Subject" onChange={(e) => handleOnChange(e, "subject")} />
       </div>
       <div className="content-wrapper">
-        <textarea required onChange={(e) => setMailValues({ ...mailValues, content: e.target.value })} />
+        <textarea required onChange={(e) => handleOnChange(e, "content")} />
       </div>
       <Button type="submit" className="desktop-send-button">Send</Button>
     </form>
