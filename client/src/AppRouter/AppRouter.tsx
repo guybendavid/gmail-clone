@@ -6,7 +6,7 @@ import { classNamesGenerator } from "@guybendavid/utils";
 import Login from "components/AuthForms/Login";
 import Register from "components/AuthForms/Register";
 import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
-import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
+import UnAuthenticatedRoute from "./Routes/UnAuthenticatedRoute";
 import DefaultRoute from "./Routes/DefaultRoute";
 import Main from "components/Main/Main";
 import IndicationMessage from "components/IndicationMessage/IndicationMessage";
@@ -29,8 +29,8 @@ const AppRouter = ({ setHistory }: Props) => {
     <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
-        <UnauthenticatedRoute exact path="/login" Component={Login} />
-        <UnauthenticatedRoute exact path="/register" Component={Register} />
+        <UnAuthenticatedRoute exact path="/login" Component={Login} />
+        <UnAuthenticatedRoute exact path="/register" Component={Register} />
         <DefaultRoute />
       </Switch>
       <IndicationMessage />
