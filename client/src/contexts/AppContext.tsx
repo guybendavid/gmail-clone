@@ -43,6 +43,8 @@ const AppContextProvider = ({ children, history }: Props) => {
     if (gqlContextErrorMessage === "Unauthenticated" || (!isAuthenticated && !isAuthForm)) {
       logout();
       content = gqlContextErrorMessage || "Unauthenticated";
+    } else if (gqlContextErrorMessage) {
+      content = gqlContextErrorMessage;
     } else if (isUserInputError || isSequelizeValidationError) {
       content = error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2];
     } else {
