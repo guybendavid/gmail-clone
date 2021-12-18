@@ -15,17 +15,17 @@ interface PrevDataOptions {
   client: ApolloClient<any>;
 }
 
-const getQueryOptions = (query: DocumentNode, loggedInUserEmail: string) => {
+function getQueryOptions(query: DocumentNode, loggedInUserEmail: string) {
   return { query, variables: { loggedInUserEmail } };
 };
 
-const getPrevData = ({ query, loggedInUserEmail, client }: PrevDataOptions): Email[] => {
+function getPrevData({ query, loggedInUserEmail, client }: PrevDataOptions): Email[] {
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
   const { getReceivedEmails, getSentEmails } = client.readQuery(queryOptions);
   return getReceivedEmails ? getReceivedEmails : getSentEmails;
 };
 
-const writeToCache = (client: ApolloClient<any>, queryOptions: QueryOptions, isReceivedEmails: boolean, newData: Email[]) => {
+function writeToCache(client: ApolloClient<any>, queryOptions: QueryOptions, isReceivedEmails: boolean, newData: Email[]) {
   const objectToCache = {
     ...queryOptions,
     data: isReceivedEmails ? { getReceivedEmails: newData } : { getSentEmails: newData }
@@ -34,7 +34,7 @@ const writeToCache = (client: ApolloClient<any>, queryOptions: QueryOptions, isR
   client.writeQuery(objectToCache);
 };
 
-const addNewEmailToCache = (newEmail: Email, loggedInUserEmail: string, client: ApolloClient<any>) => {
+function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, client: ApolloClient<any>) {
   const { email: recipientEmail } = newEmail.recipient as Participant;
   const { email: senderEmail } = newEmail.sender as Participant;
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;
@@ -60,7 +60,7 @@ const addNewEmailToCache = (newEmail: Email, loggedInUserEmail: string, client: 
   }
 };
 
-const deleteEmailsFromCache = (idsToDelete: string[], activeTab: number, loggedInUserEmail: string, client: ApolloClient<any>) => {
+function deleteEmailsFromCache(idsToDelete: string[], activeTab: number, loggedInUserEmail: string, client: ApolloClient<any>) {
   const isReceivedEmails = activeTab === 0;
   const query = isReceivedEmails ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
   const prevData = getPrevData({ query, loggedInUserEmail, client });

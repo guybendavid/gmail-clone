@@ -3,7 +3,7 @@ import { AppContext, AppContextType } from "./AppContext";
 import { Store, useStore } from "store/store";
 import { User, Email, Participant } from "interfaces/interfaces";
 import { useQuery, ApolloClient } from "@apollo/client";
-import { getLoggedInUser } from "services/auth";
+import { loggedInUser } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 import { useContext } from "react";
 
@@ -25,7 +25,6 @@ interface SetEmailToFullNameMappingData {
 const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
 
 const EmailsContextProvider = ({ children }: Props) => {
-  const loggedInUser = getLoggedInUser();
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const clearSnackBarMessage = useStore((state: Store) => state.clearSnackBarMessage);
   const activeTab = useStore((state: Store) => state.activeTab);

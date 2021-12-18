@@ -1,7 +1,7 @@
 import { useState, useContext, MouseEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
-import { getLoggedInUser } from "services/auth";
+import { loggedInUser } from "services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
 import InputBase from "@material-ui/core/InputBase";
@@ -67,7 +67,6 @@ const Navbar = () => {
 };
 
 const AvatarMenu = () => {
-  const loggedInUser = getLoggedInUser();
   const { logout } = useContext(AppContext) as AppContextType;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
