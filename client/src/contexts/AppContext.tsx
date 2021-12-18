@@ -35,9 +35,6 @@ const AppContextProvider = ({ children, history }: Props) => {
     let content = null;
 
     const isAuthForm = ["/login", "register"].includes(window.location.pathname);
-    const isGQLErrorExists = (gqlErrorMessage: string) => error.graphQLErrors?.[0]?.message?.includes(gqlErrorMessage);
-    const isUserInputError = isGQLErrorExists("UserInputError");
-    const isSequelizeValidationError = isGQLErrorExists("SequelizeValidationError");
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
     if (gqlContextErrorMessage === "Unauthenticated" || (!isAuthenticated && !isAuthForm)) {
@@ -45,8 +42,6 @@ const AppContextProvider = ({ children, history }: Props) => {
       content = gqlContextErrorMessage || "Unauthenticated";
     } else if (gqlContextErrorMessage) {
       content = gqlContextErrorMessage;
-    } else if (isUserInputError || isSequelizeValidationError) {
-      content = error.graphQLErrors[0].message.split(": ")[isUserInputError ? 1 : 2];
     } else {
       content = gqlErrorMessage;
     };
