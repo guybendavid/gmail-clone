@@ -1,9 +1,9 @@
 import { useEffect, createContext, ReactNode } from "react";
 import { AppContext, AppContextType } from "./AppContext";
 import { Store, useStore } from "store/store";
-import { User, Email, Participant } from "interfaces/interfaces";
+import { Email, Participant } from "interfaces/interfaces";
 import { useQuery, ApolloClient } from "@apollo/client";
-import { loggedInUser } from "services/auth";
+import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 import { useContext } from "react";
 
@@ -25,6 +25,7 @@ interface MapEmailToFullNameData {
 const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
 
 const EmailsContextProvider = ({ children }: Props) => {
+  const { loggedInUser } = getAuthData();
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const clearSnackBarMessage = useStore((state: Store) => state.clearSnackBarMessage);
   const activeTab = useStore((state: Store) => state.activeTab);
@@ -33,7 +34,7 @@ const EmailsContextProvider = ({ children }: Props) => {
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
   const { data, client: apolloClient } = useQuery(emailsToFetch, {
-    variables: { loggedInUserEmail: (loggedInUser as User)?.email },
+    variables: { loggedInUserEmail: loggedInUser?.email },
     onError: (error) => handleErrors(error),
     onCompleted: () => clearSnackBarMessage()
   });

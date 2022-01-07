@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
-import { User, Email } from "interfaces/interfaces";
+import { Email } from "interfaces/interfaces";
 import { useMutation, ApolloError } from "@apollo/client";
-import { loggedInUser } from "services/auth";
+import { getAuthData } from "services/auth";
 import { DELETE_EMAILS } from "services/graphql";
 import { deleteEmailsFromCache } from "services/emails-helper";
 import { IconButton, TablePagination } from "@material-ui/core";
@@ -15,6 +15,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import "./Actions.scss";
 
 const Actions = () => {
+  const { loggedInUser } = getAuthData();
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const { emails } = useContext(EmailsContext) as EmailsContextType;
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
@@ -29,7 +30,7 @@ const Actions = () => {
     if (ids.length > 0) {
       try {
         await deleteEmails({ variables: { ids } });
-        deleteEmailsFromCache(ids, activeTab, (loggedInUser as User)?.email, client);
+        deleteEmailsFromCache(ids, activeTab, loggedInUser?.email, client);
         setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
         setSelectedEmails([]);
       } catch (err) {

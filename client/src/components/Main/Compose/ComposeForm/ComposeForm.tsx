@@ -1,7 +1,7 @@
 import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
 import { AppContext, AppContextType } from "contexts/AppContext";
 import { Store, useStore } from "store/store";
-import { loggedInUser } from "services/auth";
+import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
 import { useMutation, ApolloError } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
@@ -13,6 +13,7 @@ interface Props {
 }
 
 const ComposeForm = ({ isMinimized }: Props) => {
+  const { loggedInUser } = getAuthData();
   const { handleErrors } = useContext(AppContext) as AppContextType;
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);

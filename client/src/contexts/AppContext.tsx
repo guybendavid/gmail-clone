@@ -2,7 +2,7 @@ import { createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
 import { ApolloError } from "@apollo/client";
 import { useMediaQuery } from "@material-ui/core";
-import { isAuthenticated } from "services/auth";
+import { getAuthData } from "services/auth";
 
 export type AppContextType = {
   isSmallScreen: boolean;
@@ -17,6 +17,7 @@ interface Props {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppContextProvider = ({ children }: Props) => {
+  const { isAuthenticated } = getAuthData();
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const isSmallScreen = useMediaQuery("(max-width:765px)");

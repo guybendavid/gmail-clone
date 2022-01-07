@@ -10,7 +10,11 @@ function handleAuth(data: User) {
   }
 }
 
-const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
-const isAuthenticated = loggedInUser && localStorage.token;
+function getAuthData() {
+  const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
+  const isAuthenticated = Boolean(loggedInUser && localStorage.token);
+  const isAuthForm = ["/login", "/register"].includes(window.location.pathname);
+  return { loggedInUser, isAuthenticated, isAuthForm };
+}
 
-export { loggedInUser, isAuthenticated, handleAuth };
+export { getAuthData, handleAuth };
