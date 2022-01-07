@@ -1,17 +1,17 @@
-import { useState, SyntheticEvent, useContext, ChangeEvent } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { LOGIN_USER } from "services/graphql";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
+import { useStore, Store } from "store/store";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import "./AuthForms.scss";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Login = () => {
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const handleErrors = useStore((state: Store) => state.handleErrors);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const { email } = formValues;
 

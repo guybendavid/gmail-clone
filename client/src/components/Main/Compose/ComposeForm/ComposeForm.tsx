@@ -1,5 +1,4 @@
-import { useState, useContext, SyntheticEvent, ChangeEvent } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { Store, useStore } from "store/store";
 import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
@@ -14,7 +13,7 @@ interface Props {
 
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const handleErrors = useStore((state: Store) => state.handleErrors);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const [sendEmail] = useMutation(SEND_EMAIL);

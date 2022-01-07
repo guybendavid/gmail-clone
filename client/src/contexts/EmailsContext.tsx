@@ -1,11 +1,9 @@
 import { useEffect, createContext, ReactNode } from "react";
-import { AppContext, AppContextType } from "./AppContext";
 import { Store, useStore } from "store/store";
 import { Email, Participant } from "interfaces/interfaces";
 import { useQuery, ApolloClient } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
-import { useContext } from "react";
 
 export type EmailsContextType = {
   apolloClient: ApolloClient<any> | undefined;
@@ -26,7 +24,7 @@ const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
 
 const EmailsContextProvider = ({ children }: Props) => {
   const { loggedInUser } = getAuthData();
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const handleErrors = useStore((state: Store) => state.handleErrors);
   const clearSnackBarMessage = useStore((state: Store) => state.clearSnackBarMessage);
   const activeTab = useStore((state: Store) => state.activeTab);
   const emailsToFullNames = useStore((state: Store) => state.emailsToFullNames);

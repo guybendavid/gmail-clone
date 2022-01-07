@@ -1,5 +1,4 @@
-import { useState, useContext, MouseEvent } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
+import { useState, MouseEvent } from "react";
 import { Store, useStore } from "store/store";
 import { getAuthData } from "services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
@@ -12,10 +11,11 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AppIcon from "images/app-icon.png";
 import MenuIcon from '@material-ui/icons/Menu';
+import useIsSmallScreen from "hooks/use-is-small-screen";
 import "./Navbar.scss";
 
 const Navbar = () => {
-  const { isSmallScreen } = useContext(AppContext) as AppContextType;
+  const { isSmallScreen } = useIsSmallScreen();
   const searchValue = useStore((state: Store) => state.searchValue);
   const setSearchValue = useStore((state: Store) => state.setSearchValue);
   const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
@@ -68,7 +68,8 @@ const Navbar = () => {
 
 const AvatarMenu = () => {
   const { loggedInUser } = getAuthData();
-  const { logout } = useContext(AppContext) as AppContextType;
+  const logout = useStore((state: Store) => state.logout);
+  // const { logout } = useContext(AppContext) as AppContextType;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

@@ -20,11 +20,13 @@ interface Store {
   setActiveTab: (activeTab: number) => void;
   emailsToFullNames: Participant[];
   setEmailToFullName: (emailToFullName: Participant) => void;
+  logout: () => void;
+  handleErrors: (error: any) => void;
 }
 
 const initalSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
 
-function store(set: any) {
+function store(set: any, get: any) {
   return {
     snackBarMessage: initalSnackBarMessage,
     setSnackBarMessage: (snackBarMessage: SnackBarMessage) => set(() => ({ snackBarMessage })),
@@ -39,7 +41,31 @@ function store(set: any) {
     setActiveTab: (activeTab: number) =>
       set((state: Store) => activeTab !== state.activeTab && ({ activeTab, selectedEmails: [], searchValue: "" })),
     emailsToFullNames: [],
-    setEmailToFullName: (emailToFullName: Participant) => set((state: Store) => state.emailsToFullNames.push(emailToFullName))
+    setEmailToFullName: (emailToFullName: Participant) => set((state: Store) => state.emailsToFullNames.push(emailToFullName)),
+    logout: () => {
+      set({ setIsComposeOpened: false });
+      localStorage.clear();
+      window.location.reload();
+    },
+    handleErrors: (error: any) => {
+      let content;
+      const { message: gqlErrorMessage } = error;
+      const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
+
+      if (gqlContextErrorMessage === "Unauthenticated") {
+        const logout = get().logout;
+        logout();
+        content = gqlContextErrorMessage || "Unauthenticated";
+      } else if (gqlContextErrorMessage) {
+        content = gqlContextErrorMessage;
+      } else {
+        content = gqlErrorMessage;
+      };
+
+      if (content) {
+        set({ snackBarMessage: { content, severity: "error" } });
+      }
+    }
   };
 }
 

@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { AppContext, AppContextType } from "contexts/AppContext";
 import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { Store, useStore } from "store/store";
 import { Email } from "interfaces/interfaces";
@@ -16,13 +15,12 @@ import "./Actions.scss";
 
 const Actions = () => {
   const { loggedInUser } = getAuthData();
-  const { handleErrors } = useContext(AppContext) as AppContextType;
+  const handleErrors = useStore((state: Store) => state.handleErrors);
   const { emails } = useContext(EmailsContext) as EmailsContextType;
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const selectedEmails = useStore((state: Store) => state.selectedEmails);
   const setSelectedEmails = useStore((state: Store) => state.setSelectedEmails);
   const activeTab = useStore((state: Store) => state.activeTab);
-
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS);
   const ids = selectedEmails.map((email: Email) => email.id);
 
