@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
-import { Store, useStore } from "store/store";
+import { useAppStore, AppStore } from "stores/appStore";
+import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Email } from "interfaces/interfaces";
 import { useMutation, ApolloError } from "@apollo/client";
 import { getAuthData } from "services/auth";
@@ -15,12 +16,12 @@ import "./Actions.scss";
 
 const Actions = () => {
   const { loggedInUser } = getAuthData();
-  const handleErrors = useStore((state: Store) => state.handleErrors);
+  const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
   const { emails } = useContext(EmailsContext) as EmailsContextType;
-  const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
-  const selectedEmails = useStore((state: Store) => state.selectedEmails);
-  const setSelectedEmails = useStore((state: Store) => state.setSelectedEmails);
-  const activeTab = useStore((state: Store) => state.activeTab);
+  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
+  const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
+  const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);
+  const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS);
   const ids = selectedEmails.map((email: Email) => email.id);
 

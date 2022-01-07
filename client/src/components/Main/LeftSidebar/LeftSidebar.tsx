@@ -1,4 +1,4 @@
-import { Store, useStore } from "store/store";
+import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
 import InboxIcon from "@material-ui/icons/Inbox";
@@ -35,14 +35,14 @@ const secondListTexts = [
 ];
 
 const LeftSidebar = () => {
-  const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
-  const activeTab = useStore((state: Store) => state.activeTab);
-  const setActiveTab = useStore((state: Store) => state.setActiveTab);
+  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
+  const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
+  const setActiveTab = useEmailsStore((state: EmailsStore) => state.setActiveTab);
 
   return (
     <div className="left-sidebar">
       <div className="button-wrapper">
-        <Button type="submit" fullWidth variant="contained" onClick={() => setIsComposeOpened(true)}>
+        <Button type="submit" fullWidth variant="contained" onClick={() => setIsComposeOpen(true)}>
           <img src={composeImg} alt="compose" />
           <Typography component="span">Compose</Typography>
         </Button>

@@ -1,5 +1,6 @@
 import { useState, MouseEvent } from "react";
-import { Store, useStore } from "store/store";
+import { useAppStore, AppStore } from "stores/appStore";
+import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
@@ -16,9 +17,9 @@ import "./Navbar.scss";
 
 const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();
-  const searchValue = useStore((state: Store) => state.searchValue);
-  const setSearchValue = useStore((state: Store) => state.setSearchValue);
-  const [searchBarIsOpened, setSearchBarIsOpened] = useState(false);
+  const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
+  const setSearchValue = useEmailsStore((state: EmailsStore) => state.setSearchValue);
+  const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
     <div className="navbar">
@@ -30,8 +31,8 @@ const Navbar = () => {
           <img src={AppIcon} alt="navbar-img" onClick={() => window.location.reload()} height="45" />
         </div>}
       <div className="right-section">
-        <ClickAwayListener onClickAway={() => setSearchBarIsOpened(false)}>
-          <div className={classNamesGenerator("search-wrapper", (isSmallScreen || searchBarIsOpened) && "white")}>
+        <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>
+          <div className={classNamesGenerator("search-wrapper", (isSmallScreen || searchBarIsOpen) && "white")}>
             <IconButton>
               {isSmallScreen ? <MenuIcon /> : <SearchIcon />}
             </IconButton>
@@ -40,7 +41,7 @@ const Navbar = () => {
               placeholder="Search mail"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              onClick={() => setSearchBarIsOpened(!searchBarIsOpened)}
+              onClick={() => setSearchBarIsOpen(!searchBarIsOpen)}
               inputProps={{ "aria-label": "search" }}
             />
             {isSmallScreen ?
@@ -68,7 +69,7 @@ const Navbar = () => {
 
 const AvatarMenu = () => {
   const { loggedInUser } = getAuthData();
-  const logout = useStore((state: Store) => state.logout);
+  const logout = useAppStore((state: AppStore) => state.logout);
   // const { logout } = useContext(AppContext) as AppContextType;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 

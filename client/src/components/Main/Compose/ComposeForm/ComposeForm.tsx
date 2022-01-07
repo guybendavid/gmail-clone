@@ -1,5 +1,6 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { Store, useStore } from "store/store";
+import { useAppStore, AppStore } from "stores/appStore";
+import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
 import { useMutation, ApolloError } from "@apollo/client";
@@ -13,9 +14,9 @@ interface Props {
 
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
-  const handleErrors = useStore((state: Store) => state.handleErrors);
-  const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
-  const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
+  const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
+  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
+  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
   const [sendEmail] = useMutation(SEND_EMAIL);
 
   const [mailValues, setMailValues] = useState({
@@ -34,7 +35,7 @@ const ComposeForm = ({ isMinimized }: Props) => {
     try {
       await sendEmail({ variables: { ...mailValues } });
       setSnackBarMessage({ content: "Message sent successfully", severity: "info" });
-      setIsComposeOpened(false);
+      setIsComposeOpen(false);
     } catch (err) {
       handleErrors(err as ApolloError);
     }

@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Store, useStore } from "store/store";
+import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Typography } from "@material-ui/core";
 import { classNamesGenerator } from "@guybendavid/utils";
 import MinimizeIcon from '@material-ui/icons/Minimize';
@@ -10,7 +10,7 @@ import ComposeForm from "../ComposeForm/ComposeForm";
 import "./ComposeModal.scss";
 
 const ComposeModal = () => {
-  const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
+  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const headerIconsGenerator = useCallback(() => {
@@ -20,7 +20,7 @@ const ComposeModal = () => {
       } else if (index === 0 && isMinimized) {
         return <MaximizeIcon key={index} onClick={() => setIsMinimized(false)} />;
       } else if (index === 2) {
-        return <CloseIcon key={index} onClick={() => setIsComposeOpened(false)} />;
+        return <CloseIcon key={index} onClick={() => setIsComposeOpen(false)} />;
       } else {
         return <HeightIcon key={index} onClick={(e) => e.stopPropagation()} />;
       }
