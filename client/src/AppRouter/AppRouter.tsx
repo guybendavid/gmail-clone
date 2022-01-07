@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { Container } from "@material-ui/core";
-import { Switch, useHistory, useLocation, withRouter, RouteComponentProps } from "react-router-dom";
-import { History, LocationState } from "history";
+import { Switch, useLocation, withRouter } from "react-router-dom";
 import { classNamesGenerator } from "@guybendavid/utils";
 import Login from "components/AuthForms/Login";
 import Register from "components/AuthForms/Register";
@@ -11,19 +9,9 @@ import DefaultRoute from "./Routes/DefaultRoute";
 import Main from "components/Main/Main";
 import IndicationMessage from "components/IndicationMessage/IndicationMessage";
 
-interface Props extends RouteComponentProps {
-  setHistory: (history: History<LocationState>) => void;
-}
-
-const AppRouter = ({ setHistory }: Props) => {
-  const history = useHistory();
+const AppRouter = () => {
   const location = useLocation();
   const isAuthForm = location.pathname === "/login" || location.pathname === "/register";
-
-  useEffect(() => {
-    setHistory(history);
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")}>

@@ -16,7 +16,7 @@ interface Props {
   children: ReactNode;
 }
 
-interface SetEmailToFullNameMappingData {
+interface MapEmailToFullNameData {
   participant: Participant;
   emailsToFullNames: Participant[];
   setEmailToFullName: (emailFullNameMap: Participant) => void;
@@ -49,8 +49,8 @@ const EmailsContextProvider = ({ children }: Props) => {
         const { sender, recipient } = email;
 
         isReceivedEmails ?
-          setEmailToFullNameMapping({ participant: sender as Participant, ...sharedProps }) :
-          setEmailToFullNameMapping({ participant: recipient as Participant, ...sharedProps });
+          mapEmailToFullName({ participant: sender as Participant, ...sharedProps }) :
+          mapEmailToFullName({ participant: recipient as Participant, ...sharedProps });
       });
     }
     // eslint-disable-next-line
@@ -67,7 +67,7 @@ function isParticipantEmailInStore(email: string, emailsToFullNames: Participant
   return Boolean(emailsToFullNames.find(emailToFullName => emailToFullName.email === email));
 }
 
-function setEmailToFullNameMapping({ participant, emailsToFullNames, setEmailToFullName }: SetEmailToFullNameMappingData) {
+function mapEmailToFullName({ participant, emailsToFullNames, setEmailToFullName }: MapEmailToFullNameData) {
   const { email, fullName } = participant;
 
   if (fullName && !isParticipantEmailInStore(email, emailsToFullNames)) {

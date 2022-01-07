@@ -1,7 +1,6 @@
 import { createContext, ReactNode } from "react";
 import { Store, useStore } from "store/store";
 import { ApolloError } from "@apollo/client";
-import { HistoryType } from "App";
 import { useMediaQuery } from "@material-ui/core";
 import { isAuthenticated } from "services/auth";
 
@@ -13,12 +12,11 @@ export type AppContextType = {
 
 interface Props {
   children: ReactNode;
-  history?: HistoryType;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const AppContextProvider = ({ children, history }: Props) => {
+const AppContextProvider = ({ children }: Props) => {
   const setIsComposeOpened = useStore((state: Store) => state.setIsComposeOpened);
   const setSnackBarMessage = useStore((state: Store) => state.setSnackBarMessage);
   const isSmallScreen = useMediaQuery("(max-width:765px)");
@@ -26,7 +24,6 @@ const AppContextProvider = ({ children, history }: Props) => {
   const logout = () => {
     setIsComposeOpened(false);
     localStorage.clear();
-    history?.push("/login");
     window.location.reload();
   };
 
@@ -34,7 +31,7 @@ const AppContextProvider = ({ children, history }: Props) => {
     const { message: gqlErrorMessage } = error;
     let content = null;
 
-    const isAuthForm = ["/login", "register"].includes(window.location.pathname);
+    const isAuthForm = ["/login", "/register"].includes(window.location.pathname);
     const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
 
     if (gqlContextErrorMessage === "Unauthenticated" || (!isAuthenticated && !isAuthForm)) {
