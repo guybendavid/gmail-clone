@@ -70,7 +70,6 @@ const Navbar = () => {
 const AvatarMenu = () => {
   const { loggedInUser } = getAuthData();
   const logout = useAppStore((state: AppStore) => state.logout);
-  // const { logout } = useContext(AppContext) as AppContextType;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
