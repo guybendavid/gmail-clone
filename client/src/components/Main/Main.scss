@@ -8,19 +8,9 @@
 
   .emails-wrapper {
     flex: 0.82;
-  }
 
-  @media only screen and (max-width: 765px) {
-    height: unset;
-
-    .emails-wrapper {
+    @media only screen and (max-width: 765px) {
       flex: 1;
-
-      .emails-footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-      }
     }
   }
 }

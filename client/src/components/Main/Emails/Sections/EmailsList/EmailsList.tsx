@@ -8,12 +8,14 @@ import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
 import useEmails from "hooks/use-emails";
+import useIsSmallScreen from "hooks/use-is-small-screen";
 import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
   const { loggedInUser } = getAuthData();
   const { emails, apolloClient } = useEmails();
+  const { isSmallScreen } = useIsSmallScreen();
   const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
@@ -29,7 +31,7 @@ const EmailsList = () => {
   }, [newEmail]);
 
   return (
-    <List className="emails-list">
+    <List className={classNamesGenerator("emails-list", isSmallScreen && "is-small-screen")}>
       {emails?.filter((email: Email) =>
         `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: Email, index: number) => (
           <Fragment key={index}>

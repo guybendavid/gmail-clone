@@ -1,13 +1,10 @@
 @import "styles/Mixins.scss";
 
 .emails-wrapper {
-  display: flex;
-  flex-direction: column;
-  background: white;
-
-  .scroll-area {
-    @extend %scrollbar;
-    flex: 0.75;
-    overflow-y: auto;
+  .emails-list-footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
   }
 }

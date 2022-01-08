@@ -1,7 +1,13 @@
 @import "styles/Mixins.scss";
 
 .emails-list {
+  @extend %scrollbar;
+  overflow-y: auto;
   padding: 0 !important;
+
+  &:not(.is-small-screen) {
+    height: 70%;
+  }
 
   .email {
     padding: 10px 16px 10px 5px;
