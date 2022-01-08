@@ -15,6 +15,10 @@ interface PrevDataOptions {
   client: ApolloClient<any>;
 }
 
+interface UpdateCachedEmailsListOptions extends PrevDataOptions {
+  newEmail: Email;
+}
+
 function getQueryOptions(query: DocumentNode, loggedInUserEmail: string) {
   return { query, variables: { loggedInUserEmail } };
 };
@@ -34,29 +38,29 @@ function writeToCache(client: ApolloClient<any>, queryOptions: QueryOptions, isR
   client.writeQuery(objectToCache);
 };
 
+function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: UpdateCachedEmailsListOptions) {
+  const queryOptions = getQueryOptions(query, loggedInUserEmail);
+
+  if (client.readQuery(queryOptions)) {
+    const prevData = getPrevData({ query, loggedInUserEmail, client });
+    const newData = [newEmail, ...prevData];
+    const isReceivedEmails = query === GET_RECEIVED_EMAILS;
+    writeToCache(client, queryOptions, isReceivedEmails, newData);
+  }
+};
+
 function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, client: ApolloClient<any>) {
   const { email: recipientEmail } = newEmail.recipient as Participant;
   const { email: senderEmail } = newEmail.sender as Participant;
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;
 
-  const updateCachedQuery = ({ query, loggedInUserEmail, client }: PrevDataOptions) => {
-    const queryOptions = getQueryOptions(query, loggedInUserEmail);
-
-    if (client.readQuery(queryOptions)) {
-      const prevData = getPrevData({ query, loggedInUserEmail, client });
-      const newData = [newEmail, ...prevData];
-      const isReceivedEmails = query === GET_RECEIVED_EMAILS;
-      writeToCache(client, queryOptions, isReceivedEmails, newData);
-    }
-  };
-
   if (isSentToYourself) {
     [GET_RECEIVED_EMAILS, GET_SENT_EMAILS].forEach((query) => {
-      updateCachedQuery({ query, loggedInUserEmail, client });
+      updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
     });
   } else {
     const query = recipientEmail === loggedInUserEmail ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
-    updateCachedQuery({ query, loggedInUserEmail, client });
+    updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
   }
 };
 

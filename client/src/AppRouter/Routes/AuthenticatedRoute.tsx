@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Route, Redirect } from "react-router";
-import { EmailsContextProvider } from "contexts/EmailsContext";
 import { getAuthData } from "services/auth";
 import Navbar from "components/Navbar/Navbar";
 
@@ -16,10 +15,10 @@ const AuthenticatedRoute = ({ path, Component }: Props) => {
 
   return (
     <Route path={path} render={() => isAuthenticated ?
-      <EmailsContextProvider>
+      <>
         <Navbar />
         <Component />
-      </EmailsContextProvider>
+      </>
       :
       <Redirect to="/login" />} />
   );

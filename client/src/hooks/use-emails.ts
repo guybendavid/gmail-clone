@@ -1,4 +1,4 @@
-import { useEffect, createContext, ReactNode } from "react";
+import { useEffect } from "react";
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Email, Participant } from "interfaces/interfaces";
@@ -6,24 +6,13 @@ import { useQuery, ApolloClient } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 
-type EmailsContextType = {
-  apolloClient: ApolloClient<any> | undefined;
-  emails: Email[];
-};
-
-interface Props {
-  children: ReactNode;
-}
-
 interface MapEmailToFullNameData {
   participant: Participant;
   emailsToFullNames: Participant[];
   setEmailToFullName: (emailFullNameMap: Participant) => void;
 }
 
-const EmailsContext = createContext<EmailsContextType | undefined>(undefined);
-
-const EmailsContextProvider = ({ children }: Props) => {
+const useEmails = () => {
   const { loggedInUser } = getAuthData();
   const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
   const clearSnackBarMessage = useAppStore((state: AppStore) => state.clearSnackBarMessage);
@@ -56,11 +45,7 @@ const EmailsContextProvider = ({ children }: Props) => {
     // eslint-disable-next-line
   }, [emails]);
 
-  return (
-    <EmailsContext.Provider value={{ apolloClient, emails }}>
-      {children}
-    </EmailsContext.Provider>
-  );
+  return { emails, apolloClient } as { emails: Email[], apolloClient: ApolloClient<any>; };
 };
 
 function isParticipantEmailInStore(email: string, emailsToFullNames: Participant[]) {
@@ -75,5 +60,4 @@ function mapEmailToFullName({ participant, emailsToFullNames, setEmailToFullName
   }
 };
 
-export { EmailsContext, EmailsContextProvider };
-export type { EmailsContextType };
+export default useEmails;

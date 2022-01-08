@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Email } from "interfaces/interfaces";
@@ -8,6 +6,7 @@ import { getAuthData } from "services/auth";
 import { DELETE_EMAILS } from "services/graphql";
 import { deleteEmailsFromCache } from "services/emails-helper";
 import { IconButton, TablePagination } from "@material-ui/core";
+import useEmails from "hooks/use-emails";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -16,8 +15,8 @@ import "./Actions.scss";
 
 const Actions = () => {
   const { loggedInUser } = getAuthData();
+  const { emails } = useEmails();
   const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
-  const { emails } = useContext(EmailsContext) as EmailsContextType;
   const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);

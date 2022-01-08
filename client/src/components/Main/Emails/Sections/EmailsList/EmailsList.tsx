@@ -1,19 +1,19 @@
-import { useContext, useEffect, Fragment } from "react";
-import { EmailsContext, EmailsContextType } from "contexts/EmailsContext";
+import { useEffect, Fragment } from "react";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
-import { ApolloClient, useSubscription } from "@apollo/client";
+import { useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
 import { Email, Participant } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
+import useEmails from "hooks/use-emails";
 import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
 import "./EmailsList.scss";
 
 const EmailsList = () => {
   const { loggedInUser } = getAuthData();
-  const { apolloClient, emails } = useContext(EmailsContext) as EmailsContextType;
+  const { emails, apolloClient } = useEmails();
   const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
@@ -23,7 +23,7 @@ const EmailsList = () => {
 
   useEffect(() => {
     if (newEmail) {
-      addNewEmailToCache(newEmail, loggedInUser?.email, (apolloClient as ApolloClient<any>));
+      addNewEmailToCache(newEmail, loggedInUser?.email, apolloClient);
     }
     // eslint-disable-next-line
   }, [newEmail]);
