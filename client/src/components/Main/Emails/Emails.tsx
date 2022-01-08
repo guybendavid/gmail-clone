@@ -14,8 +14,8 @@ const Emails = () => {
       <div className="scroll-area">
         {!isSmallScreen && <TabsRow />}
         <EmailsList />
+        {isSmallScreen && <EmailsFooter />}
       </div>
-      {isSmallScreen && <EmailsFooter />}
     </div>
   );
 };
