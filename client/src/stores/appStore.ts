@@ -13,13 +13,13 @@ interface AppStore {
   handleErrors: (error: any) => void;
 }
 
-const initalSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
+const initialSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
 
 function appStore(set: any, get: any) {
   return {
-    snackBarMessage: initalSnackBarMessage,
+    snackBarMessage: initialSnackBarMessage,
     setSnackBarMessage: (snackBarMessage: SnackBarMessage) => set(() => ({ snackBarMessage })),
-    clearSnackBarMessage: () => set(() => ({ snackBarMessage: initalSnackBarMessage })),
+    clearSnackBarMessage: () => set(() => ({ snackBarMessage: initialSnackBarMessage })),
     logout: () => {
       set({ setIsComposeOpen: false });
       localStorage.clear();
