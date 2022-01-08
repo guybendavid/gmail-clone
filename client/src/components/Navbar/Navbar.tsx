@@ -28,7 +28,7 @@ const Navbar = () => {
           <IconButton>
             <MenuIcon />
           </IconButton>
-          <img src={AppIcon} alt="navbar-img" onClick={() => window.location.reload()} height="45" />
+          <img src={AppIcon} alt="navbar-img" height="45" />
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>
