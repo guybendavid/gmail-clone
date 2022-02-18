@@ -21,10 +21,10 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
     }
   );
 
-  for await (const email of emails) {
+  emails.forEach((email: any) => {
     email.sender = { email: email.sender_email, fullName: email.sender_full_name };
     email.recipient = { email: email.recipient_email, fullName: email.recipient_full_name };
-  }
+  });
 
   return emails;
 };
