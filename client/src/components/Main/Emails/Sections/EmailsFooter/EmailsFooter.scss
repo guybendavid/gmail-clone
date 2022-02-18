@@ -7,7 +7,7 @@
   width: 100%;
 
   .tabs {
-    @extend %tabs;
+    background: white;
 
     button {
       &.active {
