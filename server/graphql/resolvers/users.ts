@@ -8,7 +8,7 @@ const generateImage = require("../../utils/generate-image");
 
 const usersResolver = {
   Mutation: {
-    register: async (_parent: any, args: IUSER) => {
+    register: async (_parent: any, args: Required<IUSER>) => {
       const { firstName, lastName, email, password } = args;
       const isUserExists = await User.findOne({ where: { email } });
 
@@ -16,7 +16,7 @@ const usersResolver = {
         throw new UserInputError("email already exists");
       }
 
-      const hasedPassword = await bcrypt.hash(password as string, 6);
+      const hasedPassword = await bcrypt.hash(password, 6);
       const image = generateImage();
       const user = await User.create({ firstName, lastName, email, password: hasedPassword, image });
       const { password: userPassword, ...safeUserData } = user.toJSON();

@@ -1,5 +1,5 @@
 import { ApolloClient, DocumentNode } from "@apollo/client";
-import { Email, Participant } from "interfaces/interfaces";
+import { Email } from "interfaces/interfaces";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "./graphql";
 
 interface QueryOptions {
@@ -49,9 +49,9 @@ function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: 
   }
 };
 
-function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, client: ApolloClient<any>) {
-  const { email: recipientEmail } = newEmail.recipient as Participant;
-  const { email: senderEmail } = newEmail.sender as Participant;
+function addNewEmailToCache(newEmail: Required<Email>, loggedInUserEmail: string, client: ApolloClient<any>) {
+  const { email: recipientEmail } = newEmail.recipient;
+  const { email: senderEmail } = newEmail.sender;
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;
 
   if (isSentToYourself) {

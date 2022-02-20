@@ -7,7 +7,7 @@ interface EmailsStore {
   searchValue: string;
   setSearchValue: (searchValue: string) => void;
   emailsToFullNames: Participant[];
-  setEmailToFullName: (emailToFullName: Participant) => void;
+  mapEmailToFullName: (emailToFullName: Participant) => void;
   selectedEmails: Email[];
   setSelectedEmails: (selectedEmails: Email[]) => void;
   isComposeOpen: boolean;
@@ -22,8 +22,9 @@ function emailsStore(set: any) {
     searchValue: "",
     setSearchValue: (searchValue: string) => set(() => ({ searchValue })),
     emailsToFullNames: [],
-    setEmailToFullName: (emailToFullName: Participant) =>
-      set((state: EmailsStore) => state.emailsToFullNames.push(emailToFullName)),
+    mapEmailToFullName: (emailToFullName: Participant) => set(({ emailsToFullNames: prevArr }: EmailsStore) => ({
+      emailsToFullName: prevArr.find(item => item.email === emailToFullName.email) ? [...prevArr] : [...prevArr, emailToFullName]
+    })),
     selectedEmails: [],
     setSelectedEmails: (selectedEmails: Email[]) => set(() => ({ selectedEmails })),
     isComposeOpen: false,

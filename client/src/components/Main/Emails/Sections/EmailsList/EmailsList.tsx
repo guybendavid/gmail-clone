@@ -39,7 +39,9 @@ const EmailsList = () => {
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
-                  <Typography component="span">{displayParticipantName(email, emailsToFullNames, activeTab)}</Typography>
+                  <Typography component="span">
+                    {displayParticipantName(email as Required<Email>, emailsToFullNames, activeTab)}
+                  </Typography>
                 </div>
                 <Typography component="span" className="email-body">{`${email.subject} - ${email.content}`}</Typography>
                 <Typography component="small" className="created-at">{timeDisplayer(email.createdAt)}</Typography>
@@ -53,22 +55,22 @@ const EmailsList = () => {
 };
 
 function isEmailSelected(email: Email, selectedEmails: Email[]) {
-  return selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id);
+  return Boolean(selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id));
 };
 
-function displayParticipantName({ sender, recipient }: Email, emailsToFullNames: Participant[], activeTab: number) {
+function displayParticipantName({ sender, recipient }: Required<Email>, emailsToFullNames: Participant[], activeTab: number) {
   function getTextToDisplay(participantName: string) {
     const { loggedInUser } = getAuthData();
     return participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
   }
 
   function getFullNameByStoredEmail(email: string) {
-    return emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName;
+    return emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
   }
 
   return activeTab === 0 ?
-    getTextToDisplay((sender as Participant).fullName || getFullNameByStoredEmail((sender as Participant).email) as string) :
-    getTextToDisplay((recipient as Participant).fullName || getFullNameByStoredEmail((recipient as Participant).email) as string);
+    getTextToDisplay(sender.fullName || getFullNameByStoredEmail(sender.email)) :
+    getTextToDisplay(recipient.fullName || getFullNameByStoredEmail(recipient.email));
 };
 
 export default EmailsList;
