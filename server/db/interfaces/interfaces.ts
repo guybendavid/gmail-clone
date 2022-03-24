@@ -6,11 +6,23 @@ interface User {
   password?: string;
 }
 
-interface Email {
-  sender: string;
-  recipient: string;
+interface Participant {
+  email: string;
+  fullName: string;
+}
+
+interface DBEmail {
+  sender_email: string;
+  recipient_email: string;
+  sender_full_name: string;
+  recipient_full_name: string;
   subject: string;
   content: string;
+}
+
+interface EmailResponse extends Pick<DBEmail, "subject" | "content"> {
+  sender: Participant,
+  recipient: Participant;
 }
 
 interface SendEmailPayload {
@@ -22,4 +34,4 @@ interface SendEmailPayload {
 
 type ParticipantType = "sender" | "recipient";
 
-export { User, Email, SendEmailPayload, ParticipantType };
+export { User, DBEmail, EmailResponse, SendEmailPayload, ParticipantType };

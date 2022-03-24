@@ -1,4 +1,4 @@
-import { Email as IEmail, ParticipantType } from "../db/interfaces/interfaces";
+import { DBEmail, EmailResponse, ParticipantType } from "../db/interfaces/interfaces";
 import { sequelize, User } from "../db/models/models-config";
 import { QueryTypes } from "sequelize";
 import { AuthenticationError } from "apollo-server";
@@ -21,14 +21,14 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
     }
   );
 
-  return emails.map((email: any) => ({
+  return emails.map((email: DBEmail) => ({
     ...email,
     sender: { email: email.sender_email, fullName: email.sender_full_name },
     recipient: { email: email.recipient_email, fullName: email.recipient_full_name }
   }));
 };
 
-const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: IEmail) => {
+const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: EmailResponse) => {
   const getFullNameByEmail = async () => {
     const { firstName, lastName } = await User.findOne({ where: { email: participantEmail } });
     return `${firstName} ${lastName}`;
