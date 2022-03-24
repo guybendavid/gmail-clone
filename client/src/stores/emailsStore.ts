@@ -1,13 +1,11 @@
 import create from "zustand";
-import { Participant, Email } from "interfaces/interfaces";
+import { Email } from "interfaces/interfaces";
 
 interface EmailsStore {
   activeTab: number;
   setActiveTab: (activeTab: number) => void;
   searchValue: string;
   setSearchValue: (searchValue: string) => void;
-  emailsToFullNames: Participant[];
-  mapEmailToFullName: (emailToFullName: Participant) => void;
   selectedEmails: Email[];
   setSelectedEmails: (selectedEmails: Email[]) => void;
   isComposeOpen: boolean;
@@ -21,10 +19,6 @@ function emailsStore(set: any) {
       set((state: EmailsStore) => activeTab !== state.activeTab && ({ activeTab, selectedEmails: [], searchValue: "" })),
     searchValue: "",
     setSearchValue: (searchValue: string) => set(() => ({ searchValue })),
-    emailsToFullNames: [],
-    mapEmailToFullName: (emailToFullName: Participant) => set(({ emailsToFullNames: prevArr }: EmailsStore) => ({
-      emailsToFullName: prevArr.find(item => item.email === emailToFullName.email) ? [...prevArr] : [...prevArr, emailToFullName]
-    })),
     selectedEmails: [],
     setSelectedEmails: (selectedEmails: Email[]) => set(() => ({ selectedEmails })),
     isComposeOpen: false,

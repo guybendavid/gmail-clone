@@ -22,4 +22,4 @@ interface Participant {
   fullName: string;
 }
 
-export type { User, Email, Participant };
+export type { User, Email };

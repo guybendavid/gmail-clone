@@ -21,12 +21,11 @@ const getEmails = async ({ loggedInUserEmail, participantType }: GetEmails) => {
     }
   );
 
-  emails.forEach((email: any) => {
-    email.sender = { email: email.sender_email, fullName: email.sender_full_name };
-    email.recipient = { email: email.recipient_email, fullName: email.recipient_full_name };
-  });
-
-  return emails;
+  return emails.map((email: any) => ({
+    ...email,
+    sender: { email: email.sender_email, fullName: email.sender_full_name },
+    recipient: { email: email.recipient_email, fullName: email.recipient_full_name }
+  }));
 };
 
 const formatParticipant = async (participantType: ParticipantType, participantEmail: string, newEmail: IEmail) => {

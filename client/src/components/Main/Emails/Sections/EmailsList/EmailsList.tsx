@@ -3,7 +3,7 @@ import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
-import { Email, Participant } from "interfaces/interfaces";
+import { Email } from "interfaces/interfaces";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
@@ -19,7 +19,6 @@ const EmailsList = () => {
   const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
-  const emailsToFullNames = useEmailsStore((state: EmailsStore) => state.emailsToFullNames);
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
@@ -39,9 +38,7 @@ const EmailsList = () => {
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
-                  <Typography component="span">
-                    {displayParticipantName(email as Required<Email>, emailsToFullNames, activeTab)}
-                  </Typography>
+                  <Typography component="span">{displayParticipantName(email as Required<Email>, activeTab)}</Typography>
                 </div>
                 <Typography component="span" className="email-body">{`${email.subject} - ${email.content}`}</Typography>
                 <Typography component="small" className="created-at">{timeDisplayer(email.createdAt)}</Typography>
@@ -58,19 +55,10 @@ function isEmailSelected(email: Email, selectedEmails: Email[]) {
   return Boolean(selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id));
 };
 
-function displayParticipantName({ sender, recipient }: Required<Email>, emailsToFullNames: Participant[], activeTab: number) {
-  function getTextToDisplay(participantName: string) {
-    const { loggedInUser } = getAuthData();
-    return participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
-  }
-
-  function getFullNameByStoredEmail(email: string) {
-    return emailsToFullNames.find(emailToFullName => emailToFullName.email === email)?.fullName || "";
-  }
-
-  return activeTab === 0 ?
-    getTextToDisplay(sender.fullName || getFullNameByStoredEmail(sender.email)) :
-    getTextToDisplay(recipient.fullName || getFullNameByStoredEmail(recipient.email));
+function displayParticipantName({ sender, recipient }: Required<Email>, activeTab: number) {
+  const { loggedInUser } = getAuthData();
+  const participantName = activeTab === 0 ? sender.fullName : recipient.fullName;
+  return participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
 };
 
 export default EmailsList;
