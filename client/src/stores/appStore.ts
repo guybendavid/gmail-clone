@@ -26,22 +26,14 @@ function appStore(set: any, get: any) {
       window.location.reload();
     },
     handleErrors: (error: any) => {
-      let content;
       const { message: gqlErrorMessage } = error;
       const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
+      const content = gqlContextErrorMessage || gqlErrorMessage || "Something went wrong...";
+      set({ snackBarMessage: { content, severity: "error" } });
 
-      if (gqlContextErrorMessage === "Unauthenticated") {
+      if (content === "Unauthenticated") {
         const logout = get().logout;
         logout();
-        content = gqlContextErrorMessage || "Unauthenticated";
-      } else if (gqlContextErrorMessage) {
-        content = gqlContextErrorMessage;
-      } else {
-        content = gqlErrorMessage;
-      };
-
-      if (content) {
-        set({ snackBarMessage: { content, severity: "error" } });
       }
     }
   };
