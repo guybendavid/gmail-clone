@@ -3,9 +3,9 @@ import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
-import { useMutation, ApolloError } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
-import { classNamesGenerator } from "@guybendavid/utils";
+import { classNamesGenerator, getFormValidationErrors } from "@guybendavid/utils";
 import "./ComposeForm.scss";
 
 interface Props {
@@ -14,10 +14,13 @@ interface Props {
 
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
-  const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
-  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
+  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
+  const setGlobalMessage = useAppStore((state: AppStore) => state.setGlobalMessage);
   const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
-  const [sendEmail] = useMutation(SEND_EMAIL);
+
+  const [sendEmail] = useMutation(SEND_EMAIL, {
+    onError: (err) => handleServerErrors(err)
+  });
 
   const [mailValues, setMailValues] = useState({
     senderEmail: loggedInUser?.email,
@@ -31,14 +34,16 @@ const ComposeForm = ({ isMinimized }: Props) => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    const { message: errorMessage } = getFormValidationErrors(mailValues);
 
-    try {
-      await sendEmail({ variables: { ...mailValues } });
-      setSnackBarMessage({ content: "Message sent successfully", severity: "info" });
-      setIsComposeOpen(false);
-    } catch (err) {
-      handleErrors(err as ApolloError);
+    if (errorMessage) {
+      setGlobalMessage({ content: errorMessage, severity: "error" });
+      return;
     }
+
+    await sendEmail({ variables: mailValues });
+    setGlobalMessage({ content: "Email sent successfully", severity: "info" });
+    setIsComposeOpen(false);
   };
 
   return (

@@ -7,15 +7,15 @@ import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 
 const useEmails = () => {
   const { loggedInUser } = getAuthData();
-  const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
-  const clearSnackBarMessage = useAppStore((state: AppStore) => state.clearSnackBarMessage);
+  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
+  const clearGlobalMessage = useAppStore((state: AppStore) => state.clearGlobalMessage);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
   const { data, client: apolloClient } = useQuery(emailsToFetch, {
     variables: { loggedInUserEmail: loggedInUser?.email },
-    onError: (error) => handleErrors(error),
-    onCompleted: () => clearSnackBarMessage()
+    onError: (error) => handleServerErrors(error),
+    onCompleted: () => clearGlobalMessage()
   });
 
   const emails = data?.getReceivedEmails || data?.getSentEmails;

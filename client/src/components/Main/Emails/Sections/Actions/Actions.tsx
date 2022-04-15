@@ -1,11 +1,12 @@
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Email } from "interfaces/interfaces";
-import { useMutation, ApolloError } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { DELETE_EMAILS } from "services/graphql";
 import { deleteEmailsFromCache } from "services/emails-helper";
 import { IconButton, TablePagination } from "@material-ui/core";
+import { getFormValidationErrors } from "@guybendavid/utils";
 import useEmails from "hooks/use-emails";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,24 +17,32 @@ import "./Actions.scss";
 const Actions = () => {
   const { loggedInUser } = getAuthData();
   const { emails } = useEmails();
-  const handleErrors = useAppStore((state: AppStore) => state.handleErrors);
-  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
+  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
+  const setGlobalMessage = useAppStore((state: AppStore) => state.setGlobalMessage);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
-  const [deleteEmails, { client }] = useMutation(DELETE_EMAILS);
+
+  const [deleteEmails, { client }] = useMutation(DELETE_EMAILS, {
+    onError: (err) => handleServerErrors(err)
+  });
+
   const ids = selectedEmails.map((email: Email) => email.id);
 
   const deleteFunc = async () => {
     if (ids.length > 0) {
-      try {
-        await deleteEmails({ variables: { ids } });
-        deleteEmailsFromCache(ids, activeTab, loggedInUser?.email, client);
-        setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
-        setSelectedEmails([]);
-      } catch (err) {
-        handleErrors(err as ApolloError);
+      const deleteEmailsPayload = { ids };
+      const { message: errorMessage } = getFormValidationErrors(deleteEmailsPayload);
+
+      if (errorMessage) {
+        setGlobalMessage({ content: errorMessage, severity: "error" });
+        return;
       }
+
+      await deleteEmails({ variables: deleteEmailsPayload });
+      deleteEmailsFromCache(ids, activeTab, loggedInUser?.email, client);
+      setGlobalMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
+      setSelectedEmails([]);
     }
   };
 

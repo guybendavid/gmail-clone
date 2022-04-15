@@ -1,35 +1,35 @@
 import create from "zustand";
 
-type SnackBarMessage = {
+type GlobalMessage = {
   content: string;
   severity: "error" | "info" | "success" | "warning";
 };
 
 interface AppStore {
-  snackBarMessage: SnackBarMessage;
-  setSnackBarMessage: (snackBarMessage: SnackBarMessage) => void;
-  clearSnackBarMessage: () => void;
+  globalMessage: GlobalMessage;
+  setGlobalMessage: (globalMessage: GlobalMessage) => void;
+  clearGlobalMessage: () => void;
   logout: () => void;
-  handleErrors: (error: any) => void;
+  handleServerErrors: (error: any) => void;
 }
 
-const initialSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
+const initialGlobalMessage: GlobalMessage = { content: "", severity: "error" };
 
 function appStore(set: any, get: any) {
   return {
-    snackBarMessage: initialSnackBarMessage,
-    setSnackBarMessage: (snackBarMessage: SnackBarMessage) => set(() => ({ snackBarMessage })),
-    clearSnackBarMessage: () => set(() => ({ snackBarMessage: initialSnackBarMessage })),
+    globalMessage: initialGlobalMessage,
+    setGlobalMessage: (globalMessage: GlobalMessage) => set(() => ({ globalMessage })),
+    clearGlobalMessage: () => set(() => ({ globalMessage: initialGlobalMessage })),
     logout: () => {
       set({ setIsComposeOpen: false });
       localStorage.clear();
       window.location.reload();
     },
-    handleErrors: (error: any) => {
+    handleServerErrors: (error: any) => {
       const { message: gqlErrorMessage } = error;
       const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
       const content = gqlContextErrorMessage || gqlErrorMessage || "Something went wrong...";
-      set({ snackBarMessage: { content, severity: "error" } });
+      set({ globalMessage: { content, severity: "error" } });
 
       if (content === "Unauthenticated") {
         const logout = get().logout;

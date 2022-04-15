@@ -9,13 +9,13 @@ import "./IndicationMessage.scss";
 const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };
 
 const IndicationMessage = () => {
-  const snackBarMessage = useAppStore((state: AppStore) => state.snackBarMessage);
-  const clearSnackBarMessage = useAppStore((state: AppStore) => state.clearSnackBarMessage);
-  const { content, severity } = snackBarMessage;
+  const globalMessage = useAppStore((state: AppStore) => state.globalMessage);
+  const clearGlobalMessage = useAppStore((state: AppStore) => state.clearGlobalMessage);
+  const { content, severity } = globalMessage;
   const [open, setOpen] = useState(false);
 
   const closeMessage = () => {
-    clearSnackBarMessage();
+    clearGlobalMessage();
     setOpen(false);
   };
 
