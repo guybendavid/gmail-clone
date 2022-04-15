@@ -18,7 +18,7 @@ const Actions = () => {
   const { loggedInUser } = getAuthData();
   const { emails } = useEmails();
   const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setGlobalMessage = useAppStore((state: AppStore) => state.setGlobalMessage);
+  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
@@ -35,13 +35,13 @@ const Actions = () => {
       const { message: errorMessage } = getFormValidationErrors(deleteEmailsPayload);
 
       if (errorMessage) {
-        setGlobalMessage({ content: errorMessage, severity: "error" });
+        setSnackBarMessage({ content: errorMessage, severity: "error" });
         return;
       }
 
       await deleteEmails({ variables: deleteEmailsPayload });
       deleteEmailsFromCache(ids, activeTab, loggedInUser?.email, client);
-      setGlobalMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
+      setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
       setSelectedEmails([]);
     }
   };

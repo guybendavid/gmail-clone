@@ -15,7 +15,7 @@ interface Props {
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
   const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setGlobalMessage = useAppStore((state: AppStore) => state.setGlobalMessage);
+  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
   const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
 
   const [sendEmail] = useMutation(SEND_EMAIL, {
@@ -37,12 +37,12 @@ const ComposeForm = ({ isMinimized }: Props) => {
     const { message: errorMessage } = getFormValidationErrors(mailValues);
 
     if (errorMessage) {
-      setGlobalMessage({ content: errorMessage, severity: "error" });
+      setSnackBarMessage({ content: errorMessage, severity: "error" });
       return;
     }
 
     await sendEmail({ variables: mailValues });
-    setGlobalMessage({ content: "Email sent successfully", severity: "info" });
+    setSnackBarMessage({ content: "Email sent successfully", severity: "info" });
     setIsComposeOpen(false);
   };
 

@@ -13,7 +13,7 @@ const textFieldProps = { required: true, variant: "outlined", margin: "normal", 
 
 const Login = () => {
   const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setGlobalMessage = useAppStore((state: AppStore) => state.setGlobalMessage);
+  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const { email } = formValues;
 
@@ -30,7 +30,7 @@ const Login = () => {
     const { message: errorMessage } = getFormValidationErrors(formValues);
 
     if (errorMessage) {
-      setGlobalMessage({ content: errorMessage, severity: "error" });
+      setSnackBarMessage({ content: errorMessage, severity: "error" });
       return;
     }
 

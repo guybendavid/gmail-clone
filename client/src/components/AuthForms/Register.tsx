@@ -13,7 +13,7 @@ const textFieldProps = { required: true, variant: "outlined", margin: "normal", 
 
 const Register = () => {
   const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setGlobalMessage = useAppStore((state: AppStore) => state.setGlobalMessage);
+  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", password: "" });
   const { email } = formValues;
 
@@ -30,7 +30,7 @@ const Register = () => {
     const { message: errorMessage } = getFormValidationErrors(formValues);
 
     if (errorMessage) {
-      setGlobalMessage({ content: errorMessage, severity: "error" });
+      setSnackBarMessage({ content: errorMessage, severity: "error" });
       return;
     }
 
