@@ -2,7 +2,7 @@ import { DBEmail, EmailResponse, ParticipantType } from "../db/interfaces/interf
 import { sequelize, User } from "../db/models/models-config";
 import { QueryTypes } from "sequelize";
 import { AuthenticationError } from "apollo-server";
-import { getEmailsWithParticiapntsName } from "./raw-queries";
+import { getEmailsWithParticiapntsName } from "../db/raw-queries/emails";
 
 interface GetEmails {
   loggedInUserEmail: string;

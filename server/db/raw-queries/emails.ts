@@ -1,4 +1,4 @@
-import { ParticipantType } from "../db/interfaces/interfaces";
+import { ParticipantType } from "../interfaces/interfaces";
 
 const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
