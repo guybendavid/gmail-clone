@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/models-config";
 import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
-import { getEmails, formatParticipant } from "../../utils/emails-helper";
+import { getEmails, getNewEmailFormattedParticipant } from "../../utils/emails-helper";
 
 const emailsResolver = {
   Query: {
@@ -26,8 +26,8 @@ const emailsResolver = {
 
       const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
       const newEmail = { ...email.toJSON() };
-      newEmail.sender = await formatParticipant("sender", senderEmail, newEmail);
-      newEmail.recipient = await formatParticipant("recipient", recipientEmail, newEmail);
+      newEmail.sender = await getNewEmailFormattedParticipant("sender", senderEmail, newEmail);
+      newEmail.recipient = await getNewEmailFormattedParticipant("recipient", recipientEmail, newEmail);
       pubsub.publish("NEW_EMAIL", { newEmail });
       return email;
     },
