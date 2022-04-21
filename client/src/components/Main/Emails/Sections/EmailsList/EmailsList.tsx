@@ -24,7 +24,7 @@ const EmailsList = () => {
 
   useEffect(() => {
     if (newEmail) {
-      addNewEmailToCache(newEmail, loggedInUser?.email, apolloClient);
+      addNewEmailToCache(newEmail, loggedInUser.email, apolloClient);
     }
     // eslint-disable-next-line
   }, [newEmail]);
@@ -58,7 +58,7 @@ function isEmailSelected(email: Email, selectedEmails: Email[]) {
 function displayParticipantName({ sender, recipient }: Required<Email>, activeTab: number) {
   const { loggedInUser } = getAuthData();
   const participantName = activeTab === 0 ? sender.fullName : recipient.fullName;
-  return participantName === `${loggedInUser?.firstName} ${loggedInUser?.lastName}` ? "Me" : participantName;
+  return participantName === `${loggedInUser.firstName} ${loggedInUser.lastName}` ? "Me" : participantName;
 };
 
 export default EmailsList;

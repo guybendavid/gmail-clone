@@ -23,7 +23,7 @@ const ComposeForm = ({ isMinimized }: Props) => {
   });
 
   const [mailValues, setMailValues] = useState({
-    senderEmail: loggedInUser?.email,
+    senderEmail: loggedInUser.email,
     recipientEmail: "",
     subject: "",
     content: ""

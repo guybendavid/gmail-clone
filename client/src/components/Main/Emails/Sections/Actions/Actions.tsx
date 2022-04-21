@@ -40,7 +40,7 @@ const Actions = () => {
       }
 
       await deleteEmails({ variables: deleteEmailsPayload });
-      deleteEmailsFromCache(ids, activeTab, loggedInUser?.email, client);
+      deleteEmailsFromCache(ids, activeTab, loggedInUser.email, client);
       setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
       setSelectedEmails([]);
     }

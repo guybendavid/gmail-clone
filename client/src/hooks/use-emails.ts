@@ -13,7 +13,7 @@ const useEmails = () => {
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
   const { data, client: apolloClient } = useQuery(emailsToFetch, {
-    variables: { loggedInUserEmail: loggedInUser?.email },
+    variables: { loggedInUserEmail: loggedInUser.email },
     onError: (error) => handleServerErrors(error),
     onCompleted: () => clearSnackBarMessage()
   });

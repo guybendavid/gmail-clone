@@ -83,7 +83,7 @@ const AvatarMenu = () => {
   return (
     <>
       <IconButton onClick={handleClick}>
-        <Avatar className="avatar" alt="avatar" src={loggedInUser?.image} />
+        <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
       <Menu
         id="logout-menu"
