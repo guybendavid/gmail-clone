@@ -23,7 +23,7 @@ const EmailsFooter = () => {
         <Tabs variant="fullWidth" value={activeTab} aria-label="simple tabs example">
           {texts.map((text, index) => (
             <Tab key={index} label={text} onClick={() => setActiveTab(index)}
-              className={classNamesGenerator(activeTab === index && "active")} />
+              className={classNamesGenerator(activeTab === index && "is-active")} />
           ))}
         </Tabs>
       </AppBar>

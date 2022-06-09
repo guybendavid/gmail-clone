@@ -86,7 +86,7 @@ const AvatarMenu = () => {
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
       <Menu
-        id="logout-menu"
+        className="main-menu"
         keepMounted
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

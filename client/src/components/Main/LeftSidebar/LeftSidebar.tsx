@@ -59,7 +59,7 @@ const LeftSidebar = () => {
         </div>
         <Divider />
         <div className="list-items-wrapper second-list">
-          <div className="meet-title">Meet</div>
+          <div className="header">Meet</div>
           {[VideocamIcon, KeyboardIcon].map((Icon, index) => (
             <ListItem key={index} button className="list-item">
               <Icon className="icon" />

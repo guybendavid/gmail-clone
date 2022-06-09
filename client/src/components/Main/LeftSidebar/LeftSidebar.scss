@@ -17,7 +17,7 @@
       }
 
       span {
-        color: var(--text-secondary-color);
+        color: var(--text-color);
         font-weight: bold;
         font-size: 0.8rem;
       }
@@ -53,14 +53,14 @@
       &.second-list {
         flex: 0.58;
 
-        .meet-title {
+        .header {
           margin: 10px 19px;
           font-weight: 500;
         }
       }
 
       .list-item {
-        color: var(--text-secondary-color);
+        color: var(--text-color);
         border-radius: 0 16px 16px 0;
         padding: 0 19px;
 

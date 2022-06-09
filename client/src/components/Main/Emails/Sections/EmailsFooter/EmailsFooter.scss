@@ -10,12 +10,12 @@
     background: white;
 
     button {
-      &.active {
+      &.is-active {
         color: var(--red-color);
       }
 
-      &:not(.active) {
-        color: var(--text-secondary-color);
+      &:not(.is-active) {
+        color: var(--text-color);
       }
     }
   }

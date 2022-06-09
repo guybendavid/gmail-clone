@@ -17,18 +17,14 @@ const RightSidebar = () => {
             </IconButton>
           ))}
         </div>
-        <div className="divider-wrapper">
-          <Divider />
-        </div>
+        <Divider className="divider" />
         <IconButton>
           <AddIcon />
         </IconButton>
       </div>
-      <div className="bottom-section">
-        <IconButton>
-          <KeyboardArrowRightIcon />
-        </IconButton>
-      </div>
+      <IconButton>
+        <KeyboardArrowRightIcon />
+      </IconButton>
     </div>
   );
 };

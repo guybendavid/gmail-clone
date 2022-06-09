@@ -50,7 +50,7 @@ const Actions = () => {
     <div className="actions">
       <div className="left-side">
         {selectedEmails?.length > 0 ?
-          <IconButton onClick={deleteFunc} className="delete-icon">
+          <IconButton onClick={deleteFunc} className="delete-icon-wrapper">
             <DeleteIcon />
           </IconButton>
           :

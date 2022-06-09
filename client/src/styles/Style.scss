@@ -1,7 +1,7 @@
 :root {
   --red-color: #d93025;
   --gray-color: #ededed;
-  --text-secondary-color: #00000099;
+  --text-color: #00000099;
   --gradient-color: linear-gradient(to right, #ff5f6d, #ffc371);
 }
 
@@ -26,7 +26,7 @@ body {
   }
 
   small {
-    color: var(--text-secondary-color);
+    color: var(--text-color);
     font-size: 0.8rem !important;
   }
 
