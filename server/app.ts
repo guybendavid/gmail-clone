@@ -8,15 +8,17 @@ import path from "path";
 import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
 import contextMiddleware from "./graphql/context-middleware";
+import os from "os";
 
 const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
 const serverConfig = { typeDefs, resolvers, context: contextMiddleware, subscriptions: { path: "/" } };
 const port = PORT || 4000;
 
+logger.info("hostname: ", os.hostname());
+
 const startProductionServer = () => {
   const app = express();
-
   app.use(express.static(path.join(__dirname, "client")));
 
   app.get("*", (_req, res) => {
@@ -35,7 +37,7 @@ const startDevelopmentServer = () => {
   connect({ server });
 };
 
-const connect = async ({ server, isProd }: { server: ApolloServerDev | Server, isProd?: boolean; }) => {
+const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; isProd?: boolean; }) => {
   try {
     await sequelize.authenticate();
     logger.info("Database connected!");
