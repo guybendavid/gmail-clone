@@ -15,7 +15,7 @@ const logger = pino({ level: LOG_LEVEL || "info" });
 const serverConfig = { typeDefs, resolvers, context: contextMiddleware, subscriptions: { path: "/" } };
 const port = PORT || 4000;
 
-logger.info("hostname: ", os.hostname());
+console.log("hostname: ", os.userInfo());
 
 const startProductionServer = () => {
   const app = express();
@@ -30,6 +30,8 @@ const startProductionServer = () => {
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);
   connect({ server: httpServer, isProd: true });
+
+  console.log("server: ", server);
 };
 
 const startDevelopmentServer = () => {
