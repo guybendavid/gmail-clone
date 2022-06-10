@@ -8,14 +8,11 @@ import path from "path";
 import resolvers from "./graphql/resolvers/resolvers-config";
 import typeDefs from "./graphql/type-definitions";
 import contextMiddleware from "./graphql/context-middleware";
-import os from "os";
 
 const { NODE_ENV, LOG_LEVEL, PORT } = process.env;
 const logger = pino({ level: LOG_LEVEL || "info" });
 const serverConfig = { typeDefs, resolvers, context: contextMiddleware, subscriptions: { path: "/" } };
 const port = PORT || 4000;
-
-console.log("hostname: ", os.userInfo());
 
 const startProductionServer = () => {
   const app = express();
@@ -30,8 +27,6 @@ const startProductionServer = () => {
   const httpServer = http.createServer(app);
   server.installSubscriptionHandlers(httpServer);
   connect({ server: httpServer, isProd: true });
-
-  console.log("server: ", server);
 };
 
 const startDevelopmentServer = () => {
@@ -45,6 +40,9 @@ const connect = async ({ server, isProd }: { server: ApolloServerDev | Server; i
     logger.info("Database connected!");
 
     if (isProd) {
+      // @ts-ignore
+      console.log("server.url: ", server.url);
+
       await server.listen(port);
       const baseUrl = "clone-of-gmail.herokuapp.com";
       logger.info(`Server ready at https://${baseUrl}`);
