@@ -1,10 +1,10 @@
 import { Op } from "sequelize";
 import { UserInputError, withFilter, PubSub } from "apollo-server";
 import { Email, User } from "../../db/models/models-config";
-import { SendEmailPayload, User as IUser } from "../../db/interfaces/interfaces";
+import { SendEmailPayload, User as IUser } from "../../db/types/types";
 import { getFormattedNewEmail, getEmails } from "../../utils/emails-helper";
 
-const emailsResolver = {
+export default {
   Query: {
     getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: IUser; }) => {
       const { loggedInUserEmail } = args;
@@ -49,5 +49,3 @@ const emailsResolver = {
     }
   }
 };
-
-export default emailsResolver;

@@ -2,11 +2,11 @@ import bcrypt from "bcrypt";
 import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { User } from "../../db/models/models-config";
-import { User as IUSER } from "../../db/interfaces/interfaces";
+import { User as IUSER } from "../../db/types/types";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
-const usersResolver = {
+export default {
   Mutation: {
     register: async (_parent: any, args: IUSER) => {
       const { firstName, lastName, email, password } = args;
@@ -41,5 +41,3 @@ const usersResolver = {
     }
   }
 };
-
-export default usersResolver;

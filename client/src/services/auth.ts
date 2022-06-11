@@ -1,6 +1,6 @@
-import { User } from "interfaces/interfaces";
+import { User } from "types/types";
 
-function handleAuth(data: User) {
+export function handleAuth(data: User) {
   const { token, ...user } = data;
 
   if (token && user) {
@@ -10,12 +10,10 @@ function handleAuth(data: User) {
   }
 }
 
-function getAuthData() {
+export function getAuthData() {
   const { pathname } = window.location;
   const loggedInUser = localStorage.loggedInUser && JSON.parse(localStorage.loggedInUser);
   const isAuthenticated = Boolean(loggedInUser && localStorage.token);
   const isAuthForm = pathname === "/login" || pathname === "/register";
   return { loggedInUser, isAuthenticated, isAuthForm };
 }
-
-export { getAuthData, handleAuth };

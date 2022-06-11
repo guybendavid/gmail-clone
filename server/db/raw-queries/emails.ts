@@ -1,6 +1,6 @@
-import { ParticipantType } from "../interfaces/interfaces";
+import { ParticipantType } from "../types/types";
 
-const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
+export const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   return `
   select emails.id,
   emails.subject,
@@ -16,5 +16,3 @@ const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
   where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}
   order by "createdAt" desc`;
 };
-
-export { getEmailsWithParticiapntsName };

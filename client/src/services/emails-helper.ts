@@ -1,5 +1,5 @@
 import { ApolloClient, DocumentNode } from "@apollo/client";
-import { Email } from "interfaces/interfaces";
+import { Email } from "types/types";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "./graphql";
 
 interface QueryOptions {
@@ -49,7 +49,7 @@ function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: 
   }
 };
 
-function addNewEmailToCache(newEmail: Required<Email>, loggedInUserEmail: string, client: ApolloClient<any>) {
+export function addNewEmailToCache(newEmail: Required<Email>, loggedInUserEmail: string, client: ApolloClient<any>) {
   const { email: recipientEmail } = newEmail.recipient;
   const { email: senderEmail } = newEmail.sender;
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;
@@ -64,7 +64,7 @@ function addNewEmailToCache(newEmail: Required<Email>, loggedInUserEmail: string
   }
 };
 
-function deleteEmailsFromCache(idsToDelete: string[], activeTab: number, loggedInUserEmail: string, client: ApolloClient<any>) {
+export function deleteEmailsFromCache(idsToDelete: string[], activeTab: number, loggedInUserEmail: string, client: ApolloClient<any>) {
   const isReceivedEmails = activeTab === 0;
   const query = isReceivedEmails ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
   const prevData = getPrevData({ query, loggedInUserEmail, client });
@@ -72,5 +72,3 @@ function deleteEmailsFromCache(idsToDelete: string[], activeTab: number, loggedI
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
   writeToCache(client, queryOptions, isReceivedEmails, newData);
 };
-
-export { addNewEmailToCache, deleteEmailsFromCache };

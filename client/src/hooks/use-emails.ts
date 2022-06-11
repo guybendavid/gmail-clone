@@ -1,6 +1,6 @@
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
-import { Email } from "interfaces/interfaces";
+import { Email } from "types/types";
 import { useQuery, ApolloClient } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";

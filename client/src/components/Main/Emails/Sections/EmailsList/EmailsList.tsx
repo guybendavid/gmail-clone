@@ -3,7 +3,7 @@ import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
-import { Email } from "interfaces/interfaces";
+import { Email } from "types/types";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";

@@ -1,7 +1,7 @@
 import userResolvers from "./users";
 import emailResolvers from "./emails";
 
-const resolversConfig = {
+export default {
   Email: {
     createdAt: (parent: any) => parent.createdAt?.toISOString()
   },
@@ -16,5 +16,3 @@ const resolversConfig = {
     ...emailResolvers.Subscription
   }
 };
-
-export default resolversConfig;

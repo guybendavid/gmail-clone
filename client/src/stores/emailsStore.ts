@@ -1,7 +1,7 @@
 import create from "zustand";
-import { Email } from "interfaces/interfaces";
+import { Email } from "types/types";
 
-interface EmailsStore {
+export interface EmailsStore {
   activeTab: number;
   setActiveTab: (activeTab: number) => void;
   searchValue: string;
@@ -27,4 +27,3 @@ function emailsStore(set: any) {
 }
 
 export const useEmailsStore = create(emailsStore);
-export type { EmailsStore };

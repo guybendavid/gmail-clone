@@ -1,4 +1,9 @@
-interface User {
+interface Participant {
+  email: string;
+  fullName: string;
+}
+
+export interface User {
   id: string;
   firstName: string;
   lastName: string;
@@ -8,7 +13,7 @@ interface User {
   token?: string;
 }
 
-interface Email {
+export interface Email {
   id: string;
   sender?: Participant;
   recipient?: Participant;
@@ -16,10 +21,3 @@ interface Email {
   content: string;
   createdAt: string;
 }
-
-interface Participant {
-  email: string;
-  fullName: string;
-}
-
-export type { User, Email };

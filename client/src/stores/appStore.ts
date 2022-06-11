@@ -5,7 +5,7 @@ type SnackBarMessage = {
   severity: "error" | "info" | "success" | "warning";
 };
 
-interface AppStore {
+export interface AppStore {
   snackBarMessage: SnackBarMessage;
   setSnackBarMessage: (snackBarMessage: SnackBarMessage) => void;
   clearSnackBarMessage: () => void;
@@ -40,4 +40,3 @@ function appStore(set: any, get: any) {
 }
 
 export const useAppStore = create(appStore);
-export type { AppStore };

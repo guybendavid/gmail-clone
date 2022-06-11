@@ -1,5 +1,5 @@
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
-import { Email } from "interfaces/interfaces";
+import { Email } from "types/types";
 import { Checkbox } from "@material-ui/core";
 
 interface Props {
