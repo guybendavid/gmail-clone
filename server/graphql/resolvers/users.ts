@@ -2,13 +2,13 @@ import bcrypt from "bcrypt";
 import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { User } from "../../db/models/models-config";
-import { User as IUSER } from "../../db/types/types";
+import { User as IUser } from "../../db/types/types";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
 export default {
   Mutation: {
-    register: async (_parent: any, args: Omit<IUSER, "id">) => {
+    register: async (_parent: any, args: Omit<IUser, "id">) => {
       const { firstName, lastName, email, password } = args;
       const isUserExists = await User.findOne({ where: { email } });
 
@@ -22,7 +22,7 @@ export default {
       const { password: userPassword, ...safeUserData } = user.toJSON();
       return { user: safeUserData, token: generateToken({ id: user.id, email, firstName, lastName }) };
     },
-    login: async (_parent: any, args: Pick<IUSER, "email" | "password">) => {
+    login: async (_parent: any, args: Pick<IUser, "email" | "password">) => {
       const { email, password } = args;
       const user = await User.findOne({ where: { email } });
 
