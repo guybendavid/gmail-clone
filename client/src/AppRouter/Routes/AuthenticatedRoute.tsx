@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router";
 import { getAuthData } from "services/auth";
 import Navbar from "components/Navbar/Navbar";
 
-interface Props {
+type Props = {
   exact: boolean;
   path: string;
   isAdminRoute?: boolean;

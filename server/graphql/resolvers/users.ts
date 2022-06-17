@@ -8,7 +8,7 @@ const generateImage = require("../../utils/generate-image");
 
 export default {
   Mutation: {
-    register: async (_parent: any, args: IUSER) => {
+    register: async (_parent: any, args: Omit<IUSER, "id">) => {
       const { firstName, lastName, email, password } = args;
       const isUserExists = await User.findOne({ where: { email } });
 
@@ -20,9 +20,9 @@ export default {
       const image = generateImage();
       const user = await User.create({ firstName, lastName, email, password: hasedPassword, image });
       const { password: userPassword, ...safeUserData } = user.toJSON();
-      return { ...safeUserData, token: generateToken({ id: user.id, email, firstName, lastName }) };
+      return { user: safeUserData, token: generateToken({ id: user.id, email, firstName, lastName }) };
     },
-    login: async (_parent: any, args: IUSER) => {
+    login: async (_parent: any, args: Pick<IUSER, "email" | "password">) => {
       const { email, password } = args;
       const user = await User.findOne({ where: { email } });
 
@@ -37,7 +37,7 @@ export default {
       }
 
       const { id, firstName, lastName, image } = user;
-      return { id, firstName, lastName, image, token: generateToken({ id, email, firstName, lastName }) };
+      return { user: { id, firstName, lastName, image }, token: generateToken({ id, email, firstName, lastName }) };
     }
   }
 };

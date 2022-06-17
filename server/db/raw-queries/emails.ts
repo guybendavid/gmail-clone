@@ -1,6 +1,6 @@
 import { ParticipantType } from "../types/types";
 
-export const getEmailsWithParticiapntsName = (particapntType: ParticipantType) => {
+export const getEmailsWithParticipantsName = (particapntType: ParticipantType) => {
   return `
   select emails.id,
   emails.subject,

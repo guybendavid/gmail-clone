@@ -1,6 +1,6 @@
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
-import { Email } from "types/types";
+import { SectionEmail } from "types/types";
 import { useMutation } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { DELETE_EMAILS } from "services/graphql";
@@ -22,16 +22,20 @@ const Actions = () => {
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
   const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);
   const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
+  const selectedEmailIds = selectedEmails.map((email: SectionEmail) => email.id);
 
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS, {
+    onCompleted: () => {
+      deleteEmailsFromCache(selectedEmailIds, activeTab, loggedInUser.email, client);
+      setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
+      setSelectedEmails([]);
+    },
     onError: (err) => handleServerErrors(err)
   });
 
-  const ids = selectedEmails.map((email: Email) => email.id);
-
   const deleteFunc = async () => {
-    if (ids.length > 0) {
-      const deleteEmailsPayload = { ids };
+    if (selectedEmailIds.length > 0) {
+      const deleteEmailsPayload = { ids: selectedEmailIds };
       const { message: errorMessage } = getFormValidationErrors(deleteEmailsPayload);
 
       if (errorMessage) {
@@ -40,9 +44,6 @@ const Actions = () => {
       }
 
       await deleteEmails({ variables: deleteEmailsPayload });
-      deleteEmailsFromCache(ids, activeTab, loggedInUser.email, client);
-      setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
-      setSelectedEmails([]);
     }
   };
 

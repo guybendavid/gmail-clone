@@ -1,22 +1,28 @@
 import { Op } from "sequelize";
-import { UserInputError, withFilter, PubSub } from "apollo-server";
+import { UserInputError, withFilter } from "apollo-server";
 import { Email, User } from "../../db/models/models-config";
-import { SendEmailPayload, User as IUser } from "../../db/types/types";
-import { getFormattedNewEmail, getEmails } from "../../utils/emails-helper";
+import { User as IUser, DBEmail } from "../../db/types/types";
+import { getFormattedNewEmail, getEmailsByParticipantType } from "../../utils/emails-helper";
+import { pubsub } from "../../app";
+
+interface SendEmailPayload extends Pick<DBEmail, "subject" | "content"> {
+  senderEmail: string;
+  recipientEmail: string;
+}
 
 export default {
   Query: {
     getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: IUser; }) => {
       const { loggedInUserEmail } = args;
-      return getEmails({ loggedInUserEmail, participantType: "recipient" });
+      return getEmailsByParticipantType({ loggedInUserEmail, participantType: "recipient" });
     },
     getSentEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: IUser; }) => {
       const { loggedInUserEmail } = args;
-      return getEmails({ loggedInUserEmail, participantType: "sender" });
+      return getEmailsByParticipantType({ loggedInUserEmail, participantType: "sender" });
     }
   },
   Mutation: {
-    sendEmail: async (_parent: any, args: SendEmailPayload, { pubsub }: { pubsub: PubSub; }) => {
+    sendEmail: async (_parent: any, args: SendEmailPayload, _context: { user: IUser; }) => {
       const { senderEmail, recipientEmail, subject, content } = args;
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
 
@@ -25,9 +31,7 @@ export default {
       }
 
       const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
-      const newEmail = { ...email.toJSON() };
-      const formattedNewEmail = await getFormattedNewEmail(newEmail);
-      pubsub.publish("NEW_EMAIL", { newEmail: formattedNewEmail });
+      pubsub.publish("NEW_EMAIL", { newEmail: await getFormattedNewEmail({ ...email.toJSON() }) });
       return email;
     },
     deleteEmails: async (_parent: any, args: { ids: string[]; }, _context: { user: IUser; }) => {
@@ -43,9 +47,10 @@ export default {
   },
   Subscription: {
     newEmail: {
-      subscribe: withFilter((_parent, _args, { pubsub }) => {
-        return pubsub.asyncIterator(["NEW_EMAIL"]);
-      }, ({ newEmail }, _args, { user }) => newEmail.sender.email === user.email || newEmail.recipient.email === user.email)
+      subscribe: withFilter(
+        (_parent, _args, _context) => pubsub.asyncIterator("NEW_EMAIL"),
+        ({ newEmail }, _args, { user }) => newEmail.sender.email === user.email || newEmail.recipient.email === user.email
+      )
     }
   }
 };

@@ -8,7 +8,7 @@ import { Button, TextField } from "@material-ui/core";
 import { classNamesGenerator, getFormValidationErrors } from "@guybendavid/utils";
 import "./ComposeForm.scss";
 
-interface Props {
+type Props = {
   isMinimized?: boolean;
 }
 
@@ -19,6 +19,10 @@ const ComposeForm = ({ isMinimized }: Props) => {
   const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
 
   const [sendEmail] = useMutation(SEND_EMAIL, {
+    onCompleted: () => {
+      setSnackBarMessage({ content: "Email sent successfully", severity: "info" });
+      setIsComposeOpen(false);
+    },
     onError: (err) => handleServerErrors(err)
   });
 
@@ -42,8 +46,6 @@ const ComposeForm = ({ isMinimized }: Props) => {
     }
 
     await sendEmail({ variables: mailValues });
-    setSnackBarMessage({ content: "Email sent successfully", severity: "info" });
-    setIsComposeOpen(false);
   };
 
   return (

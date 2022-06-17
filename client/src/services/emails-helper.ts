@@ -2,14 +2,14 @@ import { ApolloClient, DocumentNode } from "@apollo/client";
 import { Email } from "types/types";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "./graphql";
 
-interface QueryOptions {
+type QueryOptions = {
   query: DocumentNode;
   variables: {
     loggedInUserEmail: string;
   };
 }
 
-interface PrevDataOptions {
+type PrevDataOptions = {
   query: DocumentNode;
   loggedInUserEmail: string;
   client: ApolloClient<any>;
@@ -49,7 +49,7 @@ function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: 
   }
 };
 
-export function addNewEmailToCache(newEmail: Required<Email>, loggedInUserEmail: string, client: ApolloClient<any>) {
+export function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, client: ApolloClient<any>) {
   const { email: recipientEmail } = newEmail.recipient;
   const { email: senderEmail } = newEmail.sender;
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;

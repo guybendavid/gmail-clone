@@ -5,7 +5,7 @@ type SnackBarMessage = {
   severity: "error" | "info" | "success" | "warning";
 };
 
-export interface AppStore {
+export type AppStore = {
   snackBarMessage: SnackBarMessage;
   setSnackBarMessage: (snackBarMessage: SnackBarMessage) => void;
   clearSnackBarMessage: () => void;

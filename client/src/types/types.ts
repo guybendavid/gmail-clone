@@ -1,23 +1,27 @@
-interface Participant {
-  email: string;
-  fullName: string;
-}
-
-export interface User {
+export type User = {
   id: string;
   firstName: string;
   lastName: string;
+  image: string;
   email: string;
   password: string;
-  image: string;
-  token?: string;
-}
+};
 
-export interface Email {
+export type Email = {
   id: string;
-  sender?: Participant;
-  recipient?: Participant;
+  sender: Participant;
+  recipient: Participant;
   subject: string;
   content: string;
   createdAt: string;
-}
+};
+
+export type SectionEmail = RecievedEmail | SentEmail;
+
+type RecievedEmail = Omit<Email, "recipient">;
+type SentEmail = Omit<Email, "sender">;
+
+type Participant = {
+  email: string;
+  fullName: string;
+};

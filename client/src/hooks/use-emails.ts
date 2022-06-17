@@ -1,6 +1,6 @@
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
-import { Email } from "types/types";
+import { SectionEmail } from "types/types";
 import { useQuery, ApolloClient } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
@@ -19,8 +19,7 @@ const useEmails = () => {
   });
 
   const emails = data?.getReceivedEmails || data?.getSentEmails;
-
-  return { emails, apolloClient } as { emails: Email[], apolloClient: ApolloClient<any>; };
+  return { emails, apolloClient } as { emails: SectionEmail[], apolloClient: ApolloClient<any>; };
 };
 
 export default useEmails;

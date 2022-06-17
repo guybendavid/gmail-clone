@@ -1,16 +1,16 @@
 import create from "zustand";
-import { Email } from "types/types";
+import { SectionEmail } from "types/types";
 
-export interface EmailsStore {
+export type EmailsStore = {
   activeTab: number;
   setActiveTab: (activeTab: number) => void;
   searchValue: string;
   setSearchValue: (searchValue: string) => void;
-  selectedEmails: Email[];
-  setSelectedEmails: (selectedEmails: Email[]) => void;
+  selectedEmails: SectionEmail[];
+  setSelectedEmails: (selectedEmails: SectionEmail[]) => void;
   isComposeOpen: boolean;
   setIsComposeOpen: (isComposeOpen: boolean) => void;
-}
+};
 
 function emailsStore(set: any) {
   return {
@@ -20,7 +20,7 @@ function emailsStore(set: any) {
     searchValue: "",
     setSearchValue: (searchValue: string) => set(() => ({ searchValue })),
     selectedEmails: [],
-    setSelectedEmails: (selectedEmails: Email[]) => set(() => ({ selectedEmails })),
+    setSelectedEmails: (selectedEmails: SectionEmail[]) => set(() => ({ selectedEmails })),
     isComposeOpen: false,
     setIsComposeOpen: (isComposeOpen: boolean) => set(() => ({ isComposeOpen })),
   };

@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const email = (sequelize: Sequelize, DataTypes: any) => {
+export default (sequelize: Sequelize, DataTypes: any) => {
   const Email = sequelize.define("Email", {
     sender: {
       type: DataTypes.STRING,
@@ -40,5 +40,3 @@ const email = (sequelize: Sequelize, DataTypes: any) => {
 
   return Email;
 };
-
-export default email;

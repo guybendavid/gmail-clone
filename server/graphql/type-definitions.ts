@@ -1,6 +1,10 @@
 import { gql } from "apollo-server";
 
-const typeDefs = gql`
+export default gql`
+  type Participant {
+    email: String!
+    fullName: String!
+  }
   type User {
     id: ID!
     firstName: String!
@@ -8,11 +12,10 @@ const typeDefs = gql`
     image: String!
     email: String
     password: String
-    token: String!
   }
-  type Participant {
-    email: String!
-    fullName: String
+  type AuthOperationResponse {
+    user: User!
+    token: String!
   }
   type Email {
     id: ID!
@@ -27,8 +30,8 @@ const typeDefs = gql`
     getSentEmails(loggedInUserEmail: String!): [Email]!
   }
   type Mutation {
-    login(email: String! password: String!): User!
-    register(firstName: String! lastName: String! email: String! password: String!): User!
+    login(email: String! password: String!): AuthOperationResponse!
+    register(firstName: String! lastName: String! email: String! password: String!): AuthOperationResponse!
     sendEmail(senderEmail: String! recipientEmail: String! subject: String! content: String!): Email!
     deleteEmails(ids: [ID]!): Boolean
   }
@@ -36,5 +39,3 @@ const typeDefs = gql`
     newEmail: Email!
   }
 `;
-
-export default typeDefs;

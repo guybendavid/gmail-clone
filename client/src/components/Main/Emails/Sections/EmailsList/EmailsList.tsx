@@ -3,7 +3,7 @@ import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
-import { Email } from "types/types";
+import { SectionEmail } from "types/types";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { classNamesGenerator, timeDisplayer } from "@guybendavid/utils";
@@ -18,7 +18,6 @@ const EmailsList = () => {
   const { isSmallScreen } = useIsSmallScreen();
   const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
-  const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
@@ -31,14 +30,14 @@ const EmailsList = () => {
 
   return (
     <List className={classNamesGenerator("emails-list", isSmallScreen && "is-small-screen")}>
-      {emails?.filter((email: Email) =>
-        `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: Email, index: number) => (
+      {emails?.filter((email: SectionEmail) =>
+        `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: SectionEmail, index: number) => (
           <Fragment key={index}>
             <ListItem button className={classNamesGenerator("email", isEmailSelected(email, selectedEmails) && "is-selected")}>
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
-                  <Typography component="span">{displayParticipantName(email as Required<Email>, activeTab)}</Typography>
+                  <Typography component="span">{displayParticipantName(email)}</Typography>
                 </div>
                 <Typography component="span" className="email-body">{`${email.subject} - ${email.content}`}</Typography>
                 <Typography component="small" className="created-at">{timeDisplayer(email.createdAt)}</Typography>
@@ -51,13 +50,13 @@ const EmailsList = () => {
   );
 };
 
-function isEmailSelected(email: Email, selectedEmails: Email[]) {
-  return Boolean(selectedEmails.find((selectedEmail: Email) => selectedEmail.id === email.id));
+function isEmailSelected(email: SectionEmail, selectedEmails: SectionEmail[]) {
+  return Boolean(selectedEmails.find((selectedEmail: SectionEmail) => selectedEmail.id === email.id));
 };
 
-function displayParticipantName({ sender, recipient }: Required<Email>, activeTab: number) {
+function displayParticipantName(email: SectionEmail) {
   const { loggedInUser } = getAuthData();
-  const participantName = activeTab === 0 ? sender.fullName : recipient.fullName;
+  const participantName = "sender" in email ? email.sender.fullName : email.recipient.fullName;
   return participantName === `${loggedInUser.firstName} ${loggedInUser.lastName}` ? "Me" : participantName;
 };
 
