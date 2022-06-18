@@ -16,3 +16,4 @@ export type DBEmail = {
 };
 
 export type ParticipantType = "sender" | "recipient";
+export type ContextUser = Pick<User, "id" | "firstName" | "lastName">;
