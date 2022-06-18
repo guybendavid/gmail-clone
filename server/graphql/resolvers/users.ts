@@ -2,13 +2,13 @@ import bcrypt from "bcrypt";
 import generateToken from "../../utils/generate-token";
 import { UserInputError } from "apollo-server";
 import { User } from "../../db/models/models-config";
-import { User as IUser } from "../../db/types/types";
+import { User as UserType } from "../../db/types/types";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
 export default {
   Mutation: {
-    register: async (_parent: any, args: Omit<IUser, "id">) => {
+    register: async (_parent: any, args: Omit<UserType, "id">) => {
       const { firstName, lastName, email, password } = args;
       const isUserExists = await User.findOne({ where: { email } });
 
@@ -17,12 +17,11 @@ export default {
       }
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
-      const image = generateImage();
-      const user = await User.create({ firstName, lastName, email, password: hasedPassword, image });
+      const user = await User.create({ firstName, lastName, email, password: hasedPassword, image: generateImage() });
       const { password: userPassword, ...safeUserData } = user.toJSON();
       return { user: safeUserData, token: generateToken({ id: user.id, email, firstName, lastName }) };
     },
-    login: async (_parent: any, args: Pick<IUser, "email" | "password">) => {
+    login: async (_parent: any, args: Pick<UserType, "email" | "password">) => {
       const { email, password } = args;
       const user = await User.findOne({ where: { email } });
 
