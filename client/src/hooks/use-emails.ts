@@ -18,7 +18,7 @@ const useEmails = () => {
     onCompleted: () => clearSnackBarMessage()
   });
 
-  const emails = data?.getReceivedEmails || data?.getSentEmails;
+  const emails = data?.getReceivedEmails || data?.getSentEmails || [];
   return { emails, apolloClient } as { emails: SectionEmail[], apolloClient: ApolloClient<any>; };
 };
 

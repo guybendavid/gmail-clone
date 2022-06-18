@@ -30,7 +30,7 @@ const EmailsList = () => {
 
   return (
     <List className={classNamesGenerator("emails-list", isSmallScreen && "is-small-screen")}>
-      {emails?.filter((email: SectionEmail) =>
+      {emails.filter((email: SectionEmail) =>
         `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: SectionEmail, index: number) => (
           <Fragment key={index}>
             <ListItem button className={classNamesGenerator("email", isEmailSelected(email, selectedEmails) && "is-selected")}>

@@ -50,7 +50,7 @@ const Actions = () => {
   return (
     <div className="actions">
       <div className="left-side">
-        {selectedEmails?.length > 0 ?
+        {selectedEmails.length > 0 ?
           <IconButton onClick={deleteFunc} className="delete-icon-wrapper">
             <DeleteIcon />
           </IconButton>
@@ -64,7 +64,7 @@ const Actions = () => {
       <div className="right-side">
         <TablePagination
           component="div"
-          count={emails?.length || 0}
+          count={emails.length || 0}
           page={0}
           onChangePage={() => null}
           rowsPerPage={1000}
