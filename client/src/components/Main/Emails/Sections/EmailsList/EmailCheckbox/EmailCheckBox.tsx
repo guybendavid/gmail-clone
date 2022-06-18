@@ -4,7 +4,7 @@ import { Checkbox } from "@material-ui/core";
 
 type Props = {
   email: SectionEmail;
-}
+};
 
 const EmailCheckbox = ({ email }: Props) => {
   const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);

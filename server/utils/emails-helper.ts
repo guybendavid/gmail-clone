@@ -7,7 +7,7 @@ import { getEmailsWithParticipantsName } from "../db/raw-queries/emails";
 type GetEmailsByParticipantType = {
   loggedInUserEmail: string;
   participantType: ParticipantType;
-}
+};
 
 type GetEmailsWithParticipantsNameQueryResponse = {
   id: string;

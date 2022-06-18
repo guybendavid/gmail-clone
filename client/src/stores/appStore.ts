@@ -9,9 +9,9 @@ export type AppStore = {
   snackBarMessage: SnackBarMessage;
   setSnackBarMessage: (snackBarMessage: SnackBarMessage) => void;
   clearSnackBarMessage: () => void;
-  logout: () => void;
   handleServerErrors: (error: any) => void;
-}
+  logout: () => void;
+};
 
 const initialSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
 
@@ -20,14 +20,9 @@ function appStore(set: any, get: any) {
     snackBarMessage: initialSnackBarMessage,
     setSnackBarMessage: (snackBarMessage: SnackBarMessage) => set(() => ({ snackBarMessage })),
     clearSnackBarMessage: () => set(() => ({ snackBarMessage: initialSnackBarMessage })),
-    logout: () => {
-      set({ setIsComposeOpen: false });
-      localStorage.clear();
-      window.location.reload();
-    },
     handleServerErrors: (error: any) => {
       const { message: gqlErrorMessage } = error;
-      const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ")[1];
+      const gqlContextErrorMessage = error.networkError?.result?.errors[0]?.message?.split("Context creation failed: ").pop();
       const content = gqlContextErrorMessage || gqlErrorMessage || "Something went wrong...";
       set({ snackBarMessage: { content, severity: "error" } });
 
@@ -35,6 +30,11 @@ function appStore(set: any, get: any) {
         const logout = get().logout;
         logout();
       }
+    },
+    logout: () => {
+      set({ setIsComposeOpen: false });
+      localStorage.clear();
+      window.location.reload();
     }
   };
 }

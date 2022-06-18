@@ -7,13 +7,13 @@ type QueryOptions = {
   variables: {
     loggedInUserEmail: string;
   };
-}
+};
 
 type PrevDataOptions = {
   query: DocumentNode;
   loggedInUserEmail: string;
   client: ApolloClient<any>;
-}
+};
 
 interface UpdateCachedEmailsListOptions extends PrevDataOptions {
   newEmail: Email;

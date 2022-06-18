@@ -10,7 +10,7 @@ import "./ComposeForm.scss";
 
 type Props = {
   isMinimized?: boolean;
-}
+};
 
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
