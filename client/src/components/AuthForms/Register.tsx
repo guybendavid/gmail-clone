@@ -15,10 +15,10 @@ const Register = () => {
   const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
   const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", password: "" });
-  const { email } = formValues;
+  const { firstName, lastName, email } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
-    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, email }, token: data.token }),
+    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, firstName, lastName, email }, token: data.token }),
     onError: (error) => handleServerErrors(error)
   });
 
