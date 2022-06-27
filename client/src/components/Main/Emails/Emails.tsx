@@ -11,11 +11,13 @@ const Emails = () => {
   return (
     <div className={style}>
       <Actions />
-      {!isSmallScreen && <TabsRow />}
       {!isSmallScreen ?
-        <EmailsList />
+        <>
+          <TabsRow />
+          <EmailsList />
+        </>
         :
-        <div className="emails-list-footer-wrapper">
+        <div className="small-screen-emails-list-footer-wrapper">
           <EmailsList />
           <EmailsFooter />
         </div>
@@ -33,7 +35,7 @@ const style = css`
     flex: 1;
   }
 
-  .emails-list-footer-wrapper {
+  .small-screen-emails-list-footer-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
