@@ -50,7 +50,7 @@ const LeftSidebar = () => {
       <div className="list">
         <div className="list-items-wrapper first-list">
           {[InboxIcon, SendIcon, StarIcon, WatchLaterIcon, LabelImportantIcon, DraftsIcon, MailIcon, DeleteIcon, LabelIcon, ExpandMoreIcon].map((Icon, index) => (
-            <ListItem key={index} button className={cx("list-item", activeTab === index && "active", index === 0 && "first")}
+            <ListItem key={index} button className={cx("list-item", activeTab === index && "is-active", index === 0 && "is-first-item")}
               onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />
@@ -140,17 +140,17 @@ const style = css`
         border-radius: 0 16px 16px 0;
         padding: 0 19px;
 
-        &.active {
+        &.is-active {
           span {
             font-weight: bold;
           }
 
-          &.first {
+          &.is-first-item {
             background: #fce8e6;
             color: var(--red-color);
           }
 
-          &:not(.first) {
+          &:not(.is-first-item) {
             background: #e8eaed;
           }
         }

@@ -2,7 +2,7 @@
   --red-color: #d93025;
   --gray-color: #ededed;
   --text-color: #00000099;
-  --gradient-color: linear-gradient(to right, #ff5f6d, #ffc371);
+  --primary-gradient-color: linear-gradient(to right, #ff5f6d, #ffc371);
 }
 
 * {

@@ -33,11 +33,11 @@ const style = css`
   button {
     padding: 0;
 
-    &:nth-child(1) {
+    &:first-child {
       color: var(--red-color);
     }
 
-    &:not(:nth-child(1)) {
+    &:not(:first-child) {
       color: var(--text-color);
     }
 

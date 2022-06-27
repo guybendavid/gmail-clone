@@ -37,7 +37,7 @@ const authFormStyle = css`
 
   &::before {
     content: "";
-    background: var(--gradient-color);
+    background: var(--primary-gradient-color);
     position: absolute;
     top: 0;
     left: 0;

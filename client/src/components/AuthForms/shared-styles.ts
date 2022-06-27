@@ -7,8 +7,8 @@ export const style = css`
   width: 100%;
 
   & > div {
-    &:nth-child(1) {
-      background: var(--gradient-color);
+    &:first-child {
+      background: var(--primary-gradient-color);
     }
   }
 
@@ -17,7 +17,7 @@ export const style = css`
       margin-bottom: 0;
     }
 
-    div {
+    & > div {
       .MuiFormLabel-root.Mui-focused {
         color: var(--text-color);
       }
@@ -27,7 +27,7 @@ export const style = css`
       }
     }
 
-    a {
+    & > a {
       color: #175aa7;
       text-decoration: none;
       display: inline-block;
@@ -38,9 +38,9 @@ export const style = css`
       }
     }
 
-    button {
+    & > button {
       color: white;
-      background: var(--gradient-color);
+      background: var(--primary-gradient-color);
       text-transform: capitalize;
     }
   }

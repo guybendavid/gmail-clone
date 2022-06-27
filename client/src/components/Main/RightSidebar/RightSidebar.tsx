@@ -17,7 +17,7 @@ const RightSidebar = () => {
             </IconButton>
           ))}
         </div>
-        <Divider className="divider" />
+        <Divider />
         <IconButton>
           <AddIcon />
         </IconButton>
@@ -47,17 +47,17 @@ const style = css`
       flex-direction: column;
 
       button {
-        &:nth-child(odd) {
-          color: rgb(52, 143, 200);
-        }
-
         &:nth-child(2) {
           color: #fbbc04;
+        }
+
+        &:not(:nth-child(2)) {
+          color: rgb(52, 143, 200);
         }
       }
     }
 
-    .divider {
+    hr {
       margin: 15px 0;
       width: 50%;
     }
