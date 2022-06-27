@@ -1,10 +1,10 @@
 import { forwardRef, ReactElement, Ref } from "react";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { css } from "@emotion/css";
 import { AppBar, Dialog, Toolbar, IconButton, Typography, Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions/transition";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 import ComposeForm from "../ComposeForm/ComposeForm";
-import "./ComposeDialog.scss";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & { children?: ReactElement; },
@@ -19,8 +19,8 @@ const ComposeDialog = () => {
 
   return (
     <>
-      <Dialog fullScreen open={isComposeOpen} onClose={() => setIsComposeOpen(false)} TransitionComponent={Transition}
-        className="compose-dialog">
+      <Dialog fullScreen className={style} TransitionComponent={Transition}
+        open={isComposeOpen} onClose={() => setIsComposeOpen(false)}>
         <AppBar position="relative">
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={() => setIsComposeOpen(false)} aria-label="close">
@@ -36,3 +36,10 @@ const ComposeDialog = () => {
 };
 
 export default ComposeDialog;
+
+const style = css`
+  .title {
+    flex: 1;
+    margin-left: 16px;
+  }
+`;

@@ -2,7 +2,7 @@ import { useAppStore, AppStore } from "stores/appStore";
 
 const useLocalStorageTracker = () => {
   const logout = useAppStore((state: AppStore) => state.logout);
-  const listen = () => window.addEventListener('storage', handleChangesInLocalStorage);
+  const listen = () => window.addEventListener("storage", handleChangesInLocalStorage);
 
   const handleChangesInLocalStorage = (e: StorageEvent) => {
     const authKeys = ["loggedInUser", "token"];

@@ -1,0 +1,41 @@
+:root {
+  --red-color: #d93025;
+  --gray-color: #ededed;
+  --text-color: #00000099;
+  --gradient-color: linear-gradient(to right, #ff5f6d, #ffc371);
+}
+
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+body {
+  overflow: hidden;
+}
+
+h1 {
+  color: #525252;
+  text-align: center;
+  font-size: 2rem !important;
+  font-weight: 300 !important;
+}
+
+p {
+  color: #00000073;
+  font-size: 0.95rem !important;
+  line-height: 20px !important;
+}
+
+small {
+  color: var(--text-color);
+  font-size: 0.8rem !important;
+}
+
+#main-menu ul {
+  padding: 0;
+}
+
+#main-menu li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

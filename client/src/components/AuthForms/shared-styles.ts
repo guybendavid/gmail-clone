@@ -1,5 +1,6 @@
-.login-container,
-.register-container {
+import { css } from "@emotion/css";
+
+export const style = css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,4 +44,4 @@
       text-transform: capitalize;
     }
   }
-}
+`;

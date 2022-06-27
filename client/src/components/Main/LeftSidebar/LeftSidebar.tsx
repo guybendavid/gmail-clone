@@ -1,20 +1,20 @@
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
-import { classNamesGenerator } from "@guybendavid/utils";
+import { css, cx } from "@emotion/css";
+import { overflowHandler, scrollbarStyle } from "styles/reusable-css-in-js-styles";
 import InboxIcon from "@material-ui/icons/Inbox";
 import SendIcon from "@material-ui/icons/Send";
 import StarIcon from "@material-ui/icons/Star";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import DraftsIcon from "@material-ui/icons/Drafts";
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import LabelIcon from '@material-ui/icons/Label';
+import MailIcon from "@material-ui/icons/Mail";
+import DeleteIcon from "@material-ui/icons/Delete";
+import LabelIcon from "@material-ui/icons/Label";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import VideocamIcon from '@material-ui/icons/Videocam';
-import KeyboardIcon from '@material-ui/icons/Keyboard';
+import VideocamIcon from "@material-ui/icons/Videocam";
+import KeyboardIcon from "@material-ui/icons/Keyboard";
 import composeImg from "images/compose-img.png";
-import "./LeftSidebar.scss";
 
 const firstListTexts = [
   "Inbox",
@@ -40,7 +40,7 @@ const LeftSidebar = () => {
   const setActiveTab = useEmailsStore((state: EmailsStore) => state.setActiveTab);
 
   return (
-    <div className="left-sidebar">
+    <div className={style}>
       <div className="button-wrapper">
         <Button type="submit" fullWidth variant="contained" onClick={() => setIsComposeOpen(true)}>
           <img src={composeImg} alt="compose" />
@@ -50,7 +50,7 @@ const LeftSidebar = () => {
       <div className="list">
         <div className="list-items-wrapper first-list">
           {[InboxIcon, SendIcon, StarIcon, WatchLaterIcon, LabelImportantIcon, DraftsIcon, MailIcon, DeleteIcon, LabelIcon, ExpandMoreIcon].map((Icon, index) => (
-            <ListItem key={index} button className={classNamesGenerator("list-item", activeTab === index && "active", index === 0 && "first")}
+            <ListItem key={index} button className={cx("list-item", activeTab === index && "active", index === 0 && "first")}
               onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />
@@ -73,3 +73,100 @@ const LeftSidebar = () => {
 };
 
 export default LeftSidebar;
+
+const style = css`
+  flex: 0.18;
+  
+  .button-wrapper {
+    padding: 16px 10px;
+    background: white;
+
+    button {
+      background: white;
+      width: fit-content;
+      border-radius: 24px;
+      padding-right: 30px;
+      height: 48px;
+
+      img {
+        margin-right: 15px;
+      }
+
+      span {
+        color: var(--text-color);
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    background: white;
+    height: 100%;
+
+    .list-items-wrapper {
+      padding: 0 8px;
+
+      &.first-list {
+        ${scrollbarStyle};
+        flex: 0.4;
+        max-height: 385px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        @media only screen and (min-width: 765px) {
+          padding: 0 16px 0 8px;
+          flex: 0.32;
+        }
+      }
+
+      &.second-list {
+        flex: 0.58;
+
+        .header {
+          margin: 10px 19px;
+          font-weight: 500;
+        }
+      }
+
+      .list-item {
+        color: var(--text-color);
+        border-radius: 0 16px 16px 0;
+        padding: 0 19px;
+
+        &.active {
+          span {
+            font-weight: bold;
+          }
+
+          &.first {
+            background: #fce8e6;
+            color: var(--red-color);
+          }
+
+          &:not(.first) {
+            background: #e8eaed;
+          }
+        }
+
+        .icon {
+          margin-right: 18px;
+        }
+
+        span {
+          ${overflowHandler("180px")};
+        }
+      }
+    }
+
+    hr {
+      margin: 5px 0;
+    }
+  }
+`;

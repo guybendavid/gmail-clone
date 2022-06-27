@@ -1,12 +1,13 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { css, cx } from "@emotion/css";
 import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Button, TextField } from "@material-ui/core";
-import { classNamesGenerator, getFormValidationErrors } from "@guybendavid/utils";
-import "./ComposeForm.scss";
+import { getFormValidationErrors } from "@guybendavid/utils";
+import { scrollbarStyle, blueButtonStyle, primaryBoxShadowStyle } from "styles/reusable-css-in-js-styles";
 
 type Props = {
   isMinimized?: boolean;
@@ -49,7 +50,7 @@ const ComposeForm = ({ isMinimized }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={classNamesGenerator(isMinimized && "is-minimized")}>
+    <form onSubmit={handleSubmit} className={cx(style, isMinimized && "is-minimized")}>
       <div className="fields-wrapper">
         <TextField required fullWidth label="To" onChange={(e) => handleOnChange(e, "recipientEmail")} />
         <TextField required fullWidth label="Subject" onChange={(e) => handleOnChange(e, "subject")} />
@@ -57,9 +58,62 @@ const ComposeForm = ({ isMinimized }: Props) => {
       <div className="content-wrapper">
         <textarea required onChange={(e) => handleOnChange(e, "content")} />
       </div>
-      <Button type="submit" className="desktop-send-button">Send</Button>
+      <Button type="submit" className="send-button">Send</Button>
     </form>
   );
 };
 
 export default ComposeForm;
+
+const style = css`
+  &.is-minimized {
+    display: none;
+  }
+
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .fields-wrapper {
+    .MuiInputLabel-shrink {
+      display: none !important;
+    }
+
+    .MuiFormLabel-asterisk {
+      display: none;
+    }
+
+    .MuiInput-underline:before,
+    .MuiInput-underline:after {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    textarea {
+      ${scrollbarStyle};
+      flex: 1;
+      margin-top: 10px;
+      width: 100%;
+      height: 100%;
+      outline: none;
+      border: none;
+      resize: none;
+    }
+  }
+
+  .send-button {
+    ${blueButtonStyle};
+    margin-bottom: 10px;
+
+    &:hover {
+      ${primaryBoxShadowStyle};
+      filter: brightness(1.03);
+    }
+  }
+`;

@@ -1,4 +1,5 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
+import { style } from "./shared-styles";
 import { REGISTER_USER } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
@@ -7,7 +8,6 @@ import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@
 import { useAppStore, AppStore } from "stores/appStore";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import "./AuthForms.scss";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
@@ -38,7 +38,7 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
+    <div className={style}>
       <Avatar>
         <LockOutlinedIcon />
       </Avatar>

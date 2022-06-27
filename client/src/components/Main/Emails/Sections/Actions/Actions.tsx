@@ -1,5 +1,6 @@
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { css } from "@emotion/css";
 import { SectionEmail } from "types/types";
 import { useMutation } from "@apollo/client";
 import { getAuthData } from "services/auth";
@@ -8,11 +9,10 @@ import { deleteEmailsFromCache } from "services/emails-helper";
 import { IconButton, TablePagination } from "@material-ui/core";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import useEmails from "hooks/use-emails";
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import DeleteIcon from '@material-ui/icons/Delete';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import DeleteIcon from "@material-ui/icons/Delete";
+import RefreshIcon from "@material-ui/icons/Refresh";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import "./Actions.scss";
 
 const Actions = () => {
   const { loggedInUser } = getAuthData();
@@ -48,7 +48,7 @@ const Actions = () => {
   };
 
   return (
-    <div className="actions">
+    <div className={style}>
       <div className="left-side">
         {selectedEmails.length > 0 ?
           <IconButton onClick={deleteFunc} className="delete-icon-wrapper">
@@ -76,3 +76,18 @@ const Actions = () => {
 };
 
 export default Actions;
+
+const style = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 2px;
+
+  .delete-icon-wrapper {
+    padding-left: 10px;
+  }
+
+  @media only screen and (max-width: 765px) {
+    padding: 10px 13px;
+  }
+`;

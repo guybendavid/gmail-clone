@@ -30,7 +30,7 @@ const EmailCheckbox = ({ email }: Props) => {
       checked={checked}
       onClick={(e) => e.stopPropagation()}
       onChange={() => setEmailAsSelected(email)}
-      inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
+      inputProps={{ "aria-label": "uncontrolled-checkbox" }}
       size="small" />
   );
 };

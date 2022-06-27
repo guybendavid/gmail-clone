@@ -3,17 +3,16 @@ import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
-import { classNamesGenerator } from "@guybendavid/utils";
+import { css, cx } from "@emotion/css";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import AppsIcon from '@material-ui/icons/Apps';
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import AppsIcon from "@material-ui/icons/Apps";
+import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import AppIcon from "images/app-icon.png";
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from "@material-ui/icons/Menu";
 import useIsSmallScreen from "hooks/use-is-small-screen";
-import "./Navbar.scss";
 
 const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();
@@ -22,7 +21,7 @@ const Navbar = () => {
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
-    <div className="navbar">
+    <div className={style}>
       {!isSmallScreen &&
         <div className="left-section">
           <IconButton>
@@ -32,7 +31,7 @@ const Navbar = () => {
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>
-          <div className={classNamesGenerator("search-wrapper", (isSmallScreen || searchBarIsOpen) && "white")}>
+          <div className={cx("search-wrapper", (isSmallScreen || searchBarIsOpen) && "white")}>
             <IconButton>
               {isSmallScreen ? <MenuIcon /> : <SearchIcon />}
             </IconButton>
@@ -86,7 +85,7 @@ const AvatarMenu = () => {
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
       <Menu
-        className="main-menu"
+        id="main-menu"
         keepMounted
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -99,3 +98,74 @@ const AvatarMenu = () => {
 };
 
 export default Navbar;
+
+const style = css`
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 5px 0 5px 18px;
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .left-section,
+  .right-section {
+    display: flex;
+    align-items: center;
+
+    &.left-section {
+      flex: 0.205;
+
+      img {
+        margin: 0 20px 0 7px;
+        cursor: pointer;
+      }
+    }
+
+    &.right-section {
+      flex: 1;
+      justify-content: space-between;
+
+      .search-wrapper {
+        display: flex;
+        flex: 0.65;
+        align-items: center;
+        background: #eff2f5;
+        transition: 0.3s ease;
+        padding-right: 5px;
+        padding-left: 10px;
+        border-radius: 8px;
+
+        &.white {
+          background: #fff;
+          box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3), 0 1px 3px 1px rgba(65, 69, 73, 0.15);
+        }
+
+        .input-base {
+          padding: 10px 10px 10px 5px;
+          flex: 1;
+        }
+      }
+
+      .buttons-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      @media only screen and (max-width: 765px) {
+        .search-wrapper {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 765px) {
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+`;

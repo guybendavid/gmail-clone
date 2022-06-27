@@ -1,9 +1,0 @@
-.indication-message {
-  z-index: 100000 !important;
-
-  &:not(.is-error) {
-    .MuiPaper-root {
-      background: #202124;
-    }
-  }
-}

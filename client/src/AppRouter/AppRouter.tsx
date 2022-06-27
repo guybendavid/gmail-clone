@@ -1,6 +1,7 @@
 import { Container } from "@material-ui/core";
-import { Switch, useLocation, withRouter } from "react-router-dom";
-import { classNamesGenerator } from "@guybendavid/utils";
+import { Switch, withRouter } from "react-router-dom";
+import { css, cx } from "@emotion/css";
+import { getAuthData } from "services/auth";
 import Login from "components/AuthForms/Login";
 import Register from "components/AuthForms/Register";
 import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
@@ -10,11 +11,10 @@ import Main from "components/Main/Main";
 import IndicationMessage from "components/IndicationMessage/IndicationMessage";
 
 const AppRouter = () => {
-  const location = useLocation();
-  const isAuthForm = location.pathname === "/login" || location.pathname === "/register";
+  const { isAuthenticated } = getAuthData();
 
   return (
-    <Container className={classNamesGenerator("container", isAuthForm && "is-auth-form")}>
+    <Container className={cx(baseContainerStyle, !isAuthenticated && authFormStyle)} maxWidth={isAuthenticated ? "xl" : "sm"}>
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />
@@ -27,3 +27,31 @@ const AppRouter = () => {
 };
 
 export default withRouter(AppRouter);
+
+const baseContainerStyle = css`
+  padding: 0 !important;
+`;
+
+const authFormStyle = css`
+  margin-top: 160px;
+
+  &::before {
+    content: "";
+    background: var(--gradient-color);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 124px;
+    width: 100vw;
+    z-index: -1;
+  }
+
+  @media only screen and (max-width: 765px) {
+    margin-top: 100px;
+    max-width: 350px;
+
+    &::before {
+      height: 60px;
+    }
+  }
+`;
