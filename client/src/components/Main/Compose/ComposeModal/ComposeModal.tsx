@@ -3,10 +3,7 @@ import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { primaryBoxShadowStyle } from "styles/reusable-css-in-js-styles";
-import MinimizeIcon from "@material-ui/icons/Minimize";
-import MaximizeIcon from "@material-ui/icons/Maximize";
-import HeightIcon from "@material-ui/icons/Height";
-import CloseIcon from "@material-ui/icons/Close";
+import { Minimize as MinimizeIcon, Maximize as MaximizeIcon, Height as HeightIcon, Close as CloseIcon } from "@material-ui/icons";
 import ComposeForm from "../ComposeForm/ComposeForm";
 
 const ComposeModal = () => {

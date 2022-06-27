@@ -2,16 +2,17 @@ import { useState, MouseEvent } from "react";
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
-import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem } from "@material-ui/core";
+import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import AppsIcon from "@material-ui/icons/Apps";
-import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import AppIcon from "images/app-icon.png";
-import MenuIcon from "@material-ui/icons/Menu";
+import {
+  Search as SearchIcon,
+  ArrowDropDown as ArrowDropDownIcon,
+  Apps as AppsIcon,
+  SettingsOutlined as SettingsOutlinedIcon,
+  HelpOutline as HelpOutlineIcon,
+  Menu as MenuIcon
+} from "@material-ui/icons";
+import gmailIcon from "images/app-icon.png";
 import useIsSmallScreen from "hooks/use-is-small-screen";
 
 const Navbar = () => {
@@ -27,7 +28,7 @@ const Navbar = () => {
           <IconButton>
             <MenuIcon />
           </IconButton>
-          <img src={AppIcon} alt="navbar-img" height="45" />
+          <img src={gmailIcon} alt="navbar-img" height="45" />
         </div>}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>

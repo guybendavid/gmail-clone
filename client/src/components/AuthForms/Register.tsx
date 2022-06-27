@@ -7,7 +7,7 @@ import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useAppStore, AppStore } from "stores/appStore";
 import { getFormValidationErrors } from "@guybendavid/utils";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 

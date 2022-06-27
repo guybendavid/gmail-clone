@@ -1,3 +1,4 @@
+import useEmails from "hooks/use-emails";
 import { useAppStore, AppStore } from "stores/appStore";
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { css } from "@emotion/css";
@@ -8,11 +9,12 @@ import { DELETE_EMAILS } from "services/graphql";
 import { deleteEmailsFromCache } from "services/emails-helper";
 import { IconButton, TablePagination } from "@material-ui/core";
 import { getFormValidationErrors } from "@guybendavid/utils";
-import useEmails from "hooks/use-emails";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import DeleteIcon from "@material-ui/icons/Delete";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import {
+  CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
+  Delete as DeleteIcon,
+  Refresh as RefreshIcon,
+  MoreVert as MoreVertIcon
+} from "@material-ui/icons";
 
 const Actions = () => {
   const { loggedInUser } = getAuthData();

@@ -2,18 +2,20 @@ import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { overflowHandler, scrollbarStyle } from "styles/reusable-css-in-js-styles";
-import InboxIcon from "@material-ui/icons/Inbox";
-import SendIcon from "@material-ui/icons/Send";
-import StarIcon from "@material-ui/icons/Star";
-import WatchLaterIcon from "@material-ui/icons/WatchLater";
-import LabelImportantIcon from "@material-ui/icons/LabelImportant";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import MailIcon from "@material-ui/icons/Mail";
-import DeleteIcon from "@material-ui/icons/Delete";
-import LabelIcon from "@material-ui/icons/Label";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import VideocamIcon from "@material-ui/icons/Videocam";
-import KeyboardIcon from "@material-ui/icons/Keyboard";
+import {
+  Inbox as InboxIcon,
+  Send as SendIcon,
+  Star as StarIcon,
+  WatchLater as WatchLaterIcon,
+  LabelImportant as LabelImportantIcon,
+  Drafts as DraftsIcon,
+  Mail as MailIcon,
+  Delete as DeleteIcon,
+  Label as LabelIcon,
+  ExpandMore as ExpandMoreIcon,
+  Videocam as VideocamIcon,
+  Keyboard as KeyboardIcon
+} from "@material-ui/icons";
 import composeImg from "images/compose-img.png";
 
 const firstListTexts = [

@@ -3,7 +3,7 @@ import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { css } from "@emotion/css";
 import { AppBar, Dialog, Toolbar, IconButton, Typography, Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions/transition";
-import CloseIcon from "@material-ui/icons/Close";
+import { Close as CloseIcon } from "@material-ui/icons";
 import ComposeForm from "../ComposeForm/ComposeForm";
 
 const Transition = forwardRef(function Transition(

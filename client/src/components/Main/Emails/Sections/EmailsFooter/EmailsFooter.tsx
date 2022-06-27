@@ -1,15 +1,9 @@
 import { useEmailsStore, EmailsStore } from "stores/emailsStore";
 import { css, cx } from "@emotion/css";
 import { blueButtonStyle } from "styles/reusable-css-in-js-styles";
-import { Button } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { Button, AppBar, Tabs, Tab } from "@material-ui/core";
 
-const texts = [
-  "Inbox",
-  "Sent"
-];
+const texts = ["Inbox", "Sent"];
 
 const EmailsFooter = () => {
   const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
