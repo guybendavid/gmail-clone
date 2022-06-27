@@ -72,8 +72,16 @@ const style = css`
     height: 70%;
   }
 
+  hr {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
   .email {
     padding: 10px 16px 10px 5px;
+
+    @media only screen and (max-width: 765px) {
+      padding: 10px 16px;
+    }
 
     &:hover {
       box-shadow: 0 8px 10px 1px rgba(17, 15, 15, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05),
@@ -100,6 +108,10 @@ const style = css`
         .MuiCheckbox-colorSecondary.Mui-checked:hover {
           background: rgba(0, 0, 0, 0.3);
         }
+      }
+
+      .created-at {
+        margin-left: auto;
       }
 
       .participant-name,
@@ -133,18 +145,6 @@ const style = css`
           }
         }
       }
-
-      .created-at {
-        margin-left: auto;
-      }
     }
-
-    @media only screen and (max-width: 765px) {
-      padding: 10px 16px;
-    }
-  }
-
-  hr {
-    background-color: rgba(0, 0, 0, 0.05);
   }
 `;
