@@ -118,13 +118,13 @@ const style = css`
         max-height: 385px;
         overflow-y: auto;
 
-        &::-webkit-scrollbar {
-          width: 10px;
-        }
-
         @media only screen and (min-width: 765px) {
           padding: 0 16px 0 8px;
           flex: 0.32;
+        }
+
+        &::-webkit-scrollbar {
+          width: 10px;
         }
       }
 

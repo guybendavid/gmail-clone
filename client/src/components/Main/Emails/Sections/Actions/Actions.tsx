@@ -85,11 +85,11 @@ const style = css`
   justify-content: space-between;
   padding: 3px 2px;
 
-  .delete-icon-wrapper {
-    padding-left: 10px;
-  }
-
   @media only screen and (max-width: 765px) {
     padding: 10px 13px;
+  }
+
+  .delete-icon-wrapper {
+    padding-left: 10px;
   }
 `;

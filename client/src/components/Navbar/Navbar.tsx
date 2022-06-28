@@ -107,6 +107,11 @@ const style = css`
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   padding: 5px 0 5px 18px;
 
+  @media only screen and (max-width: 765px) {
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+
   .avatar {
     width: 30px;
     height: 30px;
@@ -131,6 +136,10 @@ const style = css`
       justify-content: space-between;
 
       .search-wrapper {
+        @media only screen and (max-width: 765px) {
+          flex: 1;
+        }
+
         display: flex;
         flex: 0.65;
         align-items: center;
@@ -156,17 +165,6 @@ const style = css`
         align-items: center;
         gap: 5px;
       }
-
-      @media only screen and (max-width: 765px) {
-        .search-wrapper {
-          flex: 1;
-        }
-      }
     }
-  }
-
-  @media only screen and (max-width: 765px) {
-    padding: 5px;
-    margin-bottom: 5px;
   }
 `;

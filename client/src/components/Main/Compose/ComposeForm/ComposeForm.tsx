@@ -66,14 +66,14 @@ const ComposeForm = ({ isMinimized }: Props) => {
 export default ComposeForm;
 
 const style = css`
-  &.is-minimized {
-    display: none;
-  }
-
   padding: 0 10px;
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  &.is-minimized {
+    display: none;
+  }
 
   .fields-wrapper {
     .MuiInputLabel-shrink {

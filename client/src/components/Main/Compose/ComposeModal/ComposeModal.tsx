@@ -51,14 +51,14 @@ const style = css`
   display: flex;
   flex-direction: column;
 
-  &:not(.is-minimized) {
-    width: 40vw;
-    height: 70vh;
-  }
-
   &.is-minimized {
     width: 20vw;
     min-width: 210px;
+  }
+
+  &:not(.is-minimized) {
+    width: 40vw;
+    height: 70vh;
   }
 
   .header {
