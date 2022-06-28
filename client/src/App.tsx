@@ -1,17 +1,8 @@
-import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import useLocalStorageTracker from "hooks/use-local-storage-tracker";
 import AppRouter from "AppRouter/AppRouter";
 import "styles/global-styles.css";
 
 const App = () => {
-  const { listen: listenToChangesInLS } = useLocalStorageTracker();
-
-  useEffect(() => {
-    listenToChangesInLS();
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <BrowserRouter>
       <AppRouter />
