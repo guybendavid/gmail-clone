@@ -14,7 +14,7 @@ const AppRouter = () => {
   const { isAuthenticated } = getAuthData();
 
   return (
-    <Container className={cx(baseContainerStyle, !isAuthenticated && authFormStyle)} maxWidth={isAuthenticated ? "xl" : "sm"}>
+    <Container className={cx(baseContainerStyle, isAuthenticated ? authenticatedStyle : authFormStyle)} maxWidth="sm">
       <Switch>
         <AuthenticatedRoute exact path="/" Component={Main} />
         <UnauthenticatedRoute exact path="/login" Component={Login} />
@@ -30,6 +30,10 @@ export default withRouter(AppRouter);
 
 const baseContainerStyle = css`
   padding: 0 !important;
+`;
+
+const authenticatedStyle = css`
+  max-width: unset !important;
 `;
 
 const authFormStyle = css`
