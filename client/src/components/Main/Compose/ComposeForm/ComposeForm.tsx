@@ -1,6 +1,6 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { useAppStore, AppStore } from "stores/appStore";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/appStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { css, cx } from "@emotion/css";
 import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
@@ -15,9 +15,8 @@ type Props = {
 
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
-  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
-  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
+  const { setIsComposeOpen } = useEmailsStore(state => state);
 
   const [sendEmail] = useMutation(SEND_EMAIL, {
     onCompleted: () => {

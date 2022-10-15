@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAppStore, AppStore } from "stores/appStore";
+import { useAppStore } from "stores/appStore";
 import { sanitize } from "dompurify";
 import { css, cx } from "@emotion/css";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
@@ -8,8 +8,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };
 
 const IndicationMessage = () => {
-  const snackBarMessage = useAppStore((state: AppStore) => state.snackBarMessage);
-  const clearSnackBarMessage = useAppStore((state: AppStore) => state.clearSnackBarMessage);
+  const { snackBarMessage, clearSnackBarMessage } = useAppStore(state => state);
   const { content, severity } = snackBarMessage;
   const [open, setOpen] = useState(false);
 

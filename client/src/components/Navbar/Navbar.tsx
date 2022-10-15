@@ -1,6 +1,6 @@
 import { useState, MouseEvent } from "react";
-import { useAppStore, AppStore } from "stores/appStore";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/appStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { getAuthData } from "services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
@@ -17,8 +17,7 @@ import useIsSmallScreen from "hooks/use-is-small-screen";
 
 const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();
-  const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
-  const setSearchValue = useEmailsStore((state: EmailsStore) => state.setSearchValue);
+  const { searchValue, setSearchValue } = useEmailsStore(state => state);
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
@@ -69,7 +68,7 @@ const Navbar = () => {
 
 const AvatarMenu = () => {
   const { loggedInUser } = getAuthData();
-  const logout = useAppStore((state: AppStore) => state.logout);
+  const { logout } = useAppStore(state => state);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {

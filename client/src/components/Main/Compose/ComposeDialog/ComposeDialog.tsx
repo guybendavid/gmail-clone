@@ -1,5 +1,5 @@
 import { forwardRef, ReactElement, Ref } from "react";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { css } from "@emotion/css";
 import { AppBar, Dialog, Toolbar, IconButton, Typography, Slide } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions/transition";
@@ -14,8 +14,7 @@ const Transition = forwardRef(function Transition(
 });
 
 const ComposeDialog = () => {
-  const isComposeOpen = useEmailsStore((state: EmailsStore) => state.isComposeOpen);
-  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
+  const { isComposeOpen, setIsComposeOpen } = useEmailsStore(state => state);
 
   return (
     <>

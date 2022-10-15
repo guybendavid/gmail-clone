@@ -5,15 +5,14 @@ import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
-import { useAppStore, AppStore } from "stores/appStore";
+import { useAppStore } from "stores/appStore";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Login = () => {
-  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const { email } = formValues;
 

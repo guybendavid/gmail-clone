@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { primaryBoxShadowStyle } from "styles/reusable-css-in-js-styles";
@@ -7,7 +7,7 @@ import { Minimize as MinimizeIcon, Maximize as MaximizeIcon, Height as HeightIco
 import ComposeForm from "../ComposeForm/ComposeForm";
 
 const ComposeModal = () => {
-  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
+  const { setIsComposeOpen } = useEmailsStore(state => state);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const headerIconsGenerator = useCallback(() => {

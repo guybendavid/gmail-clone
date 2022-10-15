@@ -1,4 +1,4 @@
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { SectionEmail } from "types/types";
 import { Checkbox } from "@material-ui/core";
 
@@ -7,9 +7,7 @@ type Props = {
 };
 
 const EmailCheckbox = ({ email }: Props) => {
-  const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
-  const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);
-
+  const { selectedEmails, setSelectedEmails } = useEmailsStore(state => state);
   const selectedEmail = selectedEmails.find((selectedEmail: SectionEmail) => selectedEmail.id === email.id);
   const checked = selectedEmail ? true : false;
 

@@ -5,14 +5,6 @@ type SnackBarMessage = {
   severity: "error" | "info" | "success" | "warning";
 };
 
-export type AppStore = {
-  snackBarMessage: SnackBarMessage;
-  setSnackBarMessage: (snackBarMessage: SnackBarMessage) => void;
-  clearSnackBarMessage: () => void;
-  handleServerErrors: (error: any) => void;
-  logout: () => void;
-};
-
 const initialSnackBarMessage: SnackBarMessage = { content: "", severity: "error" };
 
 function appStore(set: any, get: any) {

@@ -1,4 +1,4 @@
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { css } from "@emotion/css";
 import Emails from "./Emails/Emails";
 import LeftSideBar from "./LeftSidebar/LeftSidebar";
@@ -7,7 +7,7 @@ import Compose from "./Compose/Compose";
 import useIsSmallScreen from "hooks/use-is-small-screen";
 
 const Main = () => {
-  const isComposeOpen = useEmailsStore((state: EmailsStore) => state.isComposeOpen);
+  const { isComposeOpen } = useEmailsStore(state => state);
   const { isSmallScreen } = useIsSmallScreen();
 
   return (

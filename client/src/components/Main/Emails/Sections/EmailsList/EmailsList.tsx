@@ -1,5 +1,5 @@
 import { useEffect, Fragment } from "react";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { css, cx } from "@emotion/css";
 import { scrollbarStyle, overflowHandler } from "styles/reusable-css-in-js-styles";
 import { getAuthData } from "services/auth";
@@ -17,8 +17,7 @@ const EmailsList = () => {
   const { loggedInUser } = getAuthData();
   const { emails, apolloClient } = useEmails();
   const { isSmallScreen } = useIsSmallScreen();
-  const searchValue = useEmailsStore((state: EmailsStore) => state.searchValue);
-  const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
+  const { searchValue, selectedEmails } = useEmailsStore(state => state);
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 

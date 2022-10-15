@@ -1,4 +1,4 @@
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { css, cx } from "@emotion/css";
 import { blueButtonStyle } from "styles/reusable-css-in-js-styles";
 import { Button, AppBar, Tabs, Tab } from "@material-ui/core";
@@ -6,9 +6,7 @@ import { Button, AppBar, Tabs, Tab } from "@material-ui/core";
 const texts = ["Inbox", "Sent"];
 
 const EmailsFooter = () => {
-  const setIsComposeOpen = useEmailsStore((state: EmailsStore) => state.setIsComposeOpen);
-  const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
-  const setActiveTab = useEmailsStore((state: EmailsStore) => state.setActiveTab);
+  const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore(state => state);
 
   return (
     <div className={style}>

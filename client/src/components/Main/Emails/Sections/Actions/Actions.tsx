@@ -1,6 +1,6 @@
 import useEmails from "hooks/use-emails";
-import { useAppStore, AppStore } from "stores/appStore";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/appStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { css } from "@emotion/css";
 import { SectionEmail } from "types/types";
 import { useMutation } from "@apollo/client";
@@ -19,11 +19,8 @@ import {
 const Actions = () => {
   const { loggedInUser } = getAuthData();
   const { emails } = useEmails();
-  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const setSnackBarMessage = useAppStore((state: AppStore) => state.setSnackBarMessage);
-  const selectedEmails = useEmailsStore((state: EmailsStore) => state.selectedEmails);
-  const setSelectedEmails = useEmailsStore((state: EmailsStore) => state.setSelectedEmails);
-  const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
+  const { selectedEmails, setSelectedEmails, activeTab } = useEmailsStore(state => state);
   const selectedEmailIds = selectedEmails.map((email: SectionEmail) => email.id);
 
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS, {

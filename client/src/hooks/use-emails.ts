@@ -1,5 +1,5 @@
-import { useAppStore, AppStore } from "stores/appStore";
-import { useEmailsStore, EmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/appStore";
+import { useEmailsStore } from "stores/emailsStore";
 import { SectionEmail } from "types/types";
 import { useQuery, ApolloClient } from "@apollo/client";
 import { getAuthData } from "services/auth";
@@ -7,9 +7,8 @@ import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 
 const useEmails = () => {
   const { loggedInUser } = getAuthData();
-  const handleServerErrors = useAppStore((state: AppStore) => state.handleServerErrors);
-  const clearSnackBarMessage = useAppStore((state: AppStore) => state.clearSnackBarMessage);
-  const activeTab = useEmailsStore((state: EmailsStore) => state.activeTab);
+  const { handleServerErrors, clearSnackBarMessage } = useAppStore(state => state);
+  const { activeTab } = useEmailsStore(state => state);
   const emailsToFetch = activeTab === 0 ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
 
   const { data, client: apolloClient } = useQuery(emailsToFetch, {
