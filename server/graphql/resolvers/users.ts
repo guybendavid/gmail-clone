@@ -13,7 +13,7 @@ export default {
       const isUserExists = await User.findOne({ where: { email } });
 
       if (isUserExists) {
-        throw new UserInputError("email already exists");
+        throw new UserInputError("Email already exists");
       }
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
