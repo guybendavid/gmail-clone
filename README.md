@@ -22,4 +22,4 @@ http://clone-of-gmail.herokuapp.com/
 
 ## Preview 
 
-![Inbox](https://i.ibb.co/0XSq39h/Untitled.png)
+![image](https://github.com/user-attachments/assets/ad64869c-7f5d-4a57-aa51-380b98ed28a2)
