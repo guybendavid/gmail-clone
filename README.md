@@ -18,7 +18,7 @@
 
 ## Live Demo
 
-http://clone-of-gmail.herokuapp.com/
+https://gmail-clone-alnl.onrender.com
 
 ## Preview 
 
