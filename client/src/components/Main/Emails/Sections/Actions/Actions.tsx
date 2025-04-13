@@ -65,7 +65,7 @@ const Actions = () => {
           component="div"
           count={emails.length || 0}
           page={0}
-          onChangePage={() => null}
+          onPageChange={() => null}
           rowsPerPage={1000}
           rowsPerPageOptions={[]}
         />
