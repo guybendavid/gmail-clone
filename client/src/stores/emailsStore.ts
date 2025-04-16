@@ -16,13 +16,13 @@ function emailsStore(set: any) {
   return {
     activeTab: 0,
     setActiveTab: (activeTab: number) =>
-      set((state: EmailsStore) => activeTab !== state.activeTab && ({ activeTab, selectedEmails: [], searchValue: "" })),
+      set((state: EmailsStore) => activeTab !== state.activeTab && { activeTab, selectedEmails: [], searchValue: "" }),
     searchValue: "",
     setSearchValue: (searchValue: string) => set(() => ({ searchValue })),
     selectedEmails: [],
     setSelectedEmails: (selectedEmails: SectionEmail[]) => set(() => ({ selectedEmails })),
     isComposeOpen: false,
-    setIsComposeOpen: (isComposeOpen: boolean) => set(() => ({ isComposeOpen })),
+    setIsComposeOpen: (isComposeOpen: boolean) => set(() => ({ isComposeOpen }))
   };
 }
 

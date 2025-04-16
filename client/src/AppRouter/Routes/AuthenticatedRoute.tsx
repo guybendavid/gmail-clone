@@ -14,13 +14,19 @@ const AuthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
 
   return (
-    <Route path={path} render={() => isAuthenticated ?
-      <>
-        <Navbar />
-        <Component />
-      </>
-      :
-      <Redirect to="/login" />} />
+    <Route
+      path={path}
+      render={() =>
+        isAuthenticated ? (
+          <>
+            <Navbar />
+            <Component />
+          </>
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
+    />
   );
 };
 

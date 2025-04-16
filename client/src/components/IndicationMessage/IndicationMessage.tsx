@@ -9,9 +9,7 @@ const { sanitize } = dompurify;
 const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };
 
 const IndicationMessage = () => {
-  const { snackBarMessage, clearSnackBarMessage } = useAppStore(
-    (state) => state
-  );
+  const { snackBarMessage, clearSnackBarMessage } = useAppStore((state) => state);
   const { content, severity } = snackBarMessage;
   const [open, setOpen] = useState(false);
 
@@ -33,14 +31,8 @@ const IndicationMessage = () => {
           anchorOrigin={anchorOrigin}
           open={open}
           autoHideDuration={5000}
-          onClose={closeMessage}
-        >
-          <MuiAlert
-            elevation={6}
-            variant="filled"
-            severity={severity}
-            onClose={closeMessage}
-          >
+          onClose={closeMessage}>
+          <MuiAlert elevation={6} variant="filled" severity={severity} onClose={closeMessage}>
             <div dangerouslySetInnerHTML={{ __html: sanitize(content) }}></div>
           </MuiAlert>
         </Snackbar>

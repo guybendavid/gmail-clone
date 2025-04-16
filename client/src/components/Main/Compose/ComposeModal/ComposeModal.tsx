@@ -7,7 +7,7 @@ import { Minimize as MinimizeIcon, Maximize as MaximizeIcon, Height as HeightIco
 import ComposeForm from "../ComposeForm/ComposeForm";
 
 const ComposeModal = () => {
-  const { setIsComposeOpen } = useEmailsStore(state => state);
+  const { setIsComposeOpen } = useEmailsStore((state) => state);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const headerIconsGenerator = useCallback(() => {

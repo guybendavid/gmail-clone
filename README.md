@@ -20,6 +20,6 @@
 
 https://gmail-clone-alnl.onrender.com
 
-## Preview 
+## Preview
 
 ![Inbox](https://github.com/user-attachments/assets/ad64869c-7f5d-4a57-aa51-380b98ed28a2)

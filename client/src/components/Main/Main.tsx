@@ -7,7 +7,7 @@ import Compose from "./Compose/Compose";
 import useIsSmallScreen from "hooks/use-is-small-screen";
 
 const Main = () => {
-  const { isComposeOpen } = useEmailsStore(state => state);
+  const { isComposeOpen } = useEmailsStore((state) => state);
   const { isSmallScreen } = useIsSmallScreen();
 
   return (

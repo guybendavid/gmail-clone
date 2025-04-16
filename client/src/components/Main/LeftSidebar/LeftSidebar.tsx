@@ -18,26 +18,12 @@ import {
 } from "@material-ui/icons";
 import composeImg from "images/compose-img.png";
 
-const firstListTexts = [
-  "Inbox",
-  "Sent",
-  "Starred",
-  "Snoozed",
-  "Important",
-  "Drafts",
-  "All Mail",
-  "Trash",
-  "Categories",
-  "More"
-];
+const firstListTexts = ["Inbox", "Sent", "Starred", "Snoozed", "Important", "Drafts", "All Mail", "Trash", "Categories", "More"];
 
-const secondListTexts = [
-  "New meeting",
-  "Join a meeting"
-];
+const secondListTexts = ["New meeting", "Join a meeting"];
 
 const LeftSidebar = () => {
-  const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore(state => state);
+  const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore((state) => state);
 
   return (
     <div className={style}>
@@ -49,8 +35,22 @@ const LeftSidebar = () => {
       </div>
       <div className="list">
         <div className="list-items-wrapper first-list">
-          {[InboxIcon, SendIcon, StarIcon, WatchLaterIcon, LabelImportantIcon, DraftsIcon, MailIcon, DeleteIcon, LabelIcon, ExpandMoreIcon].map((Icon, index) => (
-            <ListItem key={index} button className={cx("list-item", activeTab === index && "is-active", index === 0 && "is-first-item")}
+          {[
+            InboxIcon,
+            SendIcon,
+            StarIcon,
+            WatchLaterIcon,
+            LabelImportantIcon,
+            DraftsIcon,
+            MailIcon,
+            DeleteIcon,
+            LabelIcon,
+            ExpandMoreIcon
+          ].map((Icon, index) => (
+            <ListItem
+              key={index}
+              button
+              className={cx("list-item", activeTab === index && "is-active", index === 0 && "is-first-item")}
               onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />
@@ -76,7 +76,7 @@ export default LeftSidebar;
 
 const style = css`
   flex: 0.18;
-  
+
   .button-wrapper {
     padding: 16px 10px;
     background: white;

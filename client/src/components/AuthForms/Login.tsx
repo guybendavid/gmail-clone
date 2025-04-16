@@ -12,7 +12,7 @@ import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Login = () => {
-  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const { email } = formValues;
 
@@ -44,9 +44,17 @@ const Login = () => {
       <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
         <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
-        <TextField {...textFieldProps} label="password" autoComplete="Password" type="password" onChange={(e) => handleOnChange(e, "password")} />
+        <TextField
+          {...textFieldProps}
+          label="password"
+          autoComplete="Password"
+          type="password"
+          onChange={(e) => handleOnChange(e, "password")}
+        />
         <Link to="/register">Don't have an account yet?</Link>
-        <Button type="submit" fullWidth variant="contained">Login</Button>
+        <Button type="submit" fullWidth variant="contained">
+          Login
+        </Button>
       </form>
     </div>
   );

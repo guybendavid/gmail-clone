@@ -6,16 +6,17 @@ import { Button, AppBar, Tabs, Tab } from "@material-ui/core";
 const texts = ["Inbox", "Sent"];
 
 const EmailsFooter = () => {
-  const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore(state => state);
+  const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore((state) => state);
 
   return (
     <div className={style}>
-      <Button className="compose-button" onClick={() => setIsComposeOpen(true)}>Compose</Button>
+      <Button className="compose-button" onClick={() => setIsComposeOpen(true)}>
+        Compose
+      </Button>
       <AppBar position="static" className="tabs" elevation={0}>
         <Tabs variant="fullWidth" value={activeTab} aria-label="simple tabs example">
           {texts.map((text, index) => (
-            <Tab key={index} label={text} onClick={() => setActiveTab(index)}
-              className={cx(activeTab === index && "is-active")} />
+            <Tab key={index} label={text} onClick={() => setActiveTab(index)} className={cx(activeTab === index && "is-active")} />
           ))}
         </Tabs>
       </AppBar>

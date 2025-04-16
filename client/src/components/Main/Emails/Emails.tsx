@@ -11,17 +11,17 @@ const Emails = () => {
   return (
     <div className={style}>
       <Actions />
-      {!isSmallScreen ?
+      {!isSmallScreen ? (
         <>
           <TabsRow />
           <EmailsList />
         </>
-        :
+      ) : (
         <div className="small-screen-emails-list-footer-wrapper">
           <EmailsList />
           <EmailsFooter />
         </div>
-      }
+      )}
     </div>
   );
 };

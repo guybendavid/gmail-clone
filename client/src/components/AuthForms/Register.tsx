@@ -12,7 +12,7 @@ import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
 
 const Register = () => {
-  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", password: "" });
   const { firstName, lastName, email } = formValues;
 
@@ -46,9 +46,17 @@ const Register = () => {
         <TextField {...textFieldProps} label="first name" autoComplete="First Name" onChange={(e) => handleOnChange(e, "firstName")} />
         <TextField {...textFieldProps} label="last name" autoComplete="Last Name" onChange={(e) => handleOnChange(e, "lastName")} />
         <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
-        <TextField {...textFieldProps} label="password" autoComplete="Password" type="password" onChange={(e) => handleOnChange(e, "password")} />
+        <TextField
+          {...textFieldProps}
+          label="password"
+          autoComplete="Password"
+          type="password"
+          onChange={(e) => handleOnChange(e, "password")}
+        />
         <Link to="/login">Already have an account?</Link>
-        <Button type="submit" fullWidth variant="contained">Register</Button>
+        <Button type="submit" fullWidth variant="contained">
+          Register
+        </Button>
       </form>
     </div>
   );

@@ -25,8 +25,8 @@ const EMAIL_PARTICIPANT_FIELDS = gql`
 
 export const LOGIN_USER = gql`
   ${AUTH_FIELDS}
-  mutation LoginUser($email: String! $password: String!) {
-    login(email: $email password: $password) {
+  mutation LoginUser($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       user {
         ...AuthFields
         firstName
@@ -40,8 +40,8 @@ export const LOGIN_USER = gql`
 
 export const REGISTER_USER = gql`
   ${AUTH_FIELDS}
-  mutation RegisterUser($firstName: String! $lastName: String! $email: String! $password: String!) {
-    register(firstName: $firstName lastName: $lastName email: $email password: $password) {
+  mutation RegisterUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    register(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
       user {
         ...AuthFields
       }
@@ -77,8 +77,8 @@ export const GET_SENT_EMAILS = gql`
 `;
 
 export const SEND_EMAIL = gql`
-  mutation SendEmail($senderEmail: String! $recipientEmail: String! $subject: String! $content: String!) {
-    sendEmail(senderEmail: $senderEmail recipientEmail: $recipientEmail subject: $subject content: $content) {
+  mutation SendEmail($senderEmail: String!, $recipientEmail: String!, $subject: String!, $content: String!) {
+    sendEmail(senderEmail: $senderEmail, recipientEmail: $recipientEmail, subject: $subject, content: $content) {
       id
     }
   }

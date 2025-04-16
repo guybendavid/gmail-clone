@@ -17,7 +17,7 @@ const EmailsList = () => {
   const { loggedInUser } = getAuthData();
   const { emails, apolloClient } = useEmails();
   const { isSmallScreen } = useIsSmallScreen();
-  const { searchValue, selectedEmails } = useEmailsStore(state => state);
+  const { searchValue, selectedEmails } = useEmailsStore((state) => state);
   const { data: newEmailData } = useSubscription(NEW_EMAIL);
   const newEmail = newEmailData?.newEmail;
 
@@ -30,8 +30,9 @@ const EmailsList = () => {
 
   return (
     <List className={cx(style, isSmallScreen && "is-small-screen")}>
-      {emails.filter((email: SectionEmail) =>
-        `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase())).map((email: SectionEmail, index: number) => (
+      {emails
+        .filter((email: SectionEmail) => `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase()))
+        .map((email: SectionEmail, index: number) => (
           <Fragment key={index}>
             <ListItem button className={cx("email", isEmailSelected(email, selectedEmails) && "is-selected")}>
               <div className="text-wrapper">
@@ -40,7 +41,9 @@ const EmailsList = () => {
                   <Typography component="span">{displayParticipantName(email)}</Typography>
                 </div>
                 <Typography component="span" className="email-body">{`${email.subject} - ${email.content}`}</Typography>
-                <Typography component="small" className="created-at">{timeDisplayer(email.createdAt)}</Typography>
+                <Typography component="small" className="created-at">
+                  {timeDisplayer(email.createdAt)}
+                </Typography>
               </div>
             </ListItem>
             <Divider />
@@ -52,13 +55,13 @@ const EmailsList = () => {
 
 function isEmailSelected(email: SectionEmail, selectedEmails: SectionEmail[]) {
   return Boolean(selectedEmails.find((selectedEmail: SectionEmail) => selectedEmail.id === email.id));
-};
+}
 
 function displayParticipantName(email: SectionEmail) {
   const { loggedInUser } = getAuthData();
   const participantName = "sender" in email ? email.sender.fullName : email.recipient.fullName;
   return participantName === `${loggedInUser.firstName} ${loggedInUser.lastName}` ? "Me" : participantName;
-};
+}
 
 export default EmailsList;
 
@@ -83,7 +86,9 @@ const style = css`
     }
 
     &:hover {
-      box-shadow: 0 8px 10px 1px rgba(17, 15, 15, 0.05), 0 3px 14px 2px rgba(0, 0, 0, 0.05),
+      box-shadow:
+        0 8px 10px 1px rgba(17, 15, 15, 0.05),
+        0 3px 14px 2px rgba(0, 0, 0, 0.05),
         0 5px 5px -3px rgba(0, 0, 0, 0.05);
     }
 

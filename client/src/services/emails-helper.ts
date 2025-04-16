@@ -32,16 +32,16 @@ export function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, c
     const query = recipientEmail === loggedInUserEmail ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
     updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
   }
-};
+}
 
 export function deleteEmailsFromCache(idsToDelete: string[], activeTab: number, loggedInUserEmail: string, client: ApolloClient<any>) {
   const isReceivedEmails = activeTab === 0;
   const query = isReceivedEmails ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
   const prevData = getPrevData({ query, loggedInUserEmail, client });
-  const newData = Object.values(prevData).filter(email => !idsToDelete.includes(email.id));
+  const newData = Object.values(prevData).filter((email) => !idsToDelete.includes(email.id));
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
   writeToCache(client, queryOptions, isReceivedEmails, newData);
-};
+}
 
 function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: UpdateCachedEmailsListOptions) {
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
@@ -52,17 +52,17 @@ function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: 
     const isReceivedEmails = query === GET_RECEIVED_EMAILS;
     writeToCache(client, queryOptions, isReceivedEmails, newData);
   }
-};
+}
 
 function getPrevData({ query, loggedInUserEmail, client }: PrevDataOptions): Email[] {
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
   const { getReceivedEmails, getSentEmails } = client.readQuery(queryOptions);
   return getReceivedEmails ? getReceivedEmails : getSentEmails;
-};
+}
 
 function getQueryOptions(query: DocumentNode, loggedInUserEmail: string) {
   return { query, variables: { loggedInUserEmail } };
-};
+}
 
 function writeToCache(client: ApolloClient<any>, queryOptions: QueryOptions, isReceivedEmails: boolean, newData: Email[]) {
   const objectToCache = {
@@ -71,4 +71,4 @@ function writeToCache(client: ApolloClient<any>, queryOptions: QueryOptions, isR
   };
 
   client.writeQuery(objectToCache);
-};
+}

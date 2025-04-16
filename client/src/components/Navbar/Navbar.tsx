@@ -17,24 +17,23 @@ import useIsSmallScreen from "hooks/use-is-small-screen";
 
 const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();
-  const { searchValue, setSearchValue } = useEmailsStore(state => state);
+  const { searchValue, setSearchValue } = useEmailsStore((state) => state);
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
     <div className={style}>
-      {!isSmallScreen &&
+      {!isSmallScreen && (
         <div className="left-section">
           <IconButton>
             <MenuIcon />
           </IconButton>
           <img src={gmailIcon} alt="navbar-img" height="45" />
-        </div>}
+        </div>
+      )}
       <div className="right-section">
         <ClickAwayListener onClickAway={() => setSearchBarIsOpen(false)}>
           <div className={cx("search-wrapper", (isSmallScreen || searchBarIsOpen) && "white")}>
-            <IconButton>
-              {isSmallScreen ? <MenuIcon /> : <SearchIcon />}
-            </IconButton>
+            <IconButton>{isSmallScreen ? <MenuIcon /> : <SearchIcon />}</IconButton>
             <InputBase
               className="input-base"
               placeholder="Search mail"
@@ -43,16 +42,16 @@ const Navbar = () => {
               onClick={() => setSearchBarIsOpen(!searchBarIsOpen)}
               inputProps={{ "aria-label": "search" }}
             />
-            {isSmallScreen ?
+            {isSmallScreen ? (
               <AvatarMenu />
-              :
+            ) : (
               <IconButton>
                 <ArrowDropDownIcon />
               </IconButton>
-            }
+            )}
           </div>
         </ClickAwayListener>
-        {!isSmallScreen &&
+        {!isSmallScreen && (
           <div className="buttons-wrapper">
             {[HelpOutlineIcon, SettingsOutlinedIcon, AppsIcon].map((Icon, index) => (
               <IconButton key={index}>
@@ -60,7 +59,8 @@ const Navbar = () => {
               </IconButton>
             ))}
             <AvatarMenu />
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -68,7 +68,7 @@ const Navbar = () => {
 
 const AvatarMenu = () => {
   const { loggedInUser } = getAuthData();
-  const { logout } = useAppStore(state => state);
+  const { logout } = useAppStore((state) => state);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -84,13 +84,7 @@ const AvatarMenu = () => {
       <IconButton onClick={handleClick}>
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
-      <Menu
-        id="main-menu"
-        keepMounted
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <Menu id="main-menu" keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>
@@ -150,7 +144,9 @@ const style = css`
 
         &.white {
           background: #fff;
-          box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3), 0 1px 3px 1px rgba(65, 69, 73, 0.15);
+          box-shadow:
+            0 1px 1px 0 rgba(65, 69, 73, 0.3),
+            0 1px 3px 1px rgba(65, 69, 73, 0.15);
         }
 
         .input-base {

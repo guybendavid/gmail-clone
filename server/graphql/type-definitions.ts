@@ -30,9 +30,9 @@ export default gql`
     getSentEmails(loggedInUserEmail: String!): [Email]!
   }
   type Mutation {
-    login(email: String! password: String!): AuthOperationResponse!
-    register(firstName: String! lastName: String! email: String! password: String!): AuthOperationResponse!
-    sendEmail(senderEmail: String! recipientEmail: String! subject: String! content: String!): Email!
+    login(email: String!, password: String!): AuthOperationResponse!
+    register(firstName: String!, lastName: String!, email: String!, password: String!): AuthOperationResponse!
+    sendEmail(senderEmail: String!, recipientEmail: String!, subject: String!, content: String!): Email!
     deleteEmails(ids: [ID]!): Boolean
   }
   type Subscription {

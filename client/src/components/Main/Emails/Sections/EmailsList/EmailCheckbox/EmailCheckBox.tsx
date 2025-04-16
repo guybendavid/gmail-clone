@@ -7,7 +7,7 @@ type Props = {
 };
 
 const EmailCheckbox = ({ email }: Props) => {
-  const { selectedEmails, setSelectedEmails } = useEmailsStore(state => state);
+  const { selectedEmails, setSelectedEmails } = useEmailsStore((state) => state);
   const selectedEmail = selectedEmails.find((selectedEmail: SectionEmail) => selectedEmail.id === email.id);
   const checked = selectedEmail ? true : false;
 
@@ -29,7 +29,8 @@ const EmailCheckbox = ({ email }: Props) => {
       onClick={(e) => e.stopPropagation()}
       onChange={() => setEmailAsSelected(email)}
       inputProps={{ "aria-label": "uncontrolled-checkbox" }}
-      size="small" />
+      size="small"
+    />
   );
 };
 

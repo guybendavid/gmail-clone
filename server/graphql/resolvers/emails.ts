@@ -12,17 +12,17 @@ interface SendEmailPayload extends Pick<DBEmail, "subject" | "content"> {
 
 export default {
   Query: {
-    getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: ContextUser; }) => {
+    getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string }, _context: { user: ContextUser }) => {
       const { loggedInUserEmail } = args;
       return getEmailsByParticipantType({ loggedInUserEmail, participantType: "recipient" });
     },
-    getSentEmails: (_parent: any, args: { loggedInUserEmail: string; }, _context: { user: ContextUser; }) => {
+    getSentEmails: (_parent: any, args: { loggedInUserEmail: string }, _context: { user: ContextUser }) => {
       const { loggedInUserEmail } = args;
       return getEmailsByParticipantType({ loggedInUserEmail, participantType: "sender" });
     }
   },
   Mutation: {
-    sendEmail: async (_parent: any, args: SendEmailPayload, _context: { user: ContextUser; }) => {
+    sendEmail: async (_parent: any, args: SendEmailPayload, _context: { user: ContextUser }) => {
       const { senderEmail, recipientEmail, subject, content } = args;
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
 
@@ -34,7 +34,7 @@ export default {
       pubsub.publish("NEW_EMAIL", { newEmail: await getFormattedNewEmail({ ...email.toJSON() }) });
       return email;
     },
-    deleteEmails: async (_parent: any, args: { ids: string[]; }, _context: { user: ContextUser; }) => {
+    deleteEmails: async (_parent: any, args: { ids: string[] }, _context: { user: ContextUser }) => {
       const { ids } = args;
       const idIsNotValid = (id: string) => isNaN(Number(id));
 

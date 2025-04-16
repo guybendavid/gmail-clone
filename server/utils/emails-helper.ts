@@ -24,12 +24,10 @@ export const getEmailsByParticipantType = async ({ loggedInUserEmail, participan
     throw new AuthenticationError("Please send a valid email");
   }
 
-  const emails = await sequelize.query(getEmailsWithParticipantsName(participantType),
-    {
-      type: QueryTypes.SELECT,
-      replacements: [loggedInUserEmail, loggedInUserEmail]
-    }
-  );
+  const emails = await sequelize.query(getEmailsWithParticipantsName(participantType), {
+    type: QueryTypes.SELECT,
+    replacements: [loggedInUserEmail, loggedInUserEmail]
+  });
 
   return formatDBEmailsToApiShape(emails);
 };
@@ -40,11 +38,12 @@ export const getFormattedNewEmail = async (newEmail: DBEmail) => ({
   recipient: await formatNewEmailParticipant(newEmail, "recipient")
 });
 
-const formatDBEmailsToApiShape = (emails: GetEmailsWithParticipantsNameQueryResponse) => emails.map(email => ({
-  ...email,
-  sender: { email: email.sender_email, fullName: email.sender_full_name },
-  recipient: { email: email.recipient_email, fullName: email.recipient_full_name }
-}));
+const formatDBEmailsToApiShape = (emails: GetEmailsWithParticipantsNameQueryResponse) =>
+  emails.map((email) => ({
+    ...email,
+    sender: { email: email.sender_email, fullName: email.sender_full_name },
+    recipient: { email: email.recipient_email, fullName: email.recipient_full_name }
+  }));
 
 const formatNewEmailParticipant = async (newEmail: DBEmail, participantType: ParticipantType) => {
   const emailAdderss = newEmail[participantType];

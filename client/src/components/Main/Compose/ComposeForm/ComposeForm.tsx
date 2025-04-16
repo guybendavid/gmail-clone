@@ -15,8 +15,8 @@ type Props = {
 
 const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
-  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
-  const { setIsComposeOpen } = useEmailsStore(state => state);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
+  const { setIsComposeOpen } = useEmailsStore((state) => state);
 
   const [sendEmail] = useMutation(SEND_EMAIL, {
     onCompleted: () => {
@@ -57,7 +57,9 @@ const ComposeForm = ({ isMinimized }: Props) => {
       <div className="content-wrapper">
         <textarea required onChange={(e) => handleOnChange(e, "content")} />
       </div>
-      <Button type="submit" className="send-button">Send</Button>
+      <Button type="submit" className="send-button">
+        Send
+      </Button>
     </form>
   );
 };

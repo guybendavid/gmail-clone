@@ -11,7 +11,7 @@ export type DBEmail = {
   id: string;
   subject: string;
   content: string;
-  sender: string,
+  sender: string;
   recipient: string;
 };
 

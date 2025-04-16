@@ -19,8 +19,8 @@ import {
 const Actions = () => {
   const { loggedInUser } = getAuthData();
   const { emails } = useEmails();
-  const { handleServerErrors, setSnackBarMessage } = useAppStore(state => state);
-  const { selectedEmails, setSelectedEmails, activeTab } = useEmailsStore(state => state);
+  const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
+  const { selectedEmails, setSelectedEmails, activeTab } = useEmailsStore((state) => state);
   const selectedEmailIds = selectedEmails.map((email: SectionEmail) => email.id);
 
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS, {
@@ -49,16 +49,17 @@ const Actions = () => {
   return (
     <div className={style}>
       <div className="left-side">
-        {selectedEmails.length > 0 ?
+        {selectedEmails.length > 0 ? (
           <IconButton onClick={deleteFunc} className="delete-icon-wrapper">
             <DeleteIcon />
           </IconButton>
-          :
+        ) : (
           [CheckBoxOutlineBlankIcon, RefreshIcon, MoreVertIcon].map((Icon, index) => (
             <IconButton key={index}>
               <Icon fontSize="small" />
             </IconButton>
-          ))}
+          ))
+        )}
       </div>
       <div className="right-side">
         <TablePagination
