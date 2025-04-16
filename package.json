@@ -10,8 +10,11 @@
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
-    "build-client": "cd client && npm i && npm run build && cd .. && xcopy /E /I /Y client\\build dist\\client && rmdir /s /q client\\build",
-    "build-server": "cd server && npm install && npm run build",
+    "build-client": "cd client && npm i && npm run build && cd .. && npx cpy \"client/build/**\" dist/client --cwd=. --parents && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\"",
+    "build-server": "cd server && npm i && npm run build",
     "build": "npm run clean && npm run create-dist-folder && npm run build-client && npm run build-server"
+  },
+  "devDependencies": {
+    "cpy-cli": "^5.0.0"
   }
 }
