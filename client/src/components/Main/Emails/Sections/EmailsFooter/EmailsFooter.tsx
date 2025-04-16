@@ -11,7 +11,7 @@ const EmailsFooter = () => {
   return (
     <div className={style}>
       <Button className="compose-button" onClick={() => setIsComposeOpen(true)}>
-        Compose test
+        Compose
       </Button>
       <AppBar position="static" className="tabs" elevation={0}>
         <Tabs variant="fullWidth" value={activeTab} aria-label="simple tabs example">
