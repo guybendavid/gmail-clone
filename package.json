@@ -4,9 +4,6 @@
   "author": "Guy Ben David",
   "license": "BSD-3-Clause",
   "private": true,
-  "engines": {
-    "node": ">=22"
-  },
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
