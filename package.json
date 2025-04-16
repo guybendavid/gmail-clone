@@ -10,9 +10,9 @@
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
-    "build-client": "cd client && npm i && npm run build && echo '[✅ client built]' && cd .. && npx -y cpy-cli \"client/build/**\" dist/client --cwd=. --parents && echo '[✅ copied client build]' && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\"",
-    "build-server": "cd server && npm i && npm run build && cd .. && npx -y cpy-cli server/package.json dist && echo '[📦 copied package.json]' && cd dist && npm install && echo '[📦 installed server deps]' && cd ..",
-    "build": "npm run clean && npm run create-dist-folder && echo '[📦 building client]' && npm run build-client && echo '[📦 building server]' && npm run build-server"
+    "build-client": "cd client && npm i && npm run build && cd .. && npx -y cpy-cli \"client/build/**\" dist/client --cwd=. --parents && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\"",
+    "build-server": "cd server && npm i && npm run build && cd .. && npx -y cpy-cli server/package.json server/package-lock.json dist --flat && echo \"[📦 copied package files]\" && (cd dist && npm i --no-audit --no-fund && echo \"[📦 installed server deps]\")",
+    "build": "npm run clean && npm run create-dist-folder && npm run build-client && npm run build-server"
   },
   "devDependencies": {
     "cpy-cli": "^5.0.0"
