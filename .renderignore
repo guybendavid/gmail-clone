@@ -1,0 +1,10 @@
+client/
+server/
+*.ts
+*.tsx
+tsconfig*.json
+.eslint*
+.prettier*
+.vscode/
+node_modules/
+README.md
