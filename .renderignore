@@ -1,10 +1,8 @@
 client/
 server/
-*.ts
-*.tsx
-tsconfig*.json
-.eslint*
 .prettier*
-.vscode/
-node_modules/
+.github/
+.gitignore
+.renderignore
+LICENSE
 README.md
