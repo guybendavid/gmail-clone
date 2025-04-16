@@ -11,7 +11,7 @@
     "clean": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\"",
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
     "build-client": "cd client && npm i && npm run build && echo '[✅ client built]' && cd .. && npx -y cpy-cli \"client/build/**\" dist/client --cwd=. --parents && echo '[✅ copied client build]' && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\"",
-    "build-server": "cd server && npm i && npm run build",
+    "build-server": "cd server && npm i && npm run build && cd .. && npx -y cpy-cli server/package.json dist && cd dist && npm i",
     "build": "npm run clean && npm run create-dist-folder && echo '[📦 building client]' && npm run build-client && echo '[📦 building server]' && npm run build-server"
   },
   "devDependencies": {
