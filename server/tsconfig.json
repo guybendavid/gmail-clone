@@ -9,6 +9,5 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "skipLibCheck": true
-  },
-  "include": ["app.ts", "graphql/**/*.ts", "db/**/*.ts", "utils/**/*.ts"]
+  }
 }
