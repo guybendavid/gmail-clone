@@ -26,7 +26,6 @@
     "@types/express-pino-logger": "^4.0.5",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.1",
-    "@types/validator": "^13.15.0",
     "@typescript-eslint/eslint-plugin": "^8.30.1",
     "@typescript-eslint/parser": "^8.30.1",
     "dotenv": "^16.5.0",
