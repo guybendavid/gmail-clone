@@ -12,7 +12,7 @@
     "create-dist-folder": "node -e \"require('fs').mkdirSync('dist', { recursive: true })\"",
     "build-client": "cd client && npm i && npm run build && cd .. && npx cpy \"client/build/**\" dist/client --cwd=. --parents && node -e \"require('fs').rmSync('client/build', { recursive: true, force: true })\"",
     "build-server": "cd server && npm i && npm run build",
-    "build": "npm run clean && npm run create-dist-folder && npm run build-client && npm run build-server && ls -la dist"
+    "build": "npm run clean && npm run create-dist-folder && npm run build-client && npm run build-server"
   },
   "devDependencies": {
     "cpy-cli": "^5.0.0"
