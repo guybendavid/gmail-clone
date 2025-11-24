@@ -4,27 +4,23 @@ import { Inbox as InboxIcon, People as PeopleIcon, LocalOffer as LocalOfferIcon 
 
 const texts = ["Primary", "Social", "Promotions"];
 
-const TabsRow = () => {
-  return (
-    <AppBar className={style} position="static" elevation={0}>
-      <Tabs value={0} aria-label="simple tabs example">
-        {[InboxIcon, PeopleIcon, LocalOfferIcon].map((Icon, index) => (
-          <Tab
-            key={index}
-            label={
-              <ListItem button>
-                <Icon fontSize="small" />
-                {texts[index]}
-              </ListItem>
-            }
-          />
-        ))}
-      </Tabs>
-    </AppBar>
-  );
-};
-
-export default TabsRow;
+export const TabsRow = () => (
+  <AppBar className={style} position="static" elevation={0}>
+    <Tabs value={0} aria-label="simple tabs example">
+      {[InboxIcon, PeopleIcon, LocalOfferIcon].map((Icon, index) => (
+        <Tab
+          key={index}
+          label={
+            <ListItem button={true}>
+              <Icon fontSize="small" />
+              {texts[index]}
+            </ListItem>
+          }
+        />
+      ))}
+    </Tabs>
+  </AppBar>
+);
 
 const style = css`
   background: white !important;

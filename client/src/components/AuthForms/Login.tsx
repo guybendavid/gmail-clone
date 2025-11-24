@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
 import { useMutation } from "@apollo/client";
-import { useAppStore } from "stores/appStore";
+import { useAppStore } from "stores/app-store";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 
-const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
+const textFieldProps = {
+  required: true,
+  variant: "outlined",
+  margin: "normal",
+  fullWidth: true
+} as OutlinedTextFieldProps;
 
-const Login = () => {
+export const Login = () => {
   const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const { email } = formValues;
@@ -43,7 +48,12 @@ const Login = () => {
       </Avatar>
       <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
+        <TextField
+          {...textFieldProps}
+          label="email"
+          autoComplete="Email"
+          onChange={(e) => handleOnChange(e, "email")}
+        />
         <TextField
           {...textFieldProps}
           label="password"
@@ -52,12 +62,10 @@ const Login = () => {
           onChange={(e) => handleOnChange(e, "password")}
         />
         <Link to="/register">Don't have an account yet?</Link>
-        <Button type="submit" fullWidth variant="contained">
+        <Button type="submit" fullWidth={true} variant="contained">
           Login
         </Button>
       </form>
     </div>
   );
 };
-
-export default Login;

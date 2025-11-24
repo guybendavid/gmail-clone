@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Route, Redirect } from "react-router";
 import { getAuthData } from "services/auth";
-import Navbar from "components/Navbar/Navbar";
+import { Navbar } from "components/Navbar/Navbar";
 
 type Props = {
   exact: boolean;
@@ -10,7 +10,7 @@ type Props = {
   Component: FC;
 };
 
-const AuthenticatedRoute = ({ path, Component }: Props) => {
+export const AuthenticatedRoute = ({ path, Component }: Props) => {
   const { isAuthenticated } = getAuthData();
 
   return (
@@ -29,5 +29,3 @@ const AuthenticatedRoute = ({ path, Component }: Props) => {
     />
   );
 };
-
-export default AuthenticatedRoute;

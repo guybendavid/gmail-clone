@@ -12,14 +12,14 @@ type QueryOptions = {
 type PrevDataOptions = {
   query: DocumentNode;
   loggedInUserEmail: string;
-  client: ApolloClient<any>;
+  client: ApolloClient<unknown>;
 };
 
 interface UpdateCachedEmailsListOptions extends PrevDataOptions {
   newEmail: Email;
 }
 
-export function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, client: ApolloClient<any>) {
+export const addNewEmailToCache = (newEmail: Email, loggedInUserEmail: string, client: ApolloClient<unknown>) => {
   const { email: recipientEmail } = newEmail.recipient;
   const { email: senderEmail } = newEmail.sender;
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;
@@ -28,22 +28,27 @@ export function addNewEmailToCache(newEmail: Email, loggedInUserEmail: string, c
     [GET_RECEIVED_EMAILS, GET_SENT_EMAILS].forEach((query) => {
       updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
     });
-  } else {
-    const query = recipientEmail === loggedInUserEmail ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
-    updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
+    return;
   }
-}
+  const query = recipientEmail === loggedInUserEmail ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
+  updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
+};
 
-export function deleteEmailsFromCache(idsToDelete: string[], activeTab: number, loggedInUserEmail: string, client: ApolloClient<any>) {
+export const deleteEmailsFromCache = (
+  idsToDelete: string[],
+  activeTab: number,
+  loggedInUserEmail: string,
+  client: ApolloClient<unknown>
+) => {
   const isReceivedEmails = activeTab === 0;
   const query = isReceivedEmails ? GET_RECEIVED_EMAILS : GET_SENT_EMAILS;
   const prevData = getPrevData({ query, loggedInUserEmail, client });
   const newData = Object.values(prevData).filter((email) => !idsToDelete.includes(email.id));
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
   writeToCache(client, queryOptions, isReceivedEmails, newData);
-}
+};
 
-function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: UpdateCachedEmailsListOptions) {
+const updateCachedEmailsList = ({ query, loggedInUserEmail, client, newEmail }: UpdateCachedEmailsListOptions) => {
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
 
   if (client.readQuery(queryOptions)) {
@@ -52,23 +57,29 @@ function updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail }: 
     const isReceivedEmails = query === GET_RECEIVED_EMAILS;
     writeToCache(client, queryOptions, isReceivedEmails, newData);
   }
-}
+};
 
-function getPrevData({ query, loggedInUserEmail, client }: PrevDataOptions): Email[] {
+const getPrevData = ({ query, loggedInUserEmail, client }: PrevDataOptions): Email[] => {
   const queryOptions = getQueryOptions(query, loggedInUserEmail);
   const { getReceivedEmails, getSentEmails } = client.readQuery(queryOptions);
   return getReceivedEmails ? getReceivedEmails : getSentEmails;
-}
+};
 
-function getQueryOptions(query: DocumentNode, loggedInUserEmail: string) {
-  return { query, variables: { loggedInUserEmail } };
-}
+const getQueryOptions = (query: DocumentNode, loggedInUserEmail: string) => ({
+  query,
+  variables: { loggedInUserEmail }
+});
 
-function writeToCache(client: ApolloClient<any>, queryOptions: QueryOptions, isReceivedEmails: boolean, newData: Email[]) {
+const writeToCache = (
+  client: ApolloClient<unknown>,
+  queryOptions: QueryOptions,
+  isReceivedEmails: boolean,
+  newData: Email[]
+) => {
   const objectToCache = {
     ...queryOptions,
     data: isReceivedEmails ? { getReceivedEmails: newData } : { getSentEmails: newData }
   };
 
   client.writeQuery(objectToCache);
-}
+};

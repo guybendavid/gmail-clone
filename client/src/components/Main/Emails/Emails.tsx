@@ -1,11 +1,11 @@
-import Actions from "./Sections/Actions/Actions";
-import TabsRow from "./Sections/TabsRow/TabsRow";
-import EmailsList from "./Sections/EmailsList/EmailsList";
-import EmailsFooter from "./Sections/EmailsFooter/EmailsFooter";
-import useIsSmallScreen from "hooks/use-is-small-screen";
+import { Actions } from "./Sections/Actions/Actions";
+import { TabsRow } from "./Sections/TabsRow/TabsRow";
+import { EmailsList } from "./Sections/EmailsList/EmailsList";
+import { EmailsFooter } from "./Sections/EmailsFooter/EmailsFooter";
+import { useIsSmallScreen } from "hooks/use-is-small-screen";
 import { css } from "@emotion/css";
 
-const Emails = () => {
+export const Emails = () => {
   const { isSmallScreen } = useIsSmallScreen();
 
   return (
@@ -25,8 +25,6 @@ const Emails = () => {
     </div>
   );
 };
-
-export default Emails;
 
 const style = css`
   flex: 0.82;

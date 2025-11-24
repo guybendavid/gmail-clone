@@ -1,11 +1,9 @@
-import ComposeDialog from "./ComposeDialog/ComposeDialog";
-import ComposeModal from "./ComposeModal/ComposeModal";
-import useIsSmallScreen from "hooks/use-is-small-screen";
+import { ComposeDialog } from "./ComposeDialog/ComposeDialog";
+import { ComposeModal } from "./ComposeModal/ComposeModal";
+import { useIsSmallScreen } from "hooks/use-is-small-screen";
 
-const Compose = () => {
+export const Compose = () => {
   const { isSmallScreen } = useIsSmallScreen();
 
   return <>{isSmallScreen ? <ComposeDialog /> : <ComposeModal />}</>;
 };
-
-export default Compose;

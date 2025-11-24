@@ -1,6 +1,6 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { useAppStore } from "stores/appStore";
-import { useEmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/app-store";
+import { useEmailsStore } from "stores/emails-store";
 import { css, cx } from "@emotion/css";
 import { getAuthData } from "services/auth";
 import { SEND_EMAIL } from "services/graphql";
@@ -13,7 +13,7 @@ type Props = {
   isMinimized?: boolean;
 };
 
-const ComposeForm = ({ isMinimized }: Props) => {
+export const ComposeForm = ({ isMinimized }: Props) => {
   const { loggedInUser } = getAuthData();
   const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
   const { setIsComposeOpen } = useEmailsStore((state) => state);
@@ -51,11 +51,11 @@ const ComposeForm = ({ isMinimized }: Props) => {
   return (
     <form onSubmit={handleSubmit} className={cx(style, isMinimized && "is-minimized")}>
       <div className="fields-wrapper">
-        <TextField required fullWidth label="To" onChange={(e) => handleOnChange(e, "recipientEmail")} />
-        <TextField required fullWidth label="Subject" onChange={(e) => handleOnChange(e, "subject")} />
+        <TextField required={true} fullWidth={true} label="To" onChange={(e) => handleOnChange(e, "recipientEmail")} />
+        <TextField required={true} fullWidth={true} label="Subject" onChange={(e) => handleOnChange(e, "subject")} />
       </div>
       <div className="content-wrapper">
-        <textarea required onChange={(e) => handleOnChange(e, "content")} />
+        <textarea required={true} aria-label="Email content" onChange={(e) => handleOnChange(e, "content")} />
       </div>
       <Button type="submit" className="send-button">
         Send
@@ -63,8 +63,6 @@ const ComposeForm = ({ isMinimized }: Props) => {
     </form>
   );
 };
-
-export default ComposeForm;
 
 const style = css`
   padding: 0 10px;

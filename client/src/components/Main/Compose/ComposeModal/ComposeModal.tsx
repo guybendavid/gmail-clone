@@ -1,33 +1,53 @@
 import { useState, useCallback } from "react";
-import { useEmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emails-store";
 import { Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { primaryBoxShadowStyle } from "styles/reusable-css-in-js-styles";
-import { Minimize as MinimizeIcon, Maximize as MaximizeIcon, Height as HeightIcon, Close as CloseIcon } from "@material-ui/icons";
-import ComposeForm from "../ComposeForm/ComposeForm";
+import {
+  Minimize as MinimizeIcon,
+  Maximize as MaximizeIcon,
+  Height as HeightIcon,
+  Close as CloseIcon
+} from "@material-ui/icons";
+import { ComposeForm } from "../ComposeForm/ComposeForm";
 
-const ComposeModal = () => {
+export const ComposeModal = () => {
   const { setIsComposeOpen } = useEmailsStore((state) => state);
   const [isMinimized, setIsMinimized] = useState(false);
 
-  const headerIconsGenerator = useCallback(() => {
-    return [MinimizeIcon, HeightIcon, CloseIcon].map((_Icon, index) => {
-      if (index === 0 && !isMinimized) {
-        return <MinimizeIcon key={index} onClick={() => setIsMinimized(true)} />;
-      } else if (index === 0 && isMinimized) {
-        return <MaximizeIcon key={index} onClick={() => setIsMinimized(false)} />;
-      } else if (index === 2) {
-        return <CloseIcon key={index} onClick={() => setIsComposeOpen(false)} />;
-      } else {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      setIsMinimized(!isMinimized);
+    }
+  };
+
+  const headerIconsGenerator = useCallback(
+    () =>
+      [MinimizeIcon, HeightIcon, CloseIcon].map((_Icon, index) => {
+        if (index === 0 && !isMinimized) {
+          return <MinimizeIcon key={index} onClick={() => setIsMinimized(true)} />;
+        }
+        if (index === 0 && isMinimized) {
+          return <MaximizeIcon key={index} onClick={() => setIsMinimized(false)} />;
+        }
+        if (index === 2) {
+          return <CloseIcon key={index} onClick={() => setIsComposeOpen(false)} />;
+        }
         return <HeightIcon key={index} onClick={(e) => e.stopPropagation()} />;
-      }
-    });
-    // eslint-disable-next-line
-  }, [isMinimized]);
+      }),
+
+    [isMinimized]
+  );
 
   return (
     <div className={cx(style, isMinimized && "is-minimized")}>
-      <div className="header" onClick={() => setIsMinimized(!isMinimized)}>
+      <div
+        className="header"
+        role="button"
+        tabIndex={0}
+        onClick={() => setIsMinimized(!isMinimized)}
+        onKeyDown={handleKeyDown}
+      >
         <Typography component="span">New Message</Typography>
         <div className="icons-wrapper">{headerIconsGenerator()}</div>
       </div>
@@ -35,8 +55,6 @@ const ComposeModal = () => {
     </div>
   );
 };
-
-export default ComposeModal;
 
 const style = css`
   ${primaryBoxShadowStyle};

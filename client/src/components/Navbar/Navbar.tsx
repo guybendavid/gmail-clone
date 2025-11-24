@@ -1,6 +1,6 @@
 import { useState, MouseEvent } from "react";
-import { useAppStore } from "stores/appStore";
-import { useEmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/app-store";
+import { useEmailsStore } from "stores/emails-store";
 import { getAuthData } from "services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
@@ -13,9 +13,9 @@ import {
   Menu as MenuIcon
 } from "@material-ui/icons";
 import gmailIcon from "images/app-icon.png";
-import useIsSmallScreen from "hooks/use-is-small-screen";
+import { useIsSmallScreen } from "hooks/use-is-small-screen";
 
-const Navbar = () => {
+export const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();
   const { searchValue, setSearchValue } = useEmailsStore((state) => state);
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
@@ -84,14 +84,12 @@ const AvatarMenu = () => {
       <IconButton onClick={handleClick}>
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
-      <Menu id="main-menu" keepMounted anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu id="main-menu" keepMounted={true} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>
   );
 };
-
-export default Navbar;
 
 const style = css`
   display: flex;

@@ -1,11 +1,11 @@
-import { useAppStore } from "stores/appStore";
-import { useEmailsStore } from "stores/emailsStore";
+import { useAppStore } from "stores/app-store";
+import { useEmailsStore } from "stores/emails-store";
 import { SectionEmail } from "types/types";
 import { useQuery, ApolloClient } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 
-const useEmails = () => {
+export const useEmails = () => {
   const { loggedInUser } = getAuthData();
   const { handleServerErrors, clearSnackBarMessage } = useAppStore((state) => state);
   const { activeTab } = useEmailsStore((state) => state);
@@ -18,7 +18,5 @@ const useEmails = () => {
   });
 
   const emails = data?.getReceivedEmails || data?.getSentEmails || [];
-  return { emails, apolloClient } as { emails: SectionEmail[]; apolloClient: ApolloClient<any> };
+  return { emails, apolloClient } as { emails: SectionEmail[]; apolloClient: ApolloClient<unknown> };
 };
-
-export default useEmails;

@@ -8,30 +8,26 @@ import {
   KeyboardArrowRight as KeyboardArrowRightIcon
 } from "@material-ui/icons";
 
-const RightSidebar = () => {
-  return (
-    <div className={style}>
-      <div className="top-section">
-        <div className="top-icons-wrapper">
-          {[TodayIcon, EmojiObjectsIcon, FiberManualRecordIcon].map((Icon, index) => (
-            <IconButton key={index}>
-              <Icon />
-            </IconButton>
-          ))}
-        </div>
-        <Divider />
-        <IconButton>
-          <AddIcon />
-        </IconButton>
+export const RightSidebar = () => (
+  <div className={style}>
+    <div className="top-section">
+      <div className="top-icons-wrapper">
+        {[TodayIcon, EmojiObjectsIcon, FiberManualRecordIcon].map((Icon, index) => (
+          <IconButton key={index}>
+            <Icon />
+          </IconButton>
+        ))}
       </div>
+      <Divider />
       <IconButton>
-        <KeyboardArrowRightIcon />
+        <AddIcon />
       </IconButton>
     </div>
-  );
-};
-
-export default RightSidebar;
+    <IconButton>
+      <KeyboardArrowRightIcon />
+    </IconButton>
+  </div>
+);
 
 const style = css`
   display: flex;

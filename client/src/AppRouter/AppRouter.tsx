@@ -2,23 +2,23 @@ import { Container } from "@material-ui/core";
 import { Switch, withRouter } from "react-router-dom";
 import { css, cx } from "@emotion/css";
 import { getAuthData } from "services/auth";
-import Login from "components/AuthForms/Login";
-import Register from "components/AuthForms/Register";
-import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
-import UnauthenticatedRoute from "./Routes/UnauthenticatedRoute";
-import DefaultRoute from "./Routes/DefaultRoute";
-import Main from "components/Main/Main";
-import IndicationMessage from "components/IndicationMessage/IndicationMessage";
+import { Login } from "components/AuthForms/Login";
+import { Register } from "components/AuthForms/Register";
+import { AuthenticatedRoute } from "./Routes/AuthenticatedRoute";
+import { UnauthenticatedRoute } from "./Routes/UnauthenticatedRoute";
+import { DefaultRoute } from "./Routes/DefaultRoute";
+import { Main } from "components/Main/Main";
+import { IndicationMessage } from "components/IndicationMessage/IndicationMessage";
 
-const AppRouter = () => {
+const AppRouterComponent = () => {
   const { isAuthenticated } = getAuthData();
 
   return (
     <Container className={cx(baseContainerStyle, isAuthenticated ? authenticatedStyle : authFormStyle)} maxWidth="sm">
       <Switch>
-        <AuthenticatedRoute exact path="/" Component={Main} />
-        <UnauthenticatedRoute exact path="/login" Component={Login} />
-        <UnauthenticatedRoute exact path="/register" Component={Register} />
+        <AuthenticatedRoute exact={true} path="/" Component={Main} />
+        <UnauthenticatedRoute exact={true} path="/login" Component={Login} />
+        <UnauthenticatedRoute exact={true} path="/register" Component={Register} />
         <DefaultRoute />
       </Switch>
       <IndicationMessage />
@@ -26,7 +26,7 @@ const AppRouter = () => {
   );
 };
 
-export default withRouter(AppRouter);
+export const AppRouter = withRouter(AppRouterComponent);
 
 const baseContainerStyle = css`
   padding: 0 !important;

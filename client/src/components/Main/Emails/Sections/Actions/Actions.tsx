@@ -1,6 +1,6 @@
-import useEmails from "hooks/use-emails";
-import { useAppStore } from "stores/appStore";
-import { useEmailsStore } from "stores/emailsStore";
+import { useEmails } from "hooks/use-emails";
+import { useAppStore } from "stores/app-store";
+import { useEmailsStore } from "stores/emails-store";
 import { css } from "@emotion/css";
 import { SectionEmail } from "types/types";
 import { useMutation } from "@apollo/client";
@@ -16,7 +16,7 @@ import {
   MoreVert as MoreVertIcon
 } from "@material-ui/icons";
 
-const Actions = () => {
+export const Actions = () => {
   const { loggedInUser } = getAuthData();
   const { emails } = useEmails();
   const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
@@ -26,7 +26,10 @@ const Actions = () => {
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS, {
     onCompleted: () => {
       deleteEmailsFromCache(selectedEmailIds, activeTab, loggedInUser.email, client);
-      setSnackBarMessage({ content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`, severity: "info" });
+      setSnackBarMessage({
+        content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`,
+        severity: "info"
+      });
       setSelectedEmails([]);
     },
     onError: (err) => handleServerErrors(err)
@@ -74,8 +77,6 @@ const Actions = () => {
     </div>
   );
 };
-
-export default Actions;
 
 const style = css`
   display: flex;

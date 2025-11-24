@@ -5,19 +5,25 @@ import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
 import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
-import { useAppStore } from "stores/appStore";
+import { useAppStore } from "stores/app-store";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 
-const textFieldProps = { required: true, variant: "outlined", margin: "normal", fullWidth: true } as OutlinedTextFieldProps;
+const textFieldProps = {
+  required: true,
+  variant: "outlined",
+  margin: "normal",
+  fullWidth: true
+} as OutlinedTextFieldProps;
 
-const Register = () => {
+export const Register = () => {
   const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "", email: "", password: "" });
   const { firstName, lastName, email } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
-    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, firstName, lastName, email }, token: data.token }),
+    onCompleted: ({ register: data }) =>
+      handleAuth({ user: { ...data.user, firstName, lastName, email }, token: data.token }),
     onError: (error) => handleServerErrors(error)
   });
 
@@ -43,9 +49,24 @@ const Register = () => {
       </Avatar>
       <Typography component="h1">Register</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField {...textFieldProps} label="first name" autoComplete="First Name" onChange={(e) => handleOnChange(e, "firstName")} />
-        <TextField {...textFieldProps} label="last name" autoComplete="Last Name" onChange={(e) => handleOnChange(e, "lastName")} />
-        <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
+        <TextField
+          {...textFieldProps}
+          label="first name"
+          autoComplete="First Name"
+          onChange={(e) => handleOnChange(e, "firstName")}
+        />
+        <TextField
+          {...textFieldProps}
+          label="last name"
+          autoComplete="Last Name"
+          onChange={(e) => handleOnChange(e, "lastName")}
+        />
+        <TextField
+          {...textFieldProps}
+          label="email"
+          autoComplete="Email"
+          onChange={(e) => handleOnChange(e, "email")}
+        />
         <TextField
           {...textFieldProps}
           label="password"
@@ -54,12 +75,10 @@ const Register = () => {
           onChange={(e) => handleOnChange(e, "password")}
         />
         <Link to="/login">Already have an account?</Link>
-        <Button type="submit" fullWidth variant="contained">
+        <Button type="submit" fullWidth={true} variant="contained">
           Register
         </Button>
       </form>
     </div>
   );
 };
-
-export default Register;

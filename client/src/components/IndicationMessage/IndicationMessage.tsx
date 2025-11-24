@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAppStore } from "stores/appStore";
+import { useAppStore } from "stores/app-store";
 import { css, cx } from "@emotion/css";
 import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
 import dompurify from "dompurify";
@@ -8,7 +8,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 const { sanitize } = dompurify;
 const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };
 
-const IndicationMessage = () => {
+export const IndicationMessage = () => {
   const { snackBarMessage, clearSnackBarMessage } = useAppStore((state) => state);
   const { content, severity } = snackBarMessage;
   const [open, setOpen] = useState(false);
@@ -19,8 +19,11 @@ const IndicationMessage = () => {
   };
 
   useEffect(() => {
-    content ? setOpen(true) : closeMessage();
-    // eslint-disable-next-line
+    if (content) {
+      setOpen(true);
+      return;
+    }
+    closeMessage();
   }, [content]);
 
   return (
@@ -31,7 +34,8 @@ const IndicationMessage = () => {
           anchorOrigin={anchorOrigin}
           open={open}
           autoHideDuration={5000}
-          onClose={closeMessage}>
+          onClose={closeMessage}
+        >
           <MuiAlert elevation={6} variant="filled" severity={severity} onClose={closeMessage}>
             <div dangerouslySetInnerHTML={{ __html: sanitize(content) }}></div>
           </MuiAlert>
@@ -40,8 +44,6 @@ const IndicationMessage = () => {
     </>
   );
 };
-
-export default IndicationMessage;
 
 const style = css`
   z-index: 100000 !important;

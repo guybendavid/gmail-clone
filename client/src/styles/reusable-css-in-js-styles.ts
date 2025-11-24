@@ -7,19 +7,6 @@ export const overflowHandler = (maxWidth: string = "unset") => css`
   max-width: ${maxWidth};
 `;
 
-export const baseSearchInputStyle = css`
-  flex: 1;
-
-  .input-wrapper {
-    background: white;
-    border-radius: 30px;
-
-    .input-base {
-      width: 100%;
-    }
-  }
-`;
-
 export const scrollbarStyle = css`
   &::-webkit-scrollbar {
     opacity: 0;

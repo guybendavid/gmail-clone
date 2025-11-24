@@ -1,5 +1,5 @@
 import { useEffect, Fragment } from "react";
-import { useEmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emails-store";
 import { css, cx } from "@emotion/css";
 import { scrollbarStyle, overflowHandler } from "styles/reusable-css-in-js-styles";
 import { getAuthData } from "services/auth";
@@ -9,11 +9,11 @@ import { SectionEmail } from "types/types";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { timeDisplayer } from "@guybendavid/utils";
-import useEmails from "hooks/use-emails";
-import useIsSmallScreen from "hooks/use-is-small-screen";
-import EmailCheckbox from "./EmailCheckbox/EmailCheckBox";
+import { useEmails } from "hooks/use-emails";
+import { useIsSmallScreen } from "hooks/use-is-small-screen";
+import { EmailCheckbox } from "./EmailCheckbox/EmailCheckBox";
 
-const EmailsList = () => {
+export const EmailsList = () => {
   const { loggedInUser } = getAuthData();
   const { emails, apolloClient } = useEmails();
   const { isSmallScreen } = useIsSmallScreen();
@@ -25,7 +25,6 @@ const EmailsList = () => {
     if (newEmail) {
       addNewEmailToCache(newEmail, loggedInUser.email, apolloClient);
     }
-    // eslint-disable-next-line
   }, [newEmail]);
 
   return (
@@ -34,7 +33,7 @@ const EmailsList = () => {
         .filter((email: SectionEmail) => `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase()))
         .map((email: SectionEmail, index: number) => (
           <Fragment key={index}>
-            <ListItem button className={cx("email", isEmailSelected(email, selectedEmails) && "is-selected")}>
+            <ListItem button={true} className={cx("email", isEmailSelected(email, selectedEmails) && "is-selected")}>
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
@@ -53,17 +52,14 @@ const EmailsList = () => {
   );
 };
 
-function isEmailSelected(email: SectionEmail, selectedEmails: SectionEmail[]) {
-  return Boolean(selectedEmails.find((selectedEmail: SectionEmail) => selectedEmail.id === email.id));
-}
+const isEmailSelected = (email: SectionEmail, selectedEmails: SectionEmail[]) =>
+  Boolean(selectedEmails.some((selectedEmail: SectionEmail) => selectedEmail.id === email.id));
 
-function displayParticipantName(email: SectionEmail) {
+const displayParticipantName = (email: SectionEmail) => {
   const { loggedInUser } = getAuthData();
   const participantName = "sender" in email ? email.sender.fullName : email.recipient.fullName;
   return participantName === `${loggedInUser.firstName} ${loggedInUser.lastName}` ? "Me" : participantName;
-}
-
-export default EmailsList;
+};
 
 const style = css`
   ${scrollbarStyle};

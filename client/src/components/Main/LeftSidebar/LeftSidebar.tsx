@@ -1,4 +1,4 @@
-import { useEmailsStore } from "stores/emailsStore";
+import { useEmailsStore } from "stores/emails-store";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
 import { overflowHandler, scrollbarStyle } from "styles/reusable-css-in-js-styles";
@@ -18,17 +18,27 @@ import {
 } from "@material-ui/icons";
 import composeImg from "images/compose-img.png";
 
-const firstListTexts = ["Inbox", "Sent", "Starred", "Snoozed", "Important", "Drafts", "All Mail", "Trash", "Categories", "More"];
-
+const firstListTexts = [
+  "Inbox",
+  "Sent",
+  "Starred",
+  "Snoozed",
+  "Important",
+  "Drafts",
+  "All Mail",
+  "Trash",
+  "Categories",
+  "More"
+];
 const secondListTexts = ["New meeting", "Join a meeting"];
 
-const LeftSidebar = () => {
+export const LeftSidebar = () => {
   const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore((state) => state);
 
   return (
     <div className={style}>
       <div className="button-wrapper">
-        <Button type="submit" fullWidth variant="contained" onClick={() => setIsComposeOpen(true)}>
+        <Button type="submit" fullWidth={true} variant="contained" onClick={() => setIsComposeOpen(true)}>
           <img src={composeImg} alt="compose" />
           <Typography component="span">Compose</Typography>
         </Button>
@@ -49,9 +59,10 @@ const LeftSidebar = () => {
           ].map((Icon, index) => (
             <ListItem
               key={index}
-              button
+              button={true}
               className={cx("list-item", activeTab === index && "is-active", index === 0 && "is-first-item")}
-              onClick={() => index < 2 && setActiveTab(index)}>
+              onClick={() => index < 2 && setActiveTab(index)}
+            >
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />
             </ListItem>
@@ -61,7 +72,7 @@ const LeftSidebar = () => {
         <div className="list-items-wrapper second-list">
           <div className="header">Meet</div>
           {[VideocamIcon, KeyboardIcon].map((Icon, index) => (
-            <ListItem key={index} button className="list-item">
+            <ListItem key={index} button={true} className="list-item">
               <Icon className="icon" />
               <ListItemText primary={secondListTexts[index]} />
             </ListItem>
@@ -71,8 +82,6 @@ const LeftSidebar = () => {
     </div>
   );
 };
-
-export default LeftSidebar;
 
 const style = css`
   flex: 0.18;
