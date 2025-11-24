@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --no-notify -r dotenv/config app | pino-pretty",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node ../dist/app.js"
   },
   "dependencies": {
     "@guybendavid/utils": "^3.0.0",

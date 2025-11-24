@@ -1,1 +1,0 @@
-This PR aligns the ESLint configuration across the project.
