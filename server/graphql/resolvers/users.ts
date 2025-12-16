@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt";
-import generateToken from "../../utils/generate-token";
-import { UserInputError } from "apollo-server";
 import { User } from "../../db/models/models-config";
 import { User as UserType } from "../../types/types";
+import { UserInputError } from "apollo-server";
+import bcrypt from "bcrypt";
+import generateToken from "../../utils/generate-token";
 // eslint-disable-next-line
 const generateImage = require("../../utils/generate-image");
 
@@ -18,7 +18,7 @@ export default {
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
       const user = await User.create({ firstName, lastName, email, password: hasedPassword, image: generateImage() });
-      const { password: userPassword, ...safeUserData } = user.toJSON();
+      const { password: _userPassword, ...safeUserData } = user.toJSON();
       return { user: safeUserData, token: generateToken({ id: user.id, email, firstName, lastName }) };
     },
     login: async (_parent: any, args: Pick<UserType, "email" | "password">) => {

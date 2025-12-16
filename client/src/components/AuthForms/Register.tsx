@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { style } from "./shared-styles";
+import { authFormStyle } from "./shared-styles";
 import { REGISTER_USER } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
@@ -43,7 +43,7 @@ export const Register = () => {
   };
 
   return (
-    <div className={style}>
+    <div className={authFormStyle}>
       <Avatar>
         <LockOutlinedIcon />
       </Avatar>

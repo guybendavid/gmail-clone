@@ -1,9 +1,3 @@
-import { useState, MouseEvent } from "react";
-import { useAppStore } from "stores/app-store";
-import { useEmailsStore } from "stores/emails-store";
-import { getAuthData } from "services/auth";
-import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from "@material-ui/core";
-import { css, cx } from "@emotion/css";
 import {
   Search as SearchIcon,
   ArrowDropDown as ArrowDropDownIcon,
@@ -12,8 +6,14 @@ import {
   HelpOutline as HelpOutlineIcon,
   Menu as MenuIcon
 } from "@material-ui/icons";
-import gmailIcon from "images/app-icon.png";
+import { css, cx } from "@emotion/css";
+import { getAuthData } from "services/auth";
+import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from "@material-ui/core";
+import { useAppStore } from "stores/app-store";
+import { useEmailsStore } from "stores/emails-store";
 import { useIsSmallScreen } from "hooks/use-is-small-screen";
+import { useState, MouseEvent } from "react";
+import gmailIcon from "images/app-icon.png";
 
 export const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();
@@ -21,7 +21,7 @@ export const Navbar = () => {
   const [searchBarIsOpen, setSearchBarIsOpen] = useState(false);
 
   return (
-    <div className={style}>
+    <div className={navbarStyle}>
       {!isSmallScreen && (
         <div className="left-section">
           <IconButton>
@@ -91,7 +91,7 @@ const AvatarMenu = () => {
   );
 };
 
-const style = css`
+const navbarStyle = css`
   display: flex;
   justify-content: space-between;
   background: white;

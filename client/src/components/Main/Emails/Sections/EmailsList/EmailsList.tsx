@@ -1,7 +1,7 @@
 import { useEffect, Fragment } from "react";
 import { useEmailsStore } from "stores/emails-store";
 import { css, cx } from "@emotion/css";
-import { scrollbarStyle, overflowHandler } from "styles/reusable-css-in-js-styles";
+import { scrollbarStyle, getOverflowStyle } from "styles/reusable-css-in-js-styles";
 import { getAuthData } from "services/auth";
 import { useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
@@ -23,12 +23,12 @@ export const EmailsList = () => {
 
   useEffect(() => {
     if (newEmail) {
-      addNewEmailToCache(newEmail, loggedInUser.email, apolloClient);
+      addNewEmailToCache({ newEmail, loggedInUserEmail: loggedInUser.email, client: apolloClient });
     }
   }, [newEmail]);
 
   return (
-    <List className={cx(style, isSmallScreen && "is-small-screen")}>
+    <List className={cx(emailsListStyle, isSmallScreen && "is-small-screen")}>
       {emails
         .filter((email: SectionEmail) => `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase()))
         .map((email: SectionEmail, index: number) => (
@@ -37,7 +37,7 @@ export const EmailsList = () => {
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
-                  <Typography component="span">{displayParticipantName(email)}</Typography>
+                  <Typography component="span">{getDisplayParticipantName(email)}</Typography>
                 </div>
                 <Typography component="span" className="email-body">{`${email.subject} - ${email.content}`}</Typography>
                 <Typography component="small" className="created-at">
@@ -55,13 +55,13 @@ export const EmailsList = () => {
 const isEmailSelected = (email: SectionEmail, selectedEmails: SectionEmail[]) =>
   Boolean(selectedEmails.some((selectedEmail: SectionEmail) => selectedEmail.id === email.id));
 
-const displayParticipantName = (email: SectionEmail) => {
+const getDisplayParticipantName = (email: SectionEmail) => {
   const { loggedInUser } = getAuthData();
   const participantName = "sender" in email ? email.sender.fullName : email.recipient.fullName;
   return participantName === `${loggedInUser.firstName} ${loggedInUser.lastName}` ? "Me" : participantName;
 };
 
-const style = css`
+const emailsListStyle = css`
   ${scrollbarStyle};
   overflow-y: auto;
   padding: 0 !important;
@@ -116,7 +116,7 @@ const style = css`
 
       .participant-name,
       .email-body {
-        ${overflowHandler()};
+        ${getOverflowStyle()};
         width: 145px;
 
         &.email-body {

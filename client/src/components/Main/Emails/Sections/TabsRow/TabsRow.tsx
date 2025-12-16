@@ -5,7 +5,7 @@ import { Inbox as InboxIcon, People as PeopleIcon, LocalOffer as LocalOfferIcon 
 const texts = ["Primary", "Social", "Promotions"];
 
 export const TabsRow = () => (
-  <AppBar className={style} position="static" elevation={0}>
+  <AppBar className={tabsRowStyle} position="static" elevation={0}>
     <Tabs value={0} aria-label="simple tabs example">
       {[InboxIcon, PeopleIcon, LocalOfferIcon].map((Icon, index) => (
         <Tab
@@ -22,7 +22,7 @@ export const TabsRow = () => (
   </AppBar>
 );
 
-const style = css`
+const tabsRowStyle = css`
   background: white !important;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);

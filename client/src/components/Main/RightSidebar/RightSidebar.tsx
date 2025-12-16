@@ -9,7 +9,7 @@ import {
 } from "@material-ui/icons";
 
 export const RightSidebar = () => (
-  <div className={style}>
+  <div className={rightSidebarStyle}>
     <div className="top-section">
       <div className="top-icons-wrapper">
         {[TodayIcon, EmojiObjectsIcon, FiberManualRecordIcon].map((Icon, index) => (
@@ -29,7 +29,7 @@ export const RightSidebar = () => (
   </div>
 );
 
-const style = css`
+const rightSidebarStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

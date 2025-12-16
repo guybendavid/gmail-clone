@@ -11,7 +11,7 @@ export const Main = () => {
   const { isSmallScreen } = useIsSmallScreen();
 
   return (
-    <div className={style}>
+    <div className={mainStyle}>
       {!isSmallScreen && <LeftSideBar />}
       <Emails />
       {isComposeOpen && <Compose />}
@@ -20,7 +20,7 @@ export const Main = () => {
   );
 };
 
-const style = css`
+const mainStyle = css`
   display: flex;
   height: 100vh;
 `;

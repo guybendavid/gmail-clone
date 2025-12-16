@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, default as React } from "react";
 import { useEmailsStore } from "stores/emails-store";
 import { Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
@@ -27,12 +27,15 @@ export const ComposeModal = () => {
         if (index === 0 && !isMinimized) {
           return <MinimizeIcon key={index} onClick={() => setIsMinimized(true)} />;
         }
+
         if (index === 0 && isMinimized) {
           return <MaximizeIcon key={index} onClick={() => setIsMinimized(false)} />;
         }
+
         if (index === 2) {
           return <CloseIcon key={index} onClick={() => setIsComposeOpen(false)} />;
         }
+
         return <HeightIcon key={index} onClick={(e) => e.stopPropagation()} />;
       }),
 
@@ -40,7 +43,7 @@ export const ComposeModal = () => {
   );
 
   return (
-    <div className={cx(style, isMinimized && "is-minimized")}>
+    <div className={cx(composeModalStyle, isMinimized && "is-minimized")}>
       <div
         className="header"
         role="button"
@@ -56,7 +59,7 @@ export const ComposeModal = () => {
   );
 };
 
-const style = css`
+const composeModalStyle = css`
   ${primaryBoxShadowStyle};
   z-index: 9999;
   position: absolute;

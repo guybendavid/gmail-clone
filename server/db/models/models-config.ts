@@ -1,21 +1,20 @@
 import Sequelize from "sequelize";
 import user from "./user";
 import email from "./email";
-// @ts-ignore
 import config from "../config/config";
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
 
-// @ts-ignore
-const sequelize = new Sequelize(environmentConfig);
+// @ts-expect-error - Config file is JavaScript
+export const sequelize = new Sequelize(environmentConfig);
 
 const models: any = {
   User: user(sequelize, Sequelize.DataTypes),
   Email: email(sequelize, Sequelize.DataTypes)
 };
 
-const { User, Email } = models;
+export const { User, Email } = models;
 
 User.hasMany(Email, { foreignKey: "sender" });
 User.hasMany(Email, { foreignKey: "recipient" });
@@ -30,5 +29,3 @@ Object.keys(models).forEach((modelName) => {
 
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
-
-export { sequelize, User, Email };

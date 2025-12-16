@@ -1,7 +1,7 @@
 import { useEmailsStore } from "stores/emails-store";
 import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import { overflowHandler, scrollbarStyle } from "styles/reusable-css-in-js-styles";
+import { getOverflowStyle, scrollbarStyle } from "styles/reusable-css-in-js-styles";
 import {
   Inbox as InboxIcon,
   Send as SendIcon,
@@ -36,7 +36,7 @@ export const LeftSidebar = () => {
   const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore((state) => state);
 
   return (
-    <div className={style}>
+    <div className={leftSidebarStyle}>
       <div className="button-wrapper">
         <Button type="submit" fullWidth={true} variant="contained" onClick={() => setIsComposeOpen(true)}>
           <img src={composeImg} alt="compose" />
@@ -83,7 +83,7 @@ export const LeftSidebar = () => {
   );
 };
 
-const style = css`
+const leftSidebarStyle = css`
   flex: 0.18;
 
   .button-wrapper {
@@ -169,7 +169,7 @@ const style = css`
         }
 
         span {
-          ${overflowHandler("180px")};
+          ${getOverflowStyle("180px")};
         }
       }
     }

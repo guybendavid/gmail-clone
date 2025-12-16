@@ -19,7 +19,10 @@ type GetEmailsWithParticipantsNameQueryResponse = {
   content: string;
 }[];
 
-export const getEmailsByParticipantType = async ({ loggedInUserEmail, participantType }: GetEmailsByParticipantType) => {
+export const getEmailsByParticipantType = async ({
+  loggedInUserEmail,
+  participantType
+}: GetEmailsByParticipantType) => {
   if (!loggedInUserEmail) {
     throw new AuthenticationError("Please send a valid email");
   }

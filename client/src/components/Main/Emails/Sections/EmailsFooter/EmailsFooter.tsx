@@ -9,7 +9,7 @@ export const EmailsFooter = () => {
   const { setIsComposeOpen, activeTab, setActiveTab } = useEmailsStore((state) => state);
 
   return (
-    <div className={style}>
+    <div className={emailsFooterStyle}>
       <Button className="compose-button" onClick={() => setIsComposeOpen(true)}>
         Compose
       </Button>
@@ -29,7 +29,7 @@ export const EmailsFooter = () => {
   );
 };
 
-const style = css`
+const emailsFooterStyle = css`
   text-align: center;
   position: fixed;
   bottom: 0;

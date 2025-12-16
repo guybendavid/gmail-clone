@@ -49,7 +49,7 @@ export const ComposeForm = ({ isMinimized }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cx(style, isMinimized && "is-minimized")}>
+    <form onSubmit={handleSubmit} className={cx(composeFormStyle, isMinimized && "is-minimized")}>
       <div className="fields-wrapper">
         <TextField required={true} fullWidth={true} label="To" onChange={(e) => handleOnChange(e, "recipientEmail")} />
         <TextField required={true} fullWidth={true} label="Subject" onChange={(e) => handleOnChange(e, "subject")} />
@@ -64,7 +64,7 @@ export const ComposeForm = ({ isMinimized }: Props) => {
   );
 };
 
-const style = css`
+const composeFormStyle = css`
   padding: 0 10px;
   display: flex;
   flex-direction: column;

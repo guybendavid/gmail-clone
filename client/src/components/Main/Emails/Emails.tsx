@@ -9,7 +9,7 @@ export const Emails = () => {
   const { isSmallScreen } = useIsSmallScreen();
 
   return (
-    <div className={style}>
+    <div className={emailsStyle}>
       <Actions />
       {!isSmallScreen ? (
         <>
@@ -26,7 +26,7 @@ export const Emails = () => {
   );
 };
 
-const style = css`
+const emailsStyle = css`
   flex: 0.82;
 
   @media only screen and (max-width: 765px) {

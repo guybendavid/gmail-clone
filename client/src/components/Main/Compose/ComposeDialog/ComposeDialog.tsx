@@ -16,7 +16,7 @@ export const ComposeDialog = () => {
   return (
     <Dialog
       fullScreen={true}
-      className={style}
+      className={composeDialogStyle}
       TransitionComponent={Transition}
       open={isComposeOpen}
       onClose={() => setIsComposeOpen(false)}
@@ -36,7 +36,7 @@ export const ComposeDialog = () => {
   );
 };
 
-const style = css`
+const composeDialogStyle = css`
   .title {
     flex: 1;
     margin-left: 16px;

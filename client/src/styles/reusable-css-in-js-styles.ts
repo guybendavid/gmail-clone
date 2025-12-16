@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 
-export const overflowHandler = (maxWidth: string = "unset") => css`
+export const getOverflowStyle = (maxWidth: string = "unset") => css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

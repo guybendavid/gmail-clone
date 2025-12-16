@@ -23,6 +23,7 @@ export const IndicationMessage = () => {
       setOpen(true);
       return;
     }
+
     closeMessage();
   }, [content]);
 
@@ -30,7 +31,7 @@ export const IndicationMessage = () => {
     <>
       {content && (
         <Snackbar
-          className={cx(style, severity === "error" && "is-error")}
+          className={cx(indicationMessageStyle, severity === "error" && "is-error")}
           anchorOrigin={anchorOrigin}
           open={open}
           autoHideDuration={5000}
@@ -45,7 +46,7 @@ export const IndicationMessage = () => {
   );
 };
 
-const style = css`
+const indicationMessageStyle = css`
   z-index: 100000 !important;
 
   &:not(.is-error) {

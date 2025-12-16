@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { style } from "./shared-styles";
+import { authFormStyle } from "./shared-styles";
 import { LOGIN_USER } from "services/graphql";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
@@ -42,7 +42,7 @@ export const Login = () => {
   };
 
   return (
-    <div className={style}>
+    <div className={authFormStyle}>
       <Avatar>
         <LockOutlinedIcon />
       </Avatar>

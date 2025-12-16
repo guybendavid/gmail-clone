@@ -10,6 +10,8 @@ interface SendEmailPayload extends Pick<DBEmail, "subject" | "content"> {
   recipientEmail: string;
 }
 
+const getIdIsNotValid = (id: string) => isNaN(Number(id));
+
 export default {
   Query: {
     getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string }, _context: { user: ContextUser }) => {
@@ -36,11 +38,12 @@ export default {
     },
     deleteEmails: async (_parent: any, args: { ids: string[] }, _context: { user: ContextUser }) => {
       const { ids } = args;
-      const idIsNotValid = (id: string) => isNaN(Number(id));
 
-      if (ids.length > 0 && !ids.some(idIsNotValid)) {
+      if (ids.length > 0 && !ids.some(getIdIsNotValid)) {
         await Email.destroy({ where: { id: { [Op.in]: ids } } });
-      } else {
+      }
+
+      if (ids.length === 0 || ids.some(getIdIsNotValid)) {
         throw new UserInputError("Please send a valid id's array");
       }
     }
@@ -49,7 +52,8 @@ export default {
     newEmail: {
       subscribe: withFilter(
         (_parent, _args, _context) => pubsub.asyncIterator("NEW_EMAIL"),
-        ({ newEmail }, _args, { user }) => newEmail.sender.email === user.email || newEmail.recipient.email === user.email
+        ({ newEmail }, _args, { user }) =>
+          newEmail.sender.email === user.email || newEmail.recipient.email === user.email
       )
     }
   }

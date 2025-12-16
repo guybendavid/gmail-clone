@@ -1,7 +1,6 @@
 import { ParticipantType } from "../../types/types";
 
-export const getEmailsWithParticipantsName = (particapntType: ParticipantType) => {
-  return `
+export const getEmailsWithParticipantsName = (particapntType: ParticipantType) => `
   select emails.id,
   emails.subject,
   emails.content, 
@@ -15,4 +14,3 @@ export const getEmailsWithParticipantsName = (particapntType: ParticipantType) =
   inner join public.users as users_recipient on emails.recipient = users_recipient.email
   where ${particapntType === "sender" ? "emails.sender = ?" : "emails.recipient = ?"}
   order by "createdAt" desc`;
-};

@@ -25,11 +25,18 @@ export const Actions = () => {
 
   const [deleteEmails, { client }] = useMutation(DELETE_EMAILS, {
     onCompleted: () => {
-      deleteEmailsFromCache(selectedEmailIds, activeTab, loggedInUser.email, client);
+      deleteEmailsFromCache({
+        idsToDelete: selectedEmailIds,
+        activeTab,
+        loggedInUserEmail: loggedInUser.email,
+        client
+      });
+
       setSnackBarMessage({
         content: `Email${selectedEmails.length > 1 ? "s" : ""} deleted successfully`,
         severity: "info"
       });
+
       setSelectedEmails([]);
     },
     onError: (err) => handleServerErrors(err)
@@ -50,7 +57,7 @@ export const Actions = () => {
   };
 
   return (
-    <div className={style}>
+    <div className={actionsStyle}>
       <div className="left-side">
         {selectedEmails.length > 0 ? (
           <IconButton onClick={deleteFunc} className="delete-icon-wrapper">
@@ -78,7 +85,7 @@ export const Actions = () => {
   );
 };
 
-const style = css`
+const actionsStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;

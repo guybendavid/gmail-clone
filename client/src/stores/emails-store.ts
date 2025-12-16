@@ -1,5 +1,5 @@
-import create from "zustand";
 import { SectionEmail } from "types/types";
+import create from "zustand";
 
 type EmailsStore = {
   activeTab: number;

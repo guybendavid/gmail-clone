@@ -20,6 +20,7 @@ export const EmailCheckbox = ({ email }: Props) => {
       setSelectedEmails(newArr);
       return;
     }
+
     setSelectedEmails([...selectedEmails, email]);
   };
 
