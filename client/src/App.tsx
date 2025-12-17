@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { AppRouter } from "AppRouter/AppRouter";
+import { AppRouter } from "components/AppRouter/AppRouter";
 import "styles/global-styles.css";
 
 export const App = () => (

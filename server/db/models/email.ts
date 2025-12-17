@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export const createEmailModel = (sequelize: Sequelize, DataTypes: any) => {
+export const getCreateEmailModel = ({ sequelize, DataTypes }: { sequelize: Sequelize; DataTypes: any }) => {
   const Email = sequelize.define(
     "Email",
     {

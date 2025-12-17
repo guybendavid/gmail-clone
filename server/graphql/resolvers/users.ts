@@ -1,4 +1,4 @@
-import { generateToken } from "../../utils/generate-token";
+import { getGenerateToken } from "../../utils/generate-token";
 import { User } from "../../db/models/models-config";
 import { User as UserType } from "../../types/types";
 import { UserInputError } from "apollo-server";
@@ -18,8 +18,8 @@ export const userResolvers = {
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
       const user = await User.create({ firstName, lastName, email, password: hasedPassword, image: generateImage() });
-      const { password, ...safeUserData } = user.toJSON();
-      return { user: safeUserData, token: generateToken({ id: user.id, email, firstName, lastName }) };
+      const { password: _userPassword, ...safeUserData } = user.toJSON();
+      return { user: safeUserData, token: getGenerateToken({ id: user.id, email, firstName, lastName }) };
     },
     login: async (_parent: any, args: Pick<UserType, "email" | "password">) => {
       const { email, password } = args;
@@ -36,7 +36,7 @@ export const userResolvers = {
       }
 
       const { id, firstName, lastName, image } = user;
-      return { user: { id, firstName, lastName, image }, token: generateToken({ id, email, firstName, lastName }) };
+      return { user: { id, firstName, lastName, image }, token: getGenerateToken({ id, email, firstName, lastName }) };
     }
   }
 };
