@@ -1,7 +1,7 @@
-import userResolvers from "./users";
-import emailResolvers from "./emails";
+import { userResolvers } from "./users";
+import { emailResolvers } from "./emails";
 
-export default {
+export const resolversConfig = {
   Email: {
     createdAt: (parent: any) => parent.createdAt?.toISOString()
   },

@@ -1,7 +1,7 @@
-import Sequelize from "sequelize";
-import user from "./user";
-import email from "./email";
+import { createEmailModel } from "./email";
+import { createUserModel } from "./user";
 import config from "../config/config";
+import Sequelize from "sequelize";
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];
@@ -10,8 +10,8 @@ const environmentConfig = config[NODE_ENV === "production" ? "production" : "dev
 export const sequelize = new Sequelize(environmentConfig);
 
 const models: any = {
-  User: user(sequelize, Sequelize.DataTypes),
-  Email: email(sequelize, Sequelize.DataTypes)
+  User: createUserModel(sequelize, Sequelize.DataTypes),
+  Email: createEmailModel(sequelize, Sequelize.DataTypes)
 };
 
 export const { User, Email } = models;

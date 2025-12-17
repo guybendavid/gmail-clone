@@ -12,7 +12,7 @@ interface SendEmailPayload extends Pick<DBEmail, "subject" | "content"> {
 
 const getIdIsNotValid = (id: string) => isNaN(Number(id));
 
-export default {
+export const emailResolvers = {
   Query: {
     getReceivedEmails: (_parent: any, args: { loggedInUserEmail: string }, _context: { user: ContextUser }) => {
       const { loggedInUserEmail } = args;

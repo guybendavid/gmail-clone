@@ -30,6 +30,7 @@ const firstListTexts = [
   "Categories",
   "More"
 ];
+
 const secondListTexts = ["New meeting", "Join a meeting"];
 
 export const LeftSidebar = () => {

@@ -52,10 +52,9 @@ const getSchemaDetector = (options: SchemaDetectorOptions = {}) => {
   };
 };
 
-// Configuration for this project - To do: Move to shared config package
 const SCHEMA_CONFIG = {
-  schemaLibraries: ["mongoose"],
-  schemaMethods: ["Schema"]
+  schemaLibraries: [],
+  schemaMethods: []
 };
 
 const getIsSchemaOrConfigProperty = getSchemaDetector(SCHEMA_CONFIG);
@@ -134,6 +133,7 @@ const getIsBooleanFunction = (functionNode: AnyNode): boolean => {
   // For functions with explicit return statements
   return getCheckReturnStatements(functionNode.body);
 };
+
 // Helper to check if a return statement spans multiple lines
 const getIsMultiLineReturn = (node: AnyNode): boolean => {
   const startLine = node.loc.start.line;
@@ -215,6 +215,7 @@ const getIsReturn = (functionNode: AnyNode): boolean => {
     if (functionNode.body.type === "BlockStatement") {
       return getIsReturnPresent(functionNode.body);
     }
+
     // Skip implicit returns - can't reliably determine if void without types
     return false;
   }
@@ -242,7 +243,6 @@ const MessageTypeToText = {
   NO_BLOCK_STATEMENTS_IN_EVENT_HANDLERS: "Block statements are not allowed in JSX event handler arrow functions.",
   PREFER_DIRECT_FUNCTION_REFERENCE:
     "Use direct function reference instead of arrow function when no arguments are passed.",
-  NO_INLINE_STYLES: "Inline 'style' prop is forbidden. Use Emotion CSS (@emotion/css) instead.",
   FUNCTION_MUST_START_WITH_GET_PREFIX: "Functions that return values should start with 'get' prefix.",
   NO_INLINE_EXPORTS: "Use export keyword before the variable/function declaration instead of inline exports.",
   REQUIRE_OBJECT_DESTRUCTURING: "Functions with 2 or more parameters must use object destructuring.",
@@ -874,6 +874,7 @@ export const customRuleMap: Record<string, Rule.RuleModule> = {
                 // Find the appropriate insertion point
                 const insertionTarget =
                   componentExportNodes.length > 0 ? componentExportNodes[0] : componentDeclarationNodes[0];
+
                 // Add it after the component
                 const styleText = sourceCode.getText(parentDeclaration);
                 fixes.push(fixer.insertTextAfter(insertionTarget, `\n\n${styleText}`));
@@ -1029,25 +1030,6 @@ export const customRuleMap: Record<string, Rule.RuleModule> = {
       }
     })
   },
-  "no-inline-styles": {
-    meta: {
-      type: "problem",
-      docs: {
-        description: "Disallow inline style prop on all JSX elements"
-      },
-      schema: []
-    },
-    create: (context: Rule.RuleContext) => ({
-      JSXAttribute: (node: any) => {
-        if (node.name.name === "style") {
-          context.report({
-            node,
-            message: MessageTypeToText.NO_INLINE_STYLES
-          });
-        }
-      }
-    })
-  },
   "prefer-get-prefix": {
     meta: {
       type: "suggestion",
@@ -1157,6 +1139,7 @@ export const customRuleMap: Record<string, Rule.RuleModule> = {
           (parentType === "VariableDeclarator" && grandParent?.parent?.type === "ExportNamedDeclaration");
 
         const isComponent = id && /^[A-Z]/.test(id.name);
+
         // Skip Next.js route handlers (GET, POST, PUT, DELETE, PATCH) - framework-mandated signature
         const isNextJsRouteHandler =
           parentType === "VariableDeclarator" &&

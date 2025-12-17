@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 const { SECRET_KEY } = process.env;
 
-export default (context: any) => {
+export const contextMiddleware = (context: any) => {
   if (context.req?.body) {
     const { message } = getFormValidationErrors(context.req.body.variables);
     if (message) throw new UserInputError(message);
@@ -20,7 +20,7 @@ export default (context: any) => {
 
   try {
     const decodedToken = jwt.verify(token, SECRET_KEY as string) as JwtPayload;
-    const { iat: _iat, exp: _exp, ...relevantUserFields } = decodedToken;
+    const { iat, exp, ...relevantUserFields } = decodedToken;
     context.user = { ...relevantUserFields };
   } catch {
     throw new AuthenticationError("Unauthenticated");
