@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
-import { UserInputError, withFilter } from "apollo-server";
+import { UserInputError } from "apollo-server";
+import { withFilter } from "graphql-subscriptions";
 import { Email, User } from "../../db/models/models-config";
 import { DBEmail, ContextUser } from "../../types/types";
 import { getFormattedNewEmail, getEmailsByParticipantType } from "../../utils/emails-helper";
@@ -51,8 +52,8 @@ export const emailResolvers = {
   Subscription: {
     newEmail: {
       subscribe: withFilter(
-        (_parent, _args, _context) => pubsub.asyncIterator("NEW_EMAIL"),
-        ({ newEmail }, _args, { user }) =>
+        (_parent: any, _args: any, _context: any) => pubsub.asyncIterableIterator("NEW_EMAIL"),
+        ({ newEmail }: any, _args: any, { user }: any) =>
           newEmail.sender.email === user.email || newEmail.recipient.email === user.email
       )
     }
