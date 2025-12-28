@@ -14,7 +14,7 @@ type EmailsStore = {
 
 type SetFunction = (fn: (state: EmailsStore) => Partial<EmailsStore> | false) => void;
 
-const emailsStore = (set: SetFunction) => ({
+const getEmailsStore = (set: SetFunction) => ({
   activeTab: 0,
   setActiveTab: (activeTab: number) =>
     set((state: EmailsStore) => activeTab !== state.activeTab && { activeTab, selectedEmails: [], searchValue: "" }),
@@ -26,4 +26,4 @@ const emailsStore = (set: SetFunction) => ({
   setIsComposeOpen: (isComposeOpen: boolean) => set(() => ({ isComposeOpen }))
 });
 
-export const useEmailsStore = create(emailsStore);
+export const useEmailsStore = create(getEmailsStore);

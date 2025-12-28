@@ -1,4 +1,4 @@
-import { useState, useCallback, default as React } from "react";
+import { useState, useCallback } from "react";
 import { useEmailsStore } from "stores/emails-store";
 import { Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";

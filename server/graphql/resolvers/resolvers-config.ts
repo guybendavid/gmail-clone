@@ -1,9 +1,13 @@
 import { userResolvers } from "./users";
 import { emailResolvers } from "./emails";
 
+type EmailParent = {
+  createdAt: Date | null;
+};
+
 export const resolversConfig = {
   Email: {
-    createdAt: (parent: any) => parent.createdAt?.toISOString()
+    createdAt: ({ createdAt }: EmailParent) => createdAt && createdAt.toISOString()
   },
   Query: {
     ...emailResolvers.Query

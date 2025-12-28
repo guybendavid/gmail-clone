@@ -8,7 +8,7 @@ const generateImage = require("../../utils/generate-image");
 
 export const userResolvers = {
   Mutation: {
-    register: async (_parent: any, args: Omit<UserType, "id">) => {
+    register: async (_parent: unknown, args: Omit<UserType, "id">) => {
       const { firstName, lastName, email, password } = args;
       const isUserExists = await User.findOne({ where: { email } });
 
@@ -21,7 +21,7 @@ export const userResolvers = {
       const { password: _userPassword, ...safeUserData } = user.toJSON();
       return { user: safeUserData, token: getGenerateToken({ id: user.id, email, firstName, lastName }) };
     },
-    login: async (_parent: any, args: Pick<UserType, "email" | "password">) => {
+    login: async (_parent: unknown, args: Pick<UserType, "email" | "password">) => {
       const { email, password } = args;
       const user = await User.findOne({ where: { email } });
 

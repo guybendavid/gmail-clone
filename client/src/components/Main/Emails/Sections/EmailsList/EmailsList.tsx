@@ -33,7 +33,7 @@ export const EmailsList = () => {
         .filter((email: SectionEmail) => `${email.subject}`.toUpperCase().includes(searchValue.toUpperCase()))
         .map((email: SectionEmail, index: number) => (
           <Fragment key={index}>
-            <ListItem button={true} className={cx("email", isEmailSelected(email, selectedEmails) && "is-selected")}>
+            <ListItem button={true} className={cx("email", getIsEmailSelected(email, selectedEmails) && "is-selected")}>
               <div className="text-wrapper">
                 <div className="participant-name">
                   <EmailCheckbox email={email} />
@@ -52,7 +52,7 @@ export const EmailsList = () => {
   );
 };
 
-const isEmailSelected = (email: SectionEmail, selectedEmails: SectionEmail[]) =>
+const getIsEmailSelected = (email: SectionEmail, selectedEmails: SectionEmail[]) =>
   Boolean(selectedEmails.some((selectedEmail: SectionEmail) => selectedEmail.id === email.id));
 
 const getDisplayParticipantName = (email: SectionEmail) => {

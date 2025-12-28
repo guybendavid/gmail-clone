@@ -22,7 +22,7 @@ interface ServerError {
     | null;
 }
 
-const appStore = (set: SetFunction, get: GetFunction) => ({
+const getAppStore = (set: SetFunction, get: GetFunction) => ({
   snackBarMessage: initialSnackBarMessage,
   setSnackBarMessage: (snackBarMessage: SnackBarMessage) => set(() => ({ snackBarMessage })),
   clearSnackBarMessage: () => set(() => ({ snackBarMessage: initialSnackBarMessage })),
@@ -49,4 +49,4 @@ const appStore = (set: SetFunction, get: GetFunction) => ({
   }
 });
 
-export const useAppStore = create(appStore);
+export const useAppStore = create(getAppStore);

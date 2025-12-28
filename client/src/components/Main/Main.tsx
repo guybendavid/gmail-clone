@@ -1,7 +1,7 @@
 import { useEmailsStore } from "stores/emails-store";
 import { css } from "@emotion/css";
 import { Emails } from "./Emails/Emails";
-import { LeftSidebar as LeftSideBar } from "./LeftSidebar/LeftSidebar";
+import { LeftSidebar } from "./LeftSidebar/LeftSidebar";
 import { RightSidebar } from "./RightSidebar/RightSidebar";
 import { Compose } from "./Compose/Compose";
 import { useIsSmallScreen } from "hooks/use-is-small-screen";
@@ -12,7 +12,7 @@ export const Main = () => {
 
   return (
     <div className={mainStyle}>
-      {!isSmallScreen && <LeftSideBar />}
+      {!isSmallScreen && <LeftSidebar />}
       <Emails />
       {isComposeOpen && <Compose />}
       {!isSmallScreen && <RightSidebar />}

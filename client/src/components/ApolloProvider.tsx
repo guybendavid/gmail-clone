@@ -11,7 +11,7 @@ const baseHttpLink: ApolloLink = new HttpLink({ uri: isProduction ? "" : `http:/
 const authLink = setContext((_, { headers }) => ({
   headers: {
     ...headers,
-    authorization: `Bearer ${localStorage.getItem("token")}`
+    ...(localStorage.getItem("token") ? { authorization: `Bearer ${localStorage.getItem("token")}` } : {})
   }
 }));
 
@@ -22,7 +22,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authorization: `Bearer ${localStorage.getItem("token")}`
+      ...(localStorage.getItem("token") ? { authorization: `Bearer ${localStorage.getItem("token")}` } : {})
     }
   }
 });
