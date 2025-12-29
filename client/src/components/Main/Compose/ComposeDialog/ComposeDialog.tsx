@@ -1,8 +1,9 @@
-import { forwardRef, ReactElement, Ref } from "react";
+import type { ReactElement, Ref } from "react";
+import { forwardRef } from "react";
 import { useEmailsStore } from "stores/emails-store";
 import { css } from "@emotion/css";
 import { AppBar, Dialog, Toolbar, IconButton, Typography, Slide } from "@material-ui/core";
-import { TransitionProps } from "@material-ui/core/transitions/transition";
+import type { TransitionProps } from "@material-ui/core/transitions/transition";
 import { Close as CloseIcon } from "@material-ui/icons";
 import { ComposeForm } from "../ComposeForm/ComposeForm";
 

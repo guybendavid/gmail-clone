@@ -1,6 +1,6 @@
 import { getGenerateToken } from "../../utils/generate-token";
 import { User } from "../../db/models/models-config";
-import { User as UserType } from "../../types/types";
+import type { User as UserType } from "../../types/types";
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcrypt";
 // eslint-disable-next-line

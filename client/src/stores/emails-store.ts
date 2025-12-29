@@ -1,4 +1,4 @@
-import { SectionEmail } from "types/types";
+import type { SectionEmail } from "types/types";
 import create from "zustand";
 
 type EmailsStore = {

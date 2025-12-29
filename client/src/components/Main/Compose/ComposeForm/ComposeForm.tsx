@@ -1,4 +1,5 @@
-import { useState, SyntheticEvent, ChangeEvent } from "react";
+import type { SyntheticEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { useAppStore } from "stores/app-store";
 import { useEmailsStore } from "stores/emails-store";
 import { css, cx } from "@emotion/css";

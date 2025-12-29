@@ -1,7 +1,8 @@
 import { useAppStore } from "stores/app-store";
 import { useEmailsStore } from "stores/emails-store";
-import { SectionEmail } from "types/types";
-import { useQuery, ApolloClient } from "@apollo/client";
+import type { SectionEmail } from "types/types";
+import type { ApolloClient } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
 

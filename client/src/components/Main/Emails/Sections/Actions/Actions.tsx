@@ -2,7 +2,7 @@ import { useEmails } from "hooks/use-emails";
 import { useAppStore } from "stores/app-store";
 import { useEmailsStore } from "stores/emails-store";
 import { css } from "@emotion/css";
-import { SectionEmail } from "types/types";
+import type { SectionEmail } from "types/types";
 import { useMutation } from "@apollo/client";
 import { getAuthData } from "services/auth";
 import { DELETE_EMAILS } from "services/graphql";

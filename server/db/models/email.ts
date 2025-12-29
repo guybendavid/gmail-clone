@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import type { Sequelize } from "sequelize";
 
 export const getCreateEmailModel = ({ sequelize, DataTypes }: { sequelize: Sequelize; DataTypes: any }) => {
   const Email = sequelize.define(

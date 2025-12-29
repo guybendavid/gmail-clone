@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { UserInputError } from "apollo-server";
 import { withFilter } from "graphql-subscriptions";
 import { Email, User } from "../../db/models/models-config";
-import { DBEmail, ContextUser } from "../../types/types";
+import type { DBEmail, ContextUser } from "../../types/types";
 import { getFormattedNewEmail, getEmailsByParticipantType } from "../../utils/emails-helper";
 import { pubsub } from "../../app";
 

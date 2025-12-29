@@ -12,7 +12,8 @@ import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from
 import { useAppStore } from "stores/app-store";
 import { useEmailsStore } from "stores/emails-store";
 import { useIsSmallScreen } from "hooks/use-is-small-screen";
-import { useState, MouseEvent } from "react";
+import type { MouseEvent } from "react";
+import { useState } from "react";
 import gmailIcon from "images/app-icon.png";
 
 export const Navbar = () => {

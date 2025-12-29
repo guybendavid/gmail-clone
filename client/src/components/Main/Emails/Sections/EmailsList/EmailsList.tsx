@@ -5,7 +5,7 @@ import { scrollbarStyle, getOverflowStyle } from "styles/reusable-css-in-js-styl
 import { getAuthData } from "services/auth";
 import { useSubscription } from "@apollo/client";
 import { NEW_EMAIL } from "services/graphql";
-import { SectionEmail } from "types/types";
+import type { SectionEmail } from "types/types";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
 import { addNewEmailToCache } from "services/emails-helper";
 import { timeDisplayer } from "@guybendavid/utils";

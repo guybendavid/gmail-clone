@@ -1,4 +1,4 @@
-import { DBEmail, ParticipantType } from "../types/types";
+import type { DBEmail, ParticipantType } from "../types/types";
 import { sequelize, User } from "../db/models/models-config";
 import { QueryTypes } from "sequelize";
 import { AuthenticationError } from "apollo-server";

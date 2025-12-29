@@ -1,4 +1,4 @@
-import { ParticipantType } from "../../types/types";
+import type { ParticipantType } from "../../types/types";
 
 export const getEmailsWithParticipantsName = (particapntType: ParticipantType) => `
   select emails.id,

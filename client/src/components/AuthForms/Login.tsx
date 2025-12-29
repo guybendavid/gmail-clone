@@ -1,4 +1,5 @@
-import { useState, SyntheticEvent, ChangeEvent } from "react";
+import type { SyntheticEvent, ChangeEvent } from "react";
+import { useState } from "react";
 import { authFormStyle } from "./shared-styles";
 import { LOGIN_USER } from "services/graphql";
 import { Link } from "react-router-dom";
