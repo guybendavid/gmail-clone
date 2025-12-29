@@ -34,9 +34,9 @@ export const addNewEmailToCache = ({
   const isSentToYourself = recipientEmail === senderEmail && recipientEmail === loggedInUserEmail;
 
   if (isSentToYourself) {
-    [GET_RECEIVED_EMAILS, GET_SENT_EMAILS].forEach((query) => {
-      updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail });
-    });
+    [GET_RECEIVED_EMAILS, GET_SENT_EMAILS].forEach((query) =>
+      updateCachedEmailsList({ query, loggedInUserEmail, client, newEmail })
+    );
 
     return;
   }

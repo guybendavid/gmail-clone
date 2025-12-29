@@ -71,21 +71,20 @@ const AvatarMenu = () => {
   const { loggedInUser } = getAuthData();
   const { logout } = useAppStore((state) => state);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
   return (
     <>
       <IconButton onClick={handleClick}>
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
-      <Menu id="main-menu" keepMounted={true} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+      <Menu
+        id="main-menu"
+        keepMounted={true}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+      >
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>

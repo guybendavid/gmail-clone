@@ -28,9 +28,7 @@ const startProductionServer = () => {
   const app = express();
   app.use(express.static(path.join(__dirname, "client")));
 
-  app.get("*", (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "index.html"));
-  });
+  app.get("*", (_req, res) => res.sendFile(path.resolve(__dirname, "client", "index.html")));
 
   const server = new ApolloServerProd(serverConfig);
   server.applyMiddleware({ app });
