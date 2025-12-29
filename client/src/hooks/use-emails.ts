@@ -14,8 +14,8 @@ export const useEmails = () => {
 
   const { data, client: apolloClient } = useQuery(emailsToFetch, {
     variables: { loggedInUserEmail: loggedInUser.email },
-    onError: (error) => handleServerErrors(error),
-    onCompleted: () => clearSnackBarMessage()
+    onError: handleServerErrors,
+    onCompleted: clearSnackBarMessage
   });
 
   const emails = data?.getReceivedEmails || data?.getSentEmails || [];
