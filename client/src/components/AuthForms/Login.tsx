@@ -3,7 +3,8 @@ import { authFormStyle } from "./shared-styles";
 import { LOGIN_USER } from "services/graphql";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
-import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
+import { Avatar, Button, TextField, Typography } from "@material-ui/core";
+import type { TextFieldProps } from "@material-ui/core/TextField";
 import { useMutation } from "@apollo/client";
 import { useAppStore } from "stores/app-store";
 import { getFormValidationErrors } from "@guybendavid/utils";
@@ -14,7 +15,7 @@ const textFieldProps = {
   variant: "outlined",
   margin: "normal",
   fullWidth: true
-} as OutlinedTextFieldProps;
+} as TextFieldProps;
 
 export const Login = () => {
   const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);

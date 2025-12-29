@@ -1,4 +1,5 @@
-import { ApolloClient, DocumentNode } from "@apollo/client";
+import { ApolloClient } from "@apollo/client";
+import type { DocumentNode } from "graphql";
 import { Email } from "types/types";
 import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "./graphql";
 

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useAppStore } from "stores/app-store";
+import type { SnackbarProps } from "@material-ui/core/Snackbar";
 import { css, cx } from "@emotion/css";
-import Snackbar, { SnackbarOrigin } from "@material-ui/core/Snackbar";
+import Snackbar from "@material-ui/core/Snackbar";
 import dompurify from "dompurify";
 import MuiAlert from "@material-ui/lab/Alert";
 
 const { sanitize } = dompurify;
-const anchorOrigin: SnackbarOrigin = { vertical: "bottom", horizontal: "left" };
+const anchorOrigin: SnackbarProps["anchorOrigin"] = { vertical: "bottom", horizontal: "left" };
 
 export const IndicationMessage = () => {
   const { snackBarMessage, clearSnackBarMessage } = useAppStore((state) => state);

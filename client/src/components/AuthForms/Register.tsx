@@ -4,7 +4,8 @@ import { REGISTER_USER } from "services/graphql";
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { handleAuth } from "services/auth";
-import { Avatar, Button, TextField, Typography, OutlinedTextFieldProps } from "@material-ui/core";
+import { Avatar, Button, TextField, Typography } from "@material-ui/core";
+import type { TextFieldProps } from "@material-ui/core/TextField";
 import { useAppStore } from "stores/app-store";
 import { getFormValidationErrors } from "@guybendavid/utils";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
@@ -14,7 +15,7 @@ const textFieldProps = {
   variant: "outlined",
   margin: "normal",
   fullWidth: true
-} as OutlinedTextFieldProps;
+} as TextFieldProps;
 
 export const Register = () => {
   const { handleServerErrors, setSnackBarMessage } = useAppStore((state) => state);
