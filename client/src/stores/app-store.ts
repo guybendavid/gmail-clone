@@ -10,7 +10,7 @@ const initialSnackBarMessage: SnackBarMessage = { content: "", severity: "error"
 type SetFunction = (fn: (state: unknown) => unknown) => void;
 type GetFunction = () => { logout: () => void };
 
-interface ServerError {
+type ServerError = {
   message: string;
   networkError?:
     | Error
@@ -20,7 +20,7 @@ interface ServerError {
         };
       }
     | null;
-}
+};
 
 const getAppStore = (set: SetFunction, get: GetFunction) => ({
   snackBarMessage: initialSnackBarMessage,
