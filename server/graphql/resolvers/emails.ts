@@ -11,7 +11,7 @@ interface SendEmailPayload extends Pick<DBEmail, "subject" | "content"> {
   recipientEmail: string;
 }
 
-const getIsIdNotValid = (id: string) => isNaN(Number(id));
+const getIsIdNotValid = (id: string) => Number.isNaN(Number(id));
 
 type GraphQLContext = { user: ContextUser };
 
