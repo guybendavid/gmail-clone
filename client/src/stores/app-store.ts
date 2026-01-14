@@ -16,7 +16,7 @@ type ServerError = {
     | Error
     | {
         result?: {
-          errors?: Array<{ message?: string }>;
+          errors?: { message?: string }[];
         };
       }
     | null;
@@ -28,7 +28,7 @@ const getAppStore = (set: SetFunction, get: GetFunction) => ({
   clearSnackBarMessage: () => set(() => ({ snackBarMessage: initialSnackBarMessage })),
   handleServerErrors: (error: ServerError) => {
     const { message: gqlErrorMessage, networkError } = error;
-    const networkErrorWithResult = networkError as { result?: { errors?: Array<{ message?: string }> } } | undefined;
+    const networkErrorWithResult = networkError as { result?: { errors?: { message?: string }[] } };
 
     const gqlContextErrorMessage = networkErrorWithResult?.result?.errors?.[0]?.message
       ?.split("Context creation failed: ")
