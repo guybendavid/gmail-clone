@@ -1,8 +1,9 @@
 import type { DBEmail, ParticipantType } from "../types/types";
-import { sequelize, User } from "../db/models/models-config";
-import { QueryTypes } from "sequelize";
+import { db } from "../db/connection";
+import { emails, users } from "../db/schema";
 import { AuthenticationError } from "apollo-server";
-import { getEmailsWithParticipantsName } from "../db/raw-queries/emails";
+import { alias } from "drizzle-orm/pg-core";
+import { desc, eq, sql } from "drizzle-orm";
 
 type GetEmailsByParticipantType = {
   loggedInUserEmail: string;
@@ -10,13 +11,14 @@ type GetEmailsByParticipantType = {
 };
 
 type GetEmailsWithParticipantsNameQueryResponse = {
-  id: string;
+  id: number;
   sender_email: string;
   recipient_email: string;
   sender_full_name: string;
   recipient_full_name: string;
   subject: string;
   content: string;
+  createdAt: Date;
 }[];
 
 export const getEmailsByParticipantType = async ({
@@ -27,12 +29,29 @@ export const getEmailsByParticipantType = async ({
     throw new AuthenticationError("Please send a valid email");
   }
 
-  const emails = await sequelize.query(getEmailsWithParticipantsName(participantType), {
-    type: QueryTypes.SELECT,
-    replacements: [loggedInUserEmail, loggedInUserEmail]
-  });
+  const senderUser = alias(users, "users_sender");
+  const recipientUser = alias(users, "users_recipient");
 
-  return formatDBEmailsToApiShape(emails);
+  const emailsResult: GetEmailsWithParticipantsNameQueryResponse = await db
+    .select({
+      id: emails.id,
+      subject: emails.subject,
+      content: emails.content,
+      createdAt: emails.createdAt,
+      sender_email: senderUser.email,
+      recipient_email: recipientUser.email,
+      sender_full_name: sql<string>`concat(${senderUser.firstName}, ' ', ${senderUser.lastName})`,
+      recipient_full_name: sql<string>`concat(${recipientUser.firstName}, ' ', ${recipientUser.lastName})`
+    })
+    .from(emails)
+    .innerJoin(senderUser, eq(emails.sender, senderUser.email))
+    .innerJoin(recipientUser, eq(emails.recipient, recipientUser.email))
+    .where(
+      participantType === "sender" ? eq(emails.sender, loggedInUserEmail) : eq(emails.recipient, loggedInUserEmail)
+    )
+    .orderBy(desc(emails.createdAt));
+
+  return formatDBEmailsToApiShape(emailsResult);
 };
 
 export const getFormattedNewEmail = async (newEmail: DBEmail) => ({
@@ -54,6 +73,7 @@ const formatNewEmailParticipant = async (newEmail: DBEmail, participantType: Par
 };
 
 const getFullNameByEmail = async (email: string) => {
-  const { firstName, lastName } = await User.findOne({ where: { email } });
-  return `${firstName} ${lastName}`;
+  const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  if (!user) return "";
+  return `${user.firstName} ${user.lastName}`;
 };

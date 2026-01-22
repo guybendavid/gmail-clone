@@ -1,9 +1,10 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "ignoreDependencies": ["react-router", "pg"],
+  "ignoreDependencies": ["react-router"],
   "ignoreBinaries": ["vite"],
   "ignore": [
     "server/db/migrations/**",
+    "server/db/raw-queries/**",
     "server/db/seeders/**",
     "server/utils/generate-image.ts",
     "eslint-plugins.d.ts"

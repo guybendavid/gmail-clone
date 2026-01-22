@@ -8,11 +8,12 @@ export type User = {
 };
 
 export type DBEmail = {
-  id: string;
+  id: number;
   subject: string;
   content: string;
   sender: string;
   recipient: string;
+  createdAt: Date;
 };
 
 export type ParticipantType = "sender" | "recipient";
