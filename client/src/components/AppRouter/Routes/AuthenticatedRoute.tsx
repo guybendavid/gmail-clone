@@ -1,7 +1,7 @@
+import { Route, Redirect } from "react-router-dom";
+import { Navbar } from "#root/client/components/Navbar/Navbar";
+import { getAuthData } from "#root/client/services/auth";
 import type { FC } from "react";
-import { Route, Redirect } from "react-router";
-import { getAuthData } from "services/auth";
-import { Navbar } from "components/Navbar/Navbar";
 
 type Props = {
   exact: boolean;

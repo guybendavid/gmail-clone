@@ -1,11 +1,11 @@
-import type { ReactElement, Ref } from "react";
-import { forwardRef } from "react";
-import { useEmailsStore } from "stores/emails-store";
 import { css } from "@emotion/css";
 import { AppBar, Dialog, Toolbar, IconButton, Typography, Slide } from "@material-ui/core";
-import type { TransitionProps } from "@material-ui/core/transitions/transition";
 import { Close as CloseIcon } from "@material-ui/icons";
-import { ComposeForm } from "../ComposeForm/ComposeForm";
+import { forwardRef } from "react";
+import { ComposeForm } from "#root/client/components/Main/Compose/ComposeForm/ComposeForm";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import type { TransitionProps } from "@material-ui/core/transitions/transition";
+import type { ReactElement, Ref } from "react";
 
 const Transition = forwardRef((props: TransitionProps & { children?: ReactElement }, ref: Ref<unknown>) => (
   <Slide direction="up" ref={ref} {...props} />

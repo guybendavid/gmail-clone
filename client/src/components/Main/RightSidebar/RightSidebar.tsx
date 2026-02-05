@@ -1,11 +1,11 @@
-import { IconButton, Divider } from "@material-ui/core";
 import { css } from "@emotion/css";
+import { Divider, IconButton } from "@material-ui/core";
 import {
-  Today as TodayIcon,
+  Add as AddIcon,
   EmojiObjects as EmojiObjectsIcon,
   FiberManualRecord as FiberManualRecordIcon,
-  Add as AddIcon,
-  KeyboardArrowRight as KeyboardArrowRightIcon
+  KeyboardArrowRight as KeyboardArrowRightIcon,
+  Today as TodayIcon
 } from "@material-ui/icons";
 
 export const RightSidebar = () => (

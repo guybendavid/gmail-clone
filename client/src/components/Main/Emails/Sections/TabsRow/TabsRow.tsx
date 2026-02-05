@@ -1,5 +1,5 @@
-import { AppBar, Tab, Tabs, ListItem } from "@material-ui/core";
 import { css } from "@emotion/css";
+import { AppBar, Tab, Tabs, ListItem } from "@material-ui/core";
 import { Inbox as InboxIcon, People as PeopleIcon, LocalOffer as LocalOfferIcon } from "@material-ui/icons";
 
 const texts = ["Primary", "Social", "Promotions"];

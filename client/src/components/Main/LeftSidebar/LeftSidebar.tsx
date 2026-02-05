@@ -1,22 +1,22 @@
-import { useEmailsStore } from "stores/emails-store";
-import { Button, ListItem, ListItemText, Divider, Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import { getOverflowStyle, scrollbarStyle } from "styles/reusable-css-in-js-styles";
+import { Button, Divider, ListItem, ListItemText, Typography } from "@material-ui/core";
 import {
+  Delete as DeleteIcon,
+  Drafts as DraftsIcon,
+  ExpandMore as ExpandMoreIcon,
   Inbox as InboxIcon,
+  Keyboard as KeyboardIcon,
+  Label as LabelIcon,
+  LabelImportant as LabelImportantIcon,
+  Mail as MailIcon,
   Send as SendIcon,
   Star as StarIcon,
-  WatchLater as WatchLaterIcon,
-  LabelImportant as LabelImportantIcon,
-  Drafts as DraftsIcon,
-  Mail as MailIcon,
-  Delete as DeleteIcon,
-  Label as LabelIcon,
-  ExpandMore as ExpandMoreIcon,
   Videocam as VideocamIcon,
-  Keyboard as KeyboardIcon
+  WatchLater as WatchLaterIcon
 } from "@material-ui/icons";
-import composeImg from "images/compose-img.png";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import { getOverflowStyle, scrollbarStyle } from "#root/client/styles/reusable-css-in-js-styles";
+import composeImg from "#root/client/images/compose-img.png";
 
 const firstListTexts = [
   "Inbox",

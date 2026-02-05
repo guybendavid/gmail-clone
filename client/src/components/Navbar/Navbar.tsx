@@ -7,14 +7,14 @@ import {
   Menu as MenuIcon
 } from "@material-ui/icons";
 import { css, cx } from "@emotion/css";
-import { getAuthData } from "services/auth";
+import { getAuthData } from "#root/client/services/auth";
 import { IconButton, Avatar, ClickAwayListener, Menu, MenuItem, InputBase } from "@material-ui/core";
-import { useAppStore } from "stores/app-store";
-import { useEmailsStore } from "stores/emails-store";
-import { useIsSmallScreen } from "hooks/use-is-small-screen";
-import type { MouseEvent } from "react";
+import { useAppStore } from "#root/client/stores/app-store";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import { useIsSmallScreen } from "#root/client/hooks/use-is-small-screen";
 import { useState } from "react";
-import gmailIcon from "images/app-icon.png";
+import gmailIcon from "#root/client/images/app-icon.png";
+import type { MouseEvent } from "react";
 
 export const Navbar = () => {
   const { isSmallScreen } = useIsSmallScreen();

@@ -1,8 +1,8 @@
-import type { DBEmail, ParticipantType } from "../types/types";
-import { sequelize, User } from "../db/models/models-config";
+import { GraphQLError } from "graphql";
 import { QueryTypes } from "sequelize";
-import { AuthenticationError } from "apollo-server";
-import { getEmailsWithParticipantsName } from "../db/raw-queries/emails";
+import { sequelize, User } from "#root/server/db/models/models-config";
+import { getEmailsWithParticipantsName } from "#root/server/db/raw-queries/emails";
+import type { DBEmail, ParticipantType } from "#root/server/types/types";
 
 type GetEmailsByParticipantType = {
   loggedInUserEmail: string;
@@ -24,7 +24,9 @@ export const getEmailsByParticipantType = async ({
   participantType
 }: GetEmailsByParticipantType) => {
   if (!loggedInUserEmail) {
-    throw new AuthenticationError("Please send a valid email");
+    throw new GraphQLError("Please send a valid email", {
+      extensions: { code: "UNAUTHENTICATED" }
+    });
   }
 
   const emails = await sequelize.query(getEmailsWithParticipantsName(participantType), {

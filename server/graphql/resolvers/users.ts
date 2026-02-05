@@ -1,10 +1,9 @@
-import { getGenerateToken } from "../../utils/generate-token";
-import { User } from "../../db/models/models-config";
-import type { User as UserType } from "../../types/types";
-import { UserInputError } from "apollo-server";
+import { GraphQLError } from "graphql";
+import { User } from "#root/server/db/models/models-config";
+import { getGenerateToken } from "#root/server/utils/generate-token";
 import bcrypt from "bcrypt";
-// eslint-disable-next-line
-const generateImage = require("../../utils/generate-image");
+import generateImage from "#root/server/utils/generate-image";
+import type { User as UserType } from "#root/server/types/types";
 
 export const userResolvers = {
   Mutation: {
@@ -13,7 +12,9 @@ export const userResolvers = {
       const isUserExists = await User.findOne({ where: { email } });
 
       if (isUserExists) {
-        throw new UserInputError("Email already exists");
+        throw new GraphQLError("Email already exists", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
@@ -26,13 +27,17 @@ export const userResolvers = {
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        throw new UserInputError("Email not found");
+        throw new GraphQLError("Email not found", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const correctPassword = await bcrypt.compare(password as string, user.password);
 
       if (!correctPassword) {
-        throw new UserInputError("Password is incorrect");
+        throw new GraphQLError("Password is incorrect", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const { id, firstName, lastName, image } = user;

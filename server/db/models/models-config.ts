@@ -1,7 +1,7 @@
-import { getCreateEmailModel } from "./email";
-import { getCreateUserModel } from "./user";
-import config from "../config/config";
+import { getCreateEmailModel } from "#root/server/db/models/email";
+import { getCreateUserModel } from "#root/server/db/models/user";
 import Sequelize from "sequelize";
+import config from "#root/server/db/config/config";
 
 const { NODE_ENV } = process.env;
 const environmentConfig = config[NODE_ENV === "production" ? "production" : "development"];

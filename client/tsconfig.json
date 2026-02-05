@@ -18,6 +18,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "src",
     "paths": {
+      "#root/client/*": ["./*"],
       "App": ["./App"],
       "components/*": ["./components/*"],
       "hooks/*": ["./hooks/*"],

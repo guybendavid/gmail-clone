@@ -1,14 +1,14 @@
-import type { SyntheticEvent, ChangeEvent } from "react";
-import { useState } from "react";
-import { useAppStore } from "stores/app-store";
-import { useEmailsStore } from "stores/emails-store";
-import { css, cx } from "@emotion/css";
-import { getAuthData } from "services/auth";
-import { SEND_EMAIL } from "services/graphql";
 import { useMutation } from "@apollo/client";
-import { Button, TextField } from "@material-ui/core";
+import { css, cx } from "@emotion/css";
 import { getFormValidationErrors } from "@guybendavid/utils";
-import { scrollbarStyle, blueButtonStyle, primaryBoxShadowStyle } from "styles/reusable-css-in-js-styles";
+import { Button, TextField } from "@material-ui/core";
+import { useState } from "react";
+import { getAuthData } from "#root/client/services/auth";
+import { SEND_EMAIL } from "#root/client/services/graphql";
+import { useAppStore } from "#root/client/stores/app-store";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import { scrollbarStyle, blueButtonStyle, primaryBoxShadowStyle } from "#root/client/styles/reusable-css-in-js-styles";
+import type { SyntheticEvent, ChangeEvent } from "react";
 
 type Props = {
   isMinimized?: boolean;

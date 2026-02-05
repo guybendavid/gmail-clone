@@ -1,5 +1,5 @@
-import { userResolvers } from "./users";
-import { emailResolvers } from "./emails";
+import { emailResolvers } from "#root/server/graphql/resolvers/emails";
+import { userResolvers } from "#root/server/graphql/resolvers/users";
 
 type EmailParent = {
   createdAt: Date | null;

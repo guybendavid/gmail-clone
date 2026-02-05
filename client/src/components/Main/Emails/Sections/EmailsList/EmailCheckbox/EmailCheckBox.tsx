@@ -1,6 +1,6 @@
-import { useEmailsStore } from "stores/emails-store";
-import type { SectionEmail } from "types/types";
 import { Checkbox } from "@material-ui/core";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import type { SectionEmail } from "#root/client/types/types";
 
 type Props = {
   email: SectionEmail;

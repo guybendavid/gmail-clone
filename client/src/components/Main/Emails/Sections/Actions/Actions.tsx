@@ -1,20 +1,20 @@
-import { useEmails } from "hooks/use-emails";
-import { useAppStore } from "stores/app-store";
-import { useEmailsStore } from "stores/emails-store";
-import { css } from "@emotion/css";
-import type { SectionEmail } from "types/types";
 import { useMutation } from "@apollo/client";
-import { getAuthData } from "services/auth";
-import { DELETE_EMAILS } from "services/graphql";
-import { deleteEmailsFromCache } from "services/emails-helper";
-import { IconButton, TablePagination } from "@material-ui/core";
+import { css } from "@emotion/css";
 import { getFormValidationErrors } from "@guybendavid/utils";
+import { IconButton, TablePagination } from "@material-ui/core";
 import {
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
   Delete as DeleteIcon,
-  Refresh as RefreshIcon,
-  MoreVert as MoreVertIcon
+  MoreVert as MoreVertIcon,
+  Refresh as RefreshIcon
 } from "@material-ui/icons";
+import { useEmails } from "#root/client/hooks/use-emails";
+import { getAuthData } from "#root/client/services/auth";
+import { deleteEmailsFromCache } from "#root/client/services/emails-helper";
+import { DELETE_EMAILS } from "#root/client/services/graphql";
+import { useAppStore } from "#root/client/stores/app-store";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import type { SectionEmail } from "#root/client/types/types";
 
 export const Actions = () => {
   const { loggedInUser } = getAuthData();

@@ -1,10 +1,10 @@
-import { useEmailsStore } from "stores/emails-store";
 import { css } from "@emotion/css";
-import { Emails } from "./Emails/Emails";
-import { LeftSidebar } from "./LeftSidebar/LeftSidebar";
-import { RightSidebar } from "./RightSidebar/RightSidebar";
-import { Compose } from "./Compose/Compose";
-import { useIsSmallScreen } from "hooks/use-is-small-screen";
+import { Compose } from "#root/client/components/Main/Compose/Compose";
+import { Emails } from "#root/client/components/Main/Emails/Emails";
+import { LeftSidebar } from "#root/client/components/Main/LeftSidebar/LeftSidebar";
+import { RightSidebar } from "#root/client/components/Main/RightSidebar/RightSidebar";
+import { useIsSmallScreen } from "#root/client/hooks/use-is-small-screen";
+import { useEmailsStore } from "#root/client/stores/emails-store";
 
 export const Main = () => {
   const { isComposeOpen } = useEmailsStore((state) => state);

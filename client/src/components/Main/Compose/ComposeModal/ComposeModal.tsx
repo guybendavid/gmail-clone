@@ -1,15 +1,15 @@
-import { useState, useCallback } from "react";
-import { useEmailsStore } from "stores/emails-store";
-import { Typography } from "@material-ui/core";
 import { css, cx } from "@emotion/css";
-import { primaryBoxShadowStyle } from "styles/reusable-css-in-js-styles";
+import { Typography } from "@material-ui/core";
 import {
-  Minimize as MinimizeIcon,
-  Maximize as MaximizeIcon,
+  Close as CloseIcon,
   Height as HeightIcon,
-  Close as CloseIcon
+  Maximize as MaximizeIcon,
+  Minimize as MinimizeIcon
 } from "@material-ui/icons";
-import { ComposeForm } from "../ComposeForm/ComposeForm";
+import { useCallback, useState } from "react";
+import { ComposeForm } from "#root/client/components/Main/Compose/ComposeForm/ComposeForm";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import { primaryBoxShadowStyle } from "#root/client/styles/reusable-css-in-js-styles";
 
 export const ComposeModal = () => {
   const { setIsComposeOpen } = useEmailsStore((state) => state);

@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
-const generateImage = require("../../utils/generate-image.ts");
 require("dotenv").config();
 
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
+    const { default: generateImage } = await import("../../utils/generate-image.ts");
     const hasedPassword = await bcrypt.hash(process.env.SEEDERS_PASSWORD, 6);
 
     await queryInterface.bulkInsert(

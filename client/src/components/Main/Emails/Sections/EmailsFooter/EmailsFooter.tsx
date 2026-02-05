@@ -1,7 +1,7 @@
-import { useEmailsStore } from "stores/emails-store";
 import { css, cx } from "@emotion/css";
-import { blueButtonStyle } from "styles/reusable-css-in-js-styles";
 import { Button, AppBar, Tabs, Tab } from "@material-ui/core";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import { blueButtonStyle } from "#root/client/styles/reusable-css-in-js-styles";
 
 const texts = ["Inbox", "Sent"];
 

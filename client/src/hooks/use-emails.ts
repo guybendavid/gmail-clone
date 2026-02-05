@@ -1,10 +1,10 @@
-import { useAppStore } from "stores/app-store";
-import { useEmailsStore } from "stores/emails-store";
-import type { SectionEmail } from "types/types";
-import type { ApolloClient } from "@apollo/client";
 import { useQuery } from "@apollo/client";
-import { getAuthData } from "services/auth";
-import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "services/graphql";
+import { getAuthData } from "#root/client/services/auth";
+import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "#root/client/services/graphql";
+import { useAppStore } from "#root/client/stores/app-store";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import type { ApolloClient } from "@apollo/client";
+import type { SectionEmail } from "#root/client/types/types";
 
 export const useEmails = () => {
   const { loggedInUser } = getAuthData();

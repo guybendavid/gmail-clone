@@ -1,7 +1,7 @@
+import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "#root/client/services/graphql";
 import type { ApolloClient } from "@apollo/client";
 import type { DocumentNode } from "graphql";
-import type { Email } from "types/types";
-import { GET_RECEIVED_EMAILS, GET_SENT_EMAILS } from "./graphql";
+import type { Email } from "#root/client/types/types";
 
 type QueryOptions = {
   query: DocumentNode;

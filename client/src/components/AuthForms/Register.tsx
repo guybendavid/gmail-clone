@@ -1,15 +1,15 @@
-import type { SyntheticEvent, ChangeEvent } from "react";
-import { useState } from "react";
-import { authFormStyle } from "./shared-styles";
-import { REGISTER_USER } from "services/graphql";
 import { useMutation } from "@apollo/client";
-import { Link } from "react-router-dom";
-import { handleAuth } from "services/auth";
-import { Avatar, Button, TextField, Typography } from "@material-ui/core";
-import type { TextFieldProps } from "@material-ui/core/TextField";
-import { useAppStore } from "stores/app-store";
 import { getFormValidationErrors } from "@guybendavid/utils";
+import { Avatar, Button, TextField, Typography } from "@material-ui/core";
 import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { authFormStyle } from "#root/client/components/AuthForms/shared-styles";
+import { handleAuth } from "#root/client/services/auth";
+import { REGISTER_USER } from "#root/client/services/graphql";
+import { useAppStore } from "#root/client/stores/app-store";
+import type { TextFieldProps } from "@material-ui/core/TextField";
+import type { SyntheticEvent, ChangeEvent } from "react";
 
 const textFieldProps = {
   required: true,

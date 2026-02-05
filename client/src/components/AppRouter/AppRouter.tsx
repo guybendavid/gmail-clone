@@ -1,14 +1,14 @@
+import { css, cx } from "@emotion/css";
 import { Container } from "@material-ui/core";
 import { Switch, withRouter } from "react-router-dom";
-import { css, cx } from "@emotion/css";
-import { getAuthData } from "services/auth";
-import { Login } from "components/AuthForms/Login";
-import { Register } from "components/AuthForms/Register";
-import { AuthenticatedRoute } from "./Routes/AuthenticatedRoute";
-import { UnauthenticatedRoute } from "./Routes/UnauthenticatedRoute";
-import { DefaultRoute } from "./Routes/DefaultRoute";
-import { Main } from "components/Main/Main";
-import { IndicationMessage } from "components/IndicationMessage/IndicationMessage";
+import { AuthenticatedRoute } from "#root/client/components/AppRouter/Routes/AuthenticatedRoute";
+import { DefaultRoute } from "#root/client/components/AppRouter/Routes/DefaultRoute";
+import { UnauthenticatedRoute } from "#root/client/components/AppRouter/Routes/UnauthenticatedRoute";
+import { Login } from "#root/client/components/AuthForms/Login";
+import { Register } from "#root/client/components/AuthForms/Register";
+import { IndicationMessage } from "#root/client/components/IndicationMessage/IndicationMessage";
+import { Main } from "#root/client/components/Main/Main";
+import { getAuthData } from "#root/client/services/auth";
 
 const AppRouterComponent = () => {
   const { isAuthenticated } = getAuthData();

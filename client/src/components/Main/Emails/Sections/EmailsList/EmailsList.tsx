@@ -1,17 +1,17 @@
-import { useEffect, Fragment } from "react";
-import { useEmailsStore } from "stores/emails-store";
-import { css, cx } from "@emotion/css";
-import { scrollbarStyle, getOverflowStyle } from "styles/reusable-css-in-js-styles";
-import { getAuthData } from "services/auth";
 import { useSubscription } from "@apollo/client";
-import { NEW_EMAIL } from "services/graphql";
-import type { SectionEmail } from "types/types";
-import { List, ListItem, Typography, Divider } from "@material-ui/core";
-import { addNewEmailToCache } from "services/emails-helper";
+import { css, cx } from "@emotion/css";
 import { timeDisplayer } from "@guybendavid/utils";
-import { useEmails } from "hooks/use-emails";
-import { useIsSmallScreen } from "hooks/use-is-small-screen";
-import { EmailCheckbox } from "./EmailCheckbox/EmailCheckBox";
+import { List, ListItem, Typography, Divider } from "@material-ui/core";
+import { useEffect, Fragment } from "react";
+import { EmailCheckbox } from "#root/client/components/Main/Emails/Sections/EmailsList/EmailCheckbox/EmailCheckBox";
+import { useEmails } from "#root/client/hooks/use-emails";
+import { useIsSmallScreen } from "#root/client/hooks/use-is-small-screen";
+import { getAuthData } from "#root/client/services/auth";
+import { addNewEmailToCache } from "#root/client/services/emails-helper";
+import { NEW_EMAIL } from "#root/client/services/graphql";
+import { useEmailsStore } from "#root/client/stores/emails-store";
+import { scrollbarStyle, getOverflowStyle } from "#root/client/styles/reusable-css-in-js-styles";
+import type { SectionEmail } from "#root/client/types/types";
 
 export const EmailsList = () => {
   const { loggedInUser } = getAuthData();

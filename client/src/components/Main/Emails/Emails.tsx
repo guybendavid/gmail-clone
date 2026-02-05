@@ -1,9 +1,9 @@
-import { Actions } from "./Sections/Actions/Actions";
-import { TabsRow } from "./Sections/TabsRow/TabsRow";
-import { EmailsList } from "./Sections/EmailsList/EmailsList";
-import { EmailsFooter } from "./Sections/EmailsFooter/EmailsFooter";
-import { useIsSmallScreen } from "hooks/use-is-small-screen";
 import { css } from "@emotion/css";
+import { Actions } from "#root/client/components/Main/Emails/Sections/Actions/Actions";
+import { EmailsFooter } from "#root/client/components/Main/Emails/Sections/EmailsFooter/EmailsFooter";
+import { EmailsList } from "#root/client/components/Main/Emails/Sections/EmailsList/EmailsList";
+import { TabsRow } from "#root/client/components/Main/Emails/Sections/TabsRow/TabsRow";
+import { useIsSmallScreen } from "#root/client/hooks/use-is-small-screen";
 
 export const Emails = () => {
   const { isSmallScreen } = useIsSmallScreen();

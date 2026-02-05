@@ -1,10 +1,10 @@
-import { Op } from "sequelize";
-import { UserInputError } from "apollo-server";
+import { GraphQLError } from "graphql";
 import { withFilter } from "graphql-subscriptions";
-import { Email, User } from "../../db/models/models-config";
-import type { DBEmail, ContextUser } from "../../types/types";
-import { getFormattedNewEmail, getEmailsByParticipantType } from "../../utils/emails-helper";
-import { pubsub } from "../../app";
+import { Op } from "sequelize";
+import { pubsub } from "#root/server/app";
+import { Email, User } from "#root/server/db/models/models-config";
+import { getFormattedNewEmail, getEmailsByParticipantType } from "#root/server/utils/emails-helper";
+import type { DBEmail, ContextUser } from "#root/server/types/types";
 
 interface SendEmailPayload extends Pick<DBEmail, "subject" | "content"> {
   senderEmail: string;
@@ -53,7 +53,9 @@ export const emailResolvers = {
       const recipientUser = await User.findOne({ where: { email: recipientEmail } });
 
       if (!recipientUser) {
-        throw new UserInputError("Email not found");
+        throw new GraphQLError("Email not found", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
 
       const email = await Email.create({ sender: senderEmail, recipient: recipientEmail, subject, content });
@@ -68,7 +70,9 @@ export const emailResolvers = {
       }
 
       if (ids.length === 0 || ids.some(getIsIdNotValid)) {
-        throw new UserInputError("Please send a valid id's array");
+        throw new GraphQLError("Please send a valid id's array", {
+          extensions: { code: "BAD_USER_INPUT" }
+        });
       }
     }
   },
