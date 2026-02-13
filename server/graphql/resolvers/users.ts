@@ -1,15 +1,17 @@
+import { eq } from "drizzle-orm";
 import { GraphQLError } from "graphql";
-import { User } from "#root/server/db/models/models-config";
+import { db } from "#root/server/db/connection";
+import { users } from "#root/server/db/schema";
 import { getGenerateToken } from "#root/server/utils/generate-token";
+import { getGeneratedImage } from "#root/server/utils/generate-image";
 import bcrypt from "bcrypt";
-import generateImage from "#root/server/utils/generate-image";
 import type { User as UserType } from "#root/server/types/types";
 
 export const userResolvers = {
   Mutation: {
     register: async (_parent: unknown, args: Omit<UserType, "id">) => {
       const { firstName, lastName, email, password } = args;
-      const isUserExists = await User.findOne({ where: { email } });
+      const [isUserExists] = await db.select().from(users).where(eq(users.email, email)).limit(1);
 
       if (isUserExists) {
         throw new GraphQLError("Email already exists", {
@@ -18,13 +20,28 @@ export const userResolvers = {
       }
 
       const hasedPassword = await bcrypt.hash(password as string, 6);
-      const user = await User.create({ firstName, lastName, email, password: hasedPassword, image: generateImage() });
-      const { password: _userPassword, ...safeUserData } = user.toJSON();
-      return { user: safeUserData, token: getGenerateToken({ id: user.id, email, firstName, lastName }) };
+
+      const [user] = await db
+        .insert(users)
+        .values({ firstName, lastName, email, password: hasedPassword, image: getGeneratedImage() })
+        .returning();
+
+      if (!user) {
+        throw new GraphQLError("User was not created", {
+          extensions: { code: "INTERNAL_SERVER_ERROR" }
+        });
+      }
+
+      const { password: _userPassword, ...safeUserData } = user;
+
+      return {
+        user: safeUserData,
+        token: getGenerateToken({ id: String(user.id), email, firstName, lastName })
+      };
     },
     login: async (_parent: unknown, args: Pick<UserType, "email" | "password">) => {
       const { email, password } = args;
-      const user = await User.findOne({ where: { email } });
+      const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
 
       if (!user) {
         throw new GraphQLError("Email not found", {
@@ -41,7 +58,11 @@ export const userResolvers = {
       }
 
       const { id, firstName, lastName, image } = user;
-      return { user: { id, firstName, lastName, image }, token: getGenerateToken({ id, email, firstName, lastName }) };
+
+      return {
+        user: { id, firstName, lastName, image },
+        token: getGenerateToken({ id: String(id), email, firstName, lastName })
+      };
     }
   }
 };

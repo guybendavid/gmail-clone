@@ -16,7 +16,10 @@ const getWsUri = (uri: string) => {
 };
 
 const wsUri = getWsUri(httpUri);
-const baseHttpLink: ApolloLink = new HttpLink({ uri: httpUri });
+
+const baseHttpLink: ApolloLink = new HttpLink({
+  uri: httpUri
+});
 
 const authLink = setContext((_, { headers }) => ({
   headers: {

@@ -1,31 +1,19 @@
-import { useSubscription } from "@apollo/client";
 import { css, cx } from "@emotion/css";
-import { timeDisplayer } from "@guybendavid/utils";
+import { Fragment } from "react";
 import { List, ListItem, Typography, Divider } from "@material-ui/core";
-import { useEffect, Fragment } from "react";
+import { timeDisplayer } from "@guybendavid/utils";
 import { EmailCheckbox } from "#root/client/components/Main/Emails/Sections/EmailsList/EmailCheckbox/EmailCheckBox";
 import { useEmails } from "#root/client/hooks/use-emails";
 import { useIsSmallScreen } from "#root/client/hooks/use-is-small-screen";
 import { getAuthData } from "#root/client/services/auth";
-import { addNewEmailToCache } from "#root/client/services/emails-helper";
-import { NEW_EMAIL } from "#root/client/services/graphql";
 import { useEmailsStore } from "#root/client/stores/emails-store";
 import { scrollbarStyle, getOverflowStyle } from "#root/client/styles/reusable-css-in-js-styles";
 import type { SectionEmail } from "#root/client/types/types";
 
 export const EmailsList = () => {
-  const { loggedInUser } = getAuthData();
-  const { emails, apolloClient } = useEmails();
+  const { emails } = useEmails();
   const { isSmallScreen } = useIsSmallScreen();
   const { searchValue, selectedEmails } = useEmailsStore((state) => state);
-  const { data: newEmailData } = useSubscription(NEW_EMAIL);
-  const newEmail = newEmailData?.newEmail;
-
-  useEffect(() => {
-    if (newEmail) {
-      addNewEmailToCache({ newEmail, loggedInUserEmail: loggedInUser.email, client: apolloClient });
-    }
-  }, [newEmail]);
 
   return (
     <List className={cx(emailsListStyle, isSmallScreen && "is-small-screen")}>
