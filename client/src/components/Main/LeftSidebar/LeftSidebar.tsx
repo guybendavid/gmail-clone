@@ -18,19 +18,7 @@ import { useEmailsStore } from "#root/client/stores/emails-store";
 import { getOverflowStyle, scrollbarStyle } from "#root/client/styles/reusable-css-in-js-styles";
 import composeImg from "#root/client/images/compose-img.png";
 
-const firstListTexts = [
-  "Inbox",
-  "Sent",
-  "Starred",
-  "Snoozed",
-  "Important",
-  "Drafts",
-  "All Mail",
-  "Trash",
-  "Categories",
-  "More"
-];
-
+const firstListTexts = ["Inbox", "Sent", "Starred", "Snoozed", "Important", "Drafts", "All Mail", "Trash", "Categories", "More"];
 const secondListTexts = ["New meeting", "Join a meeting"];
 
 export const LeftSidebar = () => {
@@ -62,8 +50,7 @@ export const LeftSidebar = () => {
               key={index}
               button={true}
               className={cx("list-item", activeTab === index && "is-active", index === 0 && "is-first-item")}
-              onClick={() => index < 2 && setActiveTab(index)}
-            >
+              onClick={() => index < 2 && setActiveTab(index)}>
               <Icon className="icon" />
               <ListItemText primary={firstListTexts[index]} />
             </ListItem>

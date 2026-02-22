@@ -11,11 +11,5 @@ type Props = {
 export const UnauthenticatedRoute: FC<Props> = ({ exact, path, Component }) => {
   const { isAuthenticated } = getAuthData();
 
-  return (
-    <Route
-      exact={exact}
-      path={path}
-      render={(props) => (!isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)}
-    />
-  );
+  return <Route exact={exact} path={path} render={(props) => (!isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)} />;
 };

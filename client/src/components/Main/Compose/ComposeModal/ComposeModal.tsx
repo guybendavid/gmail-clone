@@ -1,11 +1,6 @@
 import { css, cx } from "@emotion/css";
 import { Typography } from "@material-ui/core";
-import {
-  Close as CloseIcon,
-  Height as HeightIcon,
-  Maximize as MaximizeIcon,
-  Minimize as MinimizeIcon
-} from "@material-ui/icons";
+import { Close as CloseIcon, Height as HeightIcon, Maximize as MaximizeIcon, Minimize as MinimizeIcon } from "@material-ui/icons";
 import { useCallback, useState } from "react";
 import { ComposeForm } from "#root/client/components/Main/Compose/ComposeForm/ComposeForm";
 import { useEmailsStore } from "#root/client/stores/emails-store";
@@ -44,13 +39,7 @@ export const ComposeModal = () => {
 
   return (
     <div className={cx(composeModalStyle, isMinimized && "is-minimized")}>
-      <div
-        className="header"
-        role="button"
-        tabIndex={0}
-        onClick={() => setIsMinimized(!isMinimized)}
-        onKeyDown={handleKeyDown}
-      >
+      <div className="header" role="button" tabIndex={0} onClick={() => setIsMinimized(!isMinimized)} onKeyDown={handleKeyDown}>
         <Typography component="span">New Message</Typography>
         <div className="icons-wrapper">{headerIconsGenerator()}</div>
       </div>

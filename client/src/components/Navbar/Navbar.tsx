@@ -78,13 +78,7 @@ const AvatarMenu = () => {
       <IconButton onClick={handleClick}>
         <Avatar className="avatar" alt="avatar" src={loggedInUser.image} />
       </IconButton>
-      <Menu
-        id="main-menu"
-        keepMounted={true}
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-      >
+      <Menu id="main-menu" keepMounted={true} anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </>

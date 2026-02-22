@@ -29,11 +29,7 @@ const getAppStore = (set: SetFunction, get: GetFunction) => ({
   handleServerErrors: (error: ServerError) => {
     const { message: gqlErrorMessage, networkError } = error;
     const networkErrorWithResult = networkError as { result?: { errors?: { message?: string }[] } };
-
-    const gqlContextErrorMessage = networkErrorWithResult?.result?.errors?.[0]?.message
-      ?.split("Context creation failed: ")
-      .pop();
-
+    const gqlContextErrorMessage = networkErrorWithResult?.result?.errors?.[0]?.message?.split("Context creation failed: ").pop();
     const content = gqlContextErrorMessage || gqlErrorMessage || "Something went wrong...";
     set(() => ({ snackBarMessage: { content, severity: "error" } }));
 

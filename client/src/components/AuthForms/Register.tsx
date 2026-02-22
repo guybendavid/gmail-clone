@@ -24,8 +24,7 @@ export const Register = () => {
   const { firstName, lastName, email } = formValues;
 
   const [register] = useMutation(REGISTER_USER, {
-    onCompleted: ({ register: data }) =>
-      handleAuth({ user: { ...data.user, firstName, lastName, email }, token: data.token }),
+    onCompleted: ({ register: data }) => handleAuth({ user: { ...data.user, firstName, lastName, email }, token: data.token }),
     onError: (error) => handleServerErrors(error)
   });
 
@@ -51,24 +50,9 @@ export const Register = () => {
       </Avatar>
       <Typography component="h1">Register</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField
-          {...textFieldProps}
-          label="first name"
-          autoComplete="First Name"
-          onChange={(e) => handleOnChange(e, "firstName")}
-        />
-        <TextField
-          {...textFieldProps}
-          label="last name"
-          autoComplete="Last Name"
-          onChange={(e) => handleOnChange(e, "lastName")}
-        />
-        <TextField
-          {...textFieldProps}
-          label="email"
-          autoComplete="Email"
-          onChange={(e) => handleOnChange(e, "email")}
-        />
+        <TextField {...textFieldProps} label="first name" autoComplete="First Name" onChange={(e) => handleOnChange(e, "firstName")} />
+        <TextField {...textFieldProps} label="last name" autoComplete="Last Name" onChange={(e) => handleOnChange(e, "lastName")} />
+        <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
         <TextField
           {...textFieldProps}
           label="password"

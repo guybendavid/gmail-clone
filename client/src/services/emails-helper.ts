@@ -46,12 +46,7 @@ const getQueryOptions = (query: DocumentNode, loggedInUserEmail: string) => ({
   variables: { loggedInUserEmail }
 });
 
-const writeToCache = (
-  client: ApolloClient<unknown>,
-  queryOptions: QueryOptions,
-  isReceivedEmails: boolean,
-  newData: Email[]
-) => {
+const writeToCache = (client: ApolloClient<unknown>, queryOptions: QueryOptions, isReceivedEmails: boolean, newData: Email[]) => {
   const objectToCache = {
     ...queryOptions,
     data: isReceivedEmails ? { getReceivedEmails: newData } : { getSentEmails: newData }

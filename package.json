@@ -51,5 +51,6 @@
   },
   "imports": {
     "#root/*": "./*"
-  }
+  },
+  "prettier": "strictify/prettier"
 }

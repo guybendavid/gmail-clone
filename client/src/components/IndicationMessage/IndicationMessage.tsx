@@ -36,8 +36,7 @@ export const IndicationMessage = () => {
           anchorOrigin={anchorOrigin}
           open={open}
           autoHideDuration={5000}
-          onClose={closeMessage}
-        >
+          onClose={closeMessage}>
           <MuiAlert elevation={6} variant="filled" severity={severity} onClose={closeMessage}>
             <div dangerouslySetInnerHTML={{ __html: sanitize(content) }}></div>
           </MuiAlert>

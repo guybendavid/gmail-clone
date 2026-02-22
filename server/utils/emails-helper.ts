@@ -21,10 +21,7 @@ type GetEmailsWithParticipantsNameQueryResponse = {
   createdAt: Date;
 }[];
 
-export const getEmailsByParticipantType = async ({
-  loggedInUserEmail,
-  participantType
-}: GetEmailsByParticipantType) => {
+export const getEmailsByParticipantType = async ({ loggedInUserEmail, participantType }: GetEmailsByParticipantType) => {
   if (!loggedInUserEmail) {
     throw new GraphQLError("Please send a valid email", {
       extensions: { code: "UNAUTHENTICATED" }
@@ -48,9 +45,7 @@ export const getEmailsByParticipantType = async ({
     .from(emails)
     .innerJoin(senderUser, eq(emails.sender, senderUser.email))
     .innerJoin(recipientUser, eq(emails.recipient, recipientUser.email))
-    .where(
-      participantType === "sender" ? eq(emails.sender, loggedInUserEmail) : eq(emails.recipient, loggedInUserEmail)
-    )
+    .where(participantType === "sender" ? eq(emails.sender, loggedInUserEmail) : eq(emails.recipient, loggedInUserEmail))
     .orderBy(desc(emails.createdAt));
 
   return formatDBEmailsToApiShape(emailsResult);

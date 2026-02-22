@@ -20,8 +20,7 @@ export const ComposeDialog = () => {
       className={composeDialogStyle}
       TransitionComponent={Transition}
       open={isComposeOpen}
-      onClose={() => setIsComposeOpen(false)}
-    >
+      onClose={() => setIsComposeOpen(false)}>
       <AppBar position="relative">
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={() => setIsComposeOpen(false)} aria-label="close">

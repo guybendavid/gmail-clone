@@ -50,12 +50,7 @@ export const Login = () => {
       </Avatar>
       <Typography component="h1">Login</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField
-          {...textFieldProps}
-          label="email"
-          autoComplete="Email"
-          onChange={(e) => handleOnChange(e, "email")}
-        />
+        <TextField {...textFieldProps} label="email" autoComplete="Email" onChange={(e) => handleOnChange(e, "email")} />
         <TextField
           {...textFieldProps}
           label="password"

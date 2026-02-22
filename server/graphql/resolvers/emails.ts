@@ -57,10 +57,7 @@ export const emailResolvers = {
         });
       }
 
-      const [email] = await db
-        .insert(emails)
-        .values({ sender: senderEmail, recipient: recipientEmail, subject, content })
-        .returning();
+      const [email] = await db.insert(emails).values({ sender: senderEmail, recipient: recipientEmail, subject, content }).returning();
 
       if (!email) {
         throw new GraphQLError("Email was not created", {

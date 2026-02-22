@@ -16,12 +16,7 @@ export const EmailsFooter = () => {
       <AppBar position="static" className="tabs" elevation={0}>
         <Tabs variant="fullWidth" value={activeTab} aria-label="simple tabs example">
           {texts.map((text, index) => (
-            <Tab
-              key={index}
-              label={text}
-              onClick={() => setActiveTab(index)}
-              className={cx(activeTab === index && "is-active")}
-            />
+            <Tab key={index} label={text} onClick={() => setActiveTab(index)} className={cx(activeTab === index && "is-active")} />
           ))}
         </Tabs>
       </AppBar>
