@@ -9,7 +9,6 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
     "paths": {
       "#root/server/*": ["./*"]
     }
